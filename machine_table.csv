@@ -1,0 +1,11 @@
+Machine_ID,Machine_Type,Idle_Power_kW,Active_Power_kW,Changeover_Time_min,Available_From,Available_To
+M1,Welding,2.33,21.12,17,00:00,23:59
+M2,Lathe,2.42,11.54,27,00:00,23:59
+M3,CNC,3.77,10.48,12,00:00,23:59
+M4,Lathe,2.7,19.03,27,00:00,23:59
+M5,Lathe,4.15,20.52,23,00:00,23:59
+M6,Lathe,3.35,14.17,10,00:00,23:59
+M7,Lathe,4.09,15.1,14,00:00,23:59
+M8,Lathe,4.87,15.05,12,00:00,23:59
+M9,Drilling,2.29,22.71,29,00:00,23:59
+M10,Milling,4.42,20.95,27,00:00,23:59
