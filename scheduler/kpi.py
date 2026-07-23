@@ -68,12 +68,14 @@ class KPICalculator:
 
         # 4. Machine Utilization & Total Idle Time
         num_machines = len(machines)
-        total_available_slots = num_machines * horizon_slots
+        max_end_slot = int(schedule_df["End_Slot"].max()) if not schedule_df.empty else horizon_slots
+        effective_horizon = max(horizon_slots, max_end_slot)
+        total_available_slots = num_machines * effective_horizon
 
         total_active_slots = sum(row["End_Slot"] - row["Start_Slot"] for _, row in schedule_df.iterrows())
-        overall_utilization_pct = round((total_active_slots / total_available_slots) * 100.0, 2)
+        overall_utilization_pct = min(100.0, round((total_active_slots / max(1, total_available_slots)) * 100.0, 2))
 
-        total_idle_slots = total_available_slots - total_active_slots
+        total_idle_slots = max(0, total_available_slots - total_active_slots)
         total_idle_time_min = total_idle_slots * slot_min
 
         # 5. Waiting Time (Arrival to Start)

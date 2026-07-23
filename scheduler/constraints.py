@@ -13,18 +13,11 @@ logger = get_logger(__name__)
 
 
 class ConstraintFormulator:
-    """Class responsible for adding decision variables and physical scheduling constraints to CP-SAT model."""
+    """Class responsible for adding decision variables and physical constraints to CP-SAT model."""
 
     def __init__(self, model: cp_model.CpModel, horizon_slots: int):
         self.model = model
         self.horizon_slots = horizon_slots
-
-        # Decision Variable Containers
-        self.job_starts: Dict[str, cp_model.IntVar] = {}
-        self.job_ends: Dict[str, cp_model.IntVar] = {}
-        self.job_machines: Dict[Tuple[str, str], cp_model.BoolVar] = {}
-        self.interval_vars: Dict[Tuple[str, str], cp_model.IntervalVar] = {}
-        self.job_delays: Dict[str, cp_model.IntVar] = {}
 
     def create_variables_and_constraints(
         self, jobs: List[ParsedJob], machines: List[ParsedMachine]
@@ -39,10 +32,16 @@ class ConstraintFormulator:
         Returns:
             Dict[str, Any]: Dictionary containing created variable containers.
         """
-        logger.info("Formulating CP-SAT decision variables and constraints...")
+        logger.info(f"Formulating CP-SAT decision variables and constraints (Horizon={self.horizon_slots} slots)...")
 
         machine_map = {m.machine_id: m for m in machines}
         machine_intervals: Dict[str, List[cp_model.IntervalVar]] = {m.machine_id: [] for m in machines}
+
+        self.job_starts: Dict[str, cp_model.IntVar] = {}
+        self.job_ends: Dict[str, cp_model.IntVar] = {}
+        self.job_machines: Dict[Tuple[str, str], cp_model.BoolVar] = {}
+        self.interval_vars: Dict[Tuple[str, str], cp_model.IntervalVar] = {}
+        self.job_delays: Dict[str, cp_model.IntVar] = {}
 
         for j in jobs:
             # Global Start and End Variables for Job j
@@ -78,7 +77,7 @@ class ConstraintFormulator:
 
                 # Optional Interval for Job j on Machine m with Changeover Gap
                 total_duration = j.duration_slots + m.changeover_slots
-                
+
                 interval = self.model.NewOptionalIntervalVar(
                     start_var,
                     total_duration,
@@ -89,15 +88,15 @@ class ConstraintFormulator:
                 self.interval_vars[(j.job_id, m_id)] = interval
                 machine_intervals[m_id].append(interval)
 
-                # Availability Constraint
-                self.model.Add(start_var >= m.available_from_slot).OnlyEnforceIf(presence)
-                self.model.Add(end_var <= m.available_to_slot).OnlyEnforceIf(presence)
+                # Machine Availability Constraint (if operating window specified)
+                if m.available_from_slot > 0:
+                    self.model.Add(start_var >= m.available_from_slot).OnlyEnforceIf(presence)
+                if m.available_to_slot < self.horizon_slots:
+                    self.model.Add(end_var <= m.available_to_slot).OnlyEnforceIf(presence)
 
             # Compatibility Constraint: Job must be assigned to EXACTLY ONE compatible machine
             if assigned_presence_vars:
                 self.model.Add(sum(assigned_presence_vars) == 1)
-            else:
-                logger.warning(f"Job {j.job_id} has no valid compatible machines!")
 
         # Machine Non-Overlap Constraint (One job at a time per machine + changeover gap)
         for m_id, intervals in machine_intervals.items():

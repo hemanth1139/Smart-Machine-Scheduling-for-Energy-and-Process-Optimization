@@ -1,6 +1,6 @@
 """
 Enterprise Sidebar Filter Component Module.
-Renders dataset filter controls (machine selector, priority, search).
+Renders clean dataset filter controls (machine selector, priority, search).
 Navigation is handled natively by Streamlit st.navigation() in app.py.
 """
 
@@ -20,42 +20,35 @@ def render_sidebar(available_machines: List[str]) -> Dict[str, Any]:
     Returns:
         Dict[str, Any]: Filter parameters dictionary.
     """
-    st.sidebar.markdown(
-        """
-        <div style="padding: 0.5rem 0; margin-bottom: 1rem;">
-            <div style="font-size: 1rem; font-weight: 700; color: #2563EB;">Enterprise Industrial AI</div>
-            <div style="font-size: 0.75rem; color: #64748B;">Decision Support System</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
     st.sidebar.markdown("---")
-    st.sidebar.markdown("**Global Filters**")
+    st.sidebar.markdown("### ⚙️ Schedule Filters")
 
-    # Machine Selector
+    # Machine Selector — default ALL machines so nothing is hidden on load
     selected_machines = st.sidebar.multiselect(
-        label="Filter Machines",
+        label="Filter by Machine",
         options=available_machines,
-        default=available_machines[:5] if available_machines else [],
+        default=available_machines,  # show all machines by default
+        help="Select which machines to include in schedule views.",
     )
 
     # Job Priority Selector
     selected_priorities = st.sidebar.multiselect(
-        label="Job Priority",
+        label="Filter by Job Priority",
         options=["High", "Medium", "Low"],
         default=["High", "Medium", "Low"],
+        help="Show only jobs matching the selected priority levels.",
     )
 
-    # Job Search Text
+    # Job ID Search — partial match (case-insensitive)
     search_query = st.sidebar.text_input(
-        label="Search Job ID",
+        label="Search by Job ID",
         value="",
-        placeholder="e.g. J1, J12...",
+        placeholder="e.g. J1 or J42",
+        help="Searches for jobs matching the entered ID.",
     )
 
     st.sidebar.markdown("---")
-    st.sidebar.caption("Powered by XGBoost & OR-Tools CP-SAT")
+    st.sidebar.caption("⚡ Powered by XGBoost & OR-Tools CP-SAT")
 
     filters = {
         "machines": selected_machines,
@@ -63,5 +56,8 @@ def render_sidebar(available_machines: List[str]) -> Dict[str, Any]:
         "search_query": search_query.strip(),
     }
 
-    dash_logger.info(f"Sidebar filter: Machines={len(selected_machines)}, Priorities={selected_priorities}")
+    dash_logger.info(
+        f"Sidebar filter: Machines={len(selected_machines)}/{len(available_machines)}, "
+        f"Priorities={selected_priorities}, Search='{search_query.strip()}'"
+    )
     return filters

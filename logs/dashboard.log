@@ -30,3 +30,114 @@
 [2026-07-23 23:01:00] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=3, Priorities=['High', 'Medium', 'Low']
 [2026-07-23 23:01:01] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=3, Priorities=['High', 'Low']
 [2026-07-23 23:01:06] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=3, Priorities=['High', 'Low']
+[2026-07-23 23:04:02] [INFO] [SmartSchedulingDashboard:loader.py:27] - Dashboard loading predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-23 23:04:02] [INFO] [SmartSchedulingDashboard:loader.py:34] - Dashboard loading future forecast from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-23 23:04:02] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:04:17] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:04:22] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:04:25] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:04:32] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:04:36] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:04:37] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:04:39] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:04:39] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((500, 14)) to CSV byte stream.
+[2026-07-23 23:04:39] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((500, 14)) to Excel XLSX byte stream.
+[2026-07-23 23:04:41] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((7008, 6)) to CSV byte stream.
+[2026-07-23 23:04:41] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((7008, 6)) to Excel XLSX byte stream.
+[2026-07-23 23:04:43] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:04:48] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:05:09] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:05:45] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:05:57] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:06:01] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:06:10] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:06:12] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:06:16] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:06:23] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:06:23] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:06:24] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:06:24] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:06:53] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:07:49] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:07:53] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:07:54] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:07:57] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:04] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:09] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:09] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((500, 14)) to CSV byte stream.
+[2026-07-23 23:08:09] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((500, 14)) to Excel XLSX byte stream.
+[2026-07-23 23:08:09] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((7008, 6)) to CSV byte stream.
+[2026-07-23 23:08:09] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((7008, 6)) to Excel XLSX byte stream.
+[2026-07-23 23:08:10] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:12] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=4, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:16] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:18] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=6, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:19] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=7, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:20] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=8, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:20] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=9, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:21] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=10, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:23] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:25] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:26] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:34] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:35] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:36] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:36] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((500, 14)) to CSV byte stream.
+[2026-07-23 23:08:36] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((500, 14)) to Excel XLSX byte stream.
+[2026-07-23 23:08:37] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((7008, 6)) to CSV byte stream.
+[2026-07-23 23:08:37] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((7008, 6)) to Excel XLSX byte stream.
+[2026-07-23 23:08:39] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:08:50] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:09:32] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:09:43] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:09:43] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:10:39] [INFO] [SmartSchedulingDashboard:sidebar.py:64] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:10:58] [INFO] [SmartSchedulingDashboard:sidebar.py:64] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:11:57] [INFO] [SmartSchedulingDashboard:sidebar.py:64] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search='j1'
+[2026-07-23 23:12:06] [INFO] [SmartSchedulingDashboard:sidebar.py:64] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:12:08] [INFO] [SmartSchedulingDashboard:sidebar.py:64] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:12:10] [INFO] [SmartSchedulingDashboard:sidebar.py:64] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:12:13] [INFO] [SmartSchedulingDashboard:sidebar.py:64] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:13:19] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:13:39] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:13:42] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:00] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:03] [INFO] [SmartSchedulingDashboard:loader.py:27] - Dashboard loading predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-23 23:14:03] [INFO] [SmartSchedulingDashboard:loader.py:34] - Dashboard loading future forecast from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-23 23:14:04] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:09] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:25] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:26] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((500, 14)) to CSV byte stream.
+[2026-07-23 23:14:26] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((500, 14)) to Excel XLSX byte stream.
+[2026-07-23 23:14:26] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((7008, 6)) to CSV byte stream.
+[2026-07-23 23:14:26] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((7008, 6)) to Excel XLSX byte stream.
+[2026-07-23 23:14:27] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:29] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:29] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((500, 14)) to CSV byte stream.
+[2026-07-23 23:14:29] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((500, 14)) to Excel XLSX byte stream.
+[2026-07-23 23:14:29] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((7008, 6)) to CSV byte stream.
+[2026-07-23 23:14:29] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((7008, 6)) to Excel XLSX byte stream.
+[2026-07-23 23:14:31] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:31] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:31] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((500, 14)) to CSV byte stream.
+[2026-07-23 23:14:31] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((500, 14)) to Excel XLSX byte stream.
+[2026-07-23 23:14:32] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((7008, 6)) to CSV byte stream.
+[2026-07-23 23:14:32] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((7008, 6)) to Excel XLSX byte stream.
+[2026-07-23 23:14:35] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:35] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:35] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((500, 14)) to CSV byte stream.
+[2026-07-23 23:14:35] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((500, 14)) to Excel XLSX byte stream.
+[2026-07-23 23:14:35] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((7008, 6)) to CSV byte stream.
+[2026-07-23 23:14:35] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((7008, 6)) to Excel XLSX byte stream.
+[2026-07-23 23:14:44] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:44] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((500, 14)) to CSV byte stream.
+[2026-07-23 23:14:44] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((500, 14)) to Excel XLSX byte stream.
+[2026-07-23 23:14:45] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((7008, 6)) to CSV byte stream.
+[2026-07-23 23:14:45] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((7008, 6)) to Excel XLSX byte stream.
+[2026-07-23 23:14:46] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:14:46] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((500, 14)) to CSV byte stream.
+[2026-07-23 23:14:46] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((500, 14)) to Excel XLSX byte stream.
+[2026-07-23 23:14:46] [INFO] [SmartSchedulingDashboard:exporter.py:13] - Converting DataFrame ((7008, 6)) to CSV byte stream.
+[2026-07-23 23:14:47] [INFO] [SmartSchedulingDashboard:exporter.py:19] - Converting DataFrame ((7008, 6)) to Excel XLSX byte stream.
+[2026-07-23 23:14:49] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-23 23:19:55] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''

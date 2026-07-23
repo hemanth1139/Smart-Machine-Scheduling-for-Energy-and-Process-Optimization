@@ -34,7 +34,17 @@ def render_scheduling_page(opt_df: pd.DataFrame, filters: Dict[str, Any]) -> Non
         filtered_df = filtered_df[filtered_df["Priority"].isin(filters["priorities"])]
     if filters.get("search_query"):
         q = filters["search_query"].lower()
-        filtered_df = filtered_df[filtered_df["Job_ID"].str.lower().str.contains(q)]
+        filtered_df = filtered_df[filtered_df["Job_ID"].str.lower().str.contains(q, na=False)]
+
+    # Show filter result count
+    total_jobs = len(opt_df)
+    shown_jobs = len(filtered_df)
+    if shown_jobs < total_jobs:
+        st.info(f"🔍 Showing **{shown_jobs}** of **{total_jobs}** jobs — adjust sidebar filters to change the view.")
+
+    if filtered_df.empty:
+        st.warning("No jobs match the current filter selection. Clear or adjust the sidebar filters.")
+        return
 
     col1, col2, col3, col4 = st.columns(4)
 
@@ -43,16 +53,19 @@ def render_scheduling_page(opt_df: pd.DataFrame, filters: Dict[str, Any]) -> Non
     total_cost = float(filtered_df["Energy_Cost_$"].sum()) if "Energy_Cost_$" in filtered_df.columns else 0.0
     late_count = int(filtered_df["Is_Late"].sum()) if "Is_Late" in filtered_df.columns else 0
 
-    svg_clock = """<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>"""
-
     with col1:
-        render_metric_card("Scheduled Jobs Count", format_number(scheduled_jobs))
+        render_metric_card("Scheduled Jobs", format_number(scheduled_jobs))
     with col2:
-        render_metric_card("Active Machines Assigned", format_number(active_machines))
+        render_metric_card("Active Machines", format_number(active_machines))
     with col3:
-        render_metric_card("Filtered Schedule Energy Cost", format_currency(total_cost))
+        render_metric_card("Total Energy Cost", format_currency(total_cost))
     with col4:
-        render_metric_card("Late Jobs Count", format_number(late_count), delta="Zero Delays" if late_count == 0 else f"{late_count} Late", delta_is_positive=(late_count == 0), icon_svg=svg_clock)
+        render_metric_card(
+            "Late Jobs",
+            format_number(late_count),
+            delta="On Time ✓" if late_count == 0 else f"{late_count} Late",
+            delta_is_positive=(late_count == 0),
+        )
 
     st.markdown("---")
 

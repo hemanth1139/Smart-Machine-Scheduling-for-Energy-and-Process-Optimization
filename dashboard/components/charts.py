@@ -23,18 +23,16 @@ def apply_corporate_layout(fig: go.Figure, title: str, x_title: str, y_title: st
     fig.update_layout(
         title=dict(text=title, font=dict(family="Inter, sans-serif", size=15, color="#0F172A")),
         xaxis=dict(
-            title=x_title,
+            title=dict(text=x_title, font=dict(size=12, color="#64748B")),
             showgrid=True,
             gridcolor="#E2E8F0",
             zeroline=False,
-            titlefont=dict(size=12, color="#64748B"),
         ),
         yaxis=dict(
-            title=y_title,
+            title=dict(text=y_title, font=dict(size=12, color="#64748B")),
             showgrid=True,
             gridcolor="#E2E8F0",
             zeroline=False,
-            titlefont=dict(size=12, color="#64748B"),
         ),
         plot_bgcolor="#FFFFFF",
         paper_bgcolor="#FFFFFF",
@@ -92,7 +90,7 @@ def build_machine_timeline(df: pd.DataFrame) -> go.Figure:
         y="Duration_min",
         color="Machine_Type",
         title="Total Active Operating Minutes per Machine",
-        color_discrete_sequence=px.colors.qualitative.Blues,
+        color_discrete_sequence=px.colors.sequential.Blues[2:],
     )
     fig = apply_corporate_layout(fig, "Total Active Operating Minutes per Machine", "Machine ID", "Active Minutes", height=380)
     return fig

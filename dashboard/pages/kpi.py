@@ -1,6 +1,6 @@
 """
-KPI Dashboard View.
-Renders Key Performance Indicator cards for scheduling efficiency, cost savings, and resource optimization.
+Performance & Benchmark KPI Dashboard View.
+Renders Key Performance Indicator cards, cost savings, resource optimization, and side-by-side benchmark comparison.
 """
 
 from typing import Dict, Any
@@ -8,13 +8,23 @@ import streamlit as st
 import pandas as pd
 
 from dashboard.components.cards import render_metric_card
+from dashboard.components.charts import (
+    build_cost_comparison_chart,
+    build_peak_load_comparison_chart,
+)
+from dashboard.components.tables import render_styled_dataframe
 from dashboard.utils.formatter import format_currency, format_percentage, format_number
 
 
-def render_kpi_page(kpi_df: pd.DataFrame) -> None:
-    """Renders Executive KPI Dashboard."""
-    st.markdown("### System Performance KPI Dashboard")
-    st.caption("Quantitative Key Performance Indicators across Baseline & CP-SAT Schedules")
+def render_kpi_page(
+    kpi_df: pd.DataFrame,
+    opt_df: pd.DataFrame = None,
+    fcfs_df: pd.DataFrame = None,
+    comp_df: pd.DataFrame = None,
+) -> None:
+    """Renders Executive KPI and Benchmark Comparison Dashboard."""
+    st.markdown("### System Performance & Benchmark Analytics")
+    st.caption("Quantitative Key Performance Indicators & Baseline FCFS vs CP-SAT Optimization Comparison")
 
     if kpi_df.empty:
         st.warning("No KPI summary data found. Execute Phase 3 scheduling pipeline first.")
@@ -60,5 +70,20 @@ def render_kpi_page(kpi_df: pd.DataFrame) -> None:
 
     st.markdown("---")
 
-    st.markdown("#### Complete KPI Summary Comparison Table")
-    st.dataframe(kpi_df, use_container_width=True)
+    st.markdown("#### Baseline FCFS vs CP-SAT Benchmark Charts")
+    col_c1, col_c2 = st.columns(2)
+    with col_c1:
+        fig_cost = build_cost_comparison_chart(opt_cost=opt_cost, fcfs_cost=fcfs_cost)
+        st.plotly_chart(fig_cost, use_container_width=True)
+    with col_c2:
+        if opt_df is not None and fcfs_df is not None:
+            fig_peak = build_peak_load_comparison_chart(opt_df=opt_df, fcfs_df=fcfs_df)
+            st.plotly_chart(fig_peak, use_container_width=True)
+
+    st.markdown("---")
+
+    st.markdown("#### Complete Performance Summary Table")
+    if comp_df is not None and not comp_df.empty:
+        render_styled_dataframe(comp_df, height=280)
+    else:
+        st.dataframe(kpi_df, use_container_width=True)

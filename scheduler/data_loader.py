@@ -136,7 +136,7 @@ class SchedulingDataLoader:
             chg_slots = minutes_to_slots(chg_min, self.cfg.SLOT_DURATION_MIN)
 
             from_slot = 0
-            to_slot = self.cfg.SCHEDULING_HORIZON_SLOTS
+            to_slot = 10000  # unconstrained upper bound for 23:59 machine availability
 
             parsed_machines.append(
                 ParsedMachine(

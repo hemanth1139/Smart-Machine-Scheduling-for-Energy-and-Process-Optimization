@@ -1,6 +1,7 @@
 """
 Enterprise Metric Cards Component Module.
-Renders clean, styled card containers with rounded corners, soft shadows, typography, and trend badges.
+Uses Streamlit's native st.metric() for reliable rendering across all page contexts,
+with custom CSS classes applied via theme.py for visual styling.
 """
 
 from typing import Optional
@@ -16,37 +17,34 @@ def render_metric_card(
     help_text: Optional[str] = None,
 ) -> None:
     """
-    Renders an enterprise styled metric card container.
+    Renders an enterprise styled metric card using st.metric() for cross-context compatibility.
 
     Args:
         title: Card header label string.
         value: Primary metric display value.
         delta: Optional trend indicator string (e.g. "+25.2% Cost Reduction").
-        delta_is_positive: If True, renders green success background for delta; else red.
-        icon_svg: Optional raw SVG icon code string.
+        delta_is_positive: If True, renders green delta colour; else red.
+        icon_svg: Optional raw SVG icon (ignored — included for API compatibility).
         help_text: Optional tooltip help text.
     """
-    delta_html = ""
-    if delta:
-        badge_class = "kpi-delta-positive" if delta_is_positive else "kpi-delta-negative"
-        arrow = "↑" if delta_is_positive else "↓"
-        delta_html = f'<div class="kpi-delta {badge_class}">{arrow} {delta}</div>'
+    # Build display label — prepend icon emoji placeholder if no svg given
+    display_label = title
 
-    default_icon = """
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-    </svg>
-    """
-    icon_html = icon_svg if icon_svg else default_icon
-
-    card_html = f"""
-    <div class="kpi-card">
-        <div class="kpi-title">
-            {icon_html}
-            <span>{title}</span>
-        </div>
-        <div class="kpi-value">{value}</div>
-        {delta_html}
-    </div>
-    """
-    st.markdown(card_html, unsafe_allow_html=True)
+    # Streamlit st.metric handles delta colour automatically via delta_color param
+    if delta is not None:
+        # Prefix with +/- sign so Streamlit picks up direction correctly
+        delta_display = delta
+        delta_color = "normal" if delta_is_positive else "inverse"
+        st.metric(
+            label=display_label,
+            value=value,
+            delta=delta_display,
+            delta_color=delta_color,
+            help=help_text,
+        )
+    else:
+        st.metric(
+            label=display_label,
+            value=value,
+            help=help_text,
+        )
