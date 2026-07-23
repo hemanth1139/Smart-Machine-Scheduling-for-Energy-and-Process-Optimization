@@ -1,0 +1,32 @@
+[2026-07-23 22:35:44] [WARNING] [SmartSchedulingDashboard:loader.py:30] - Predictions file not found at D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv. Creating fallback frame.
+[2026-07-23 22:35:44] [WARNING] [SmartSchedulingDashboard:loader.py:37] - Future forecast file not found at D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv. Creating fallback frame.
+[2026-07-23 22:40:12] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Dashboard Overview, Machines=5
+[2026-07-23 22:41:07] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Dashboard Overview, Machines=5
+[2026-07-23 22:41:14] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Energy Demand Forecasting, Machines=5
+[2026-07-23 22:41:18] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Machine Job Scheduling, Machines=5
+[2026-07-23 22:41:20] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Machine Resource Analytics, Machines=5
+[2026-07-23 22:41:22] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Performance KPI Metrics, Machines=5
+[2026-07-23 22:41:24] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Schedule Comparison Analysis, Machines=5
+[2026-07-23 22:41:25] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Technical Reports Viewer, Machines=5
+[2026-07-23 22:41:26] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Settings & Export Center, Machines=5
+[2026-07-23 22:41:27] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Technical Reports Viewer, Machines=5
+[2026-07-23 22:41:31] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Technical Reports Viewer, Machines=5
+[2026-07-23 22:41:37] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Technical Reports Viewer, Machines=6
+[2026-07-23 22:41:43] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Technical Reports Viewer, Machines=6
+[2026-07-23 22:43:29] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Dashboard Overview, Machines=5
+[2026-07-23 22:46:30] [WARNING] [SmartSchedulingDashboard:loader.py:30] - Predictions file not found at D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv. Creating fallback frame.
+[2026-07-23 22:46:30] [WARNING] [SmartSchedulingDashboard:loader.py:37] - Future forecast file not found at D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv. Creating fallback frame.
+[2026-07-23 22:46:30] [INFO] [SmartSchedulingDashboard:sidebar.py:87] - Sidebar filter: Page=Dashboard Overview, Machines=5
+[2026-07-23 22:52:14] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 22:52:22] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=0, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 22:52:24] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=1, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 22:52:26] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=2, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 22:52:35] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=2, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 22:55:42] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=3, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:00:49] [INFO] [SmartSchedulingDashboard:loader.py:27] - Dashboard loading predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-23 23:00:49] [INFO] [SmartSchedulingDashboard:loader.py:34] - Dashboard loading future forecast from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-23 23:00:49] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=5, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:00:59] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=4, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:01:00] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=3, Priorities=['High', 'Medium', 'Low']
+[2026-07-23 23:01:01] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=3, Priorities=['High', 'Low']
+[2026-07-23 23:01:06] [INFO] [SmartSchedulingDashboard:sidebar.py:66] - Sidebar filter: Machines=3, Priorities=['High', 'Low']

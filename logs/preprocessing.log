@@ -1,0 +1,22 @@
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:28] - ======================================================================
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:29] - Starting Phase 1 Execution: Data Loading, Validation & Feature Engineering
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:30] - ======================================================================
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:36] - Step 1/5: Loading raw datasets (Energy, Job, Machine)...
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:41] - Step 2/5: Running automated data quality validation checks...
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:52] -   [Energy] Rows: 35040, Duplicates: 0, Missing: 0, Invalid Warnings: 0
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:52] -   [Job] Rows: 500, Duplicates: 0, Missing: 0, Invalid Warnings: 0
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:52] -   [Machine] Rows: 10, Duplicates: 0, Missing: 0, Invalid Warnings: 0
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:60] - Step 3/5: Executing data cleaning pipeline (deduplication, type conversion, imputation)...
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:71] - Cleaned job dataset saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\jobs_cleaned.csv
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:72] - Cleaned machine dataset saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\machines_cleaned.csv
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:75] - Step 4/5: Applying feature engineering (lag features, rolling stats, cyclical encodings)...
+[2026-07-23 23:00:02] [INFO] [SmartSchedulingPhase1:main_phase1.py:85] - Step 5/5: Exporting feature-engineered energy dataset...
+[2026-07-23 23:00:03] [INFO] [SmartSchedulingPhase1:main_phase1.py:88] - Feature-engineered energy dataset saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\energy_engineered.csv | Shape: (35040, 37)
+[2026-07-23 23:00:03] [INFO] [SmartSchedulingPhase1:main_phase1.py:90] - ======================================================================
+[2026-07-23 23:00:03] [INFO] [SmartSchedulingPhase1:main_phase1.py:91] - PHASE 1 EXECUTION COMPLETE SUCCESSFULLY!
+[2026-07-23 23:00:03] [INFO] [SmartSchedulingPhase1:main_phase1.py:92] - Processed Data Directory: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed
+[2026-07-23 23:00:03] [INFO] [SmartSchedulingPhase1:main_phase1.py:93] -   • Energy (engineered): energy_engineered.csv
+[2026-07-23 23:00:03] [INFO] [SmartSchedulingPhase1:main_phase1.py:94] -   • Jobs (cleaned):      jobs_cleaned.csv
+[2026-07-23 23:00:03] [INFO] [SmartSchedulingPhase1:main_phase1.py:95] -   • Machines (cleaned):  machines_cleaned.csv
+[2026-07-23 23:00:03] [INFO] [SmartSchedulingPhase1:main_phase1.py:96] - Ready for Phase 2: XGBoost Energy Demand Forecasting.
+[2026-07-23 23:00:03] [INFO] [SmartSchedulingPhase1:main_phase1.py:97] - ======================================================================
