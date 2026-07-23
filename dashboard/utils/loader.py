@@ -12,7 +12,7 @@ from config.config import Config, config
 from dashboard.utils.logger import dash_logger
 
 
-@st.cache_data(ttl=600)
+@st.cache_data(ttl=5)
 def load_predictions_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Loads test set predictions and 24h future forecast CSVs generated in Phase 2.
@@ -40,7 +40,7 @@ def load_predictions_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
     return pred_df, fut_df
 
 
-@st.cache_data(ttl=600)
+@st.cache_data(ttl=5)
 def load_scheduling_data() -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """
     Loads optimized schedule, FCFS schedule, KPI summary, and comparison CSVs generated in Phase 3.
@@ -64,7 +64,7 @@ def load_scheduling_data() -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd
     return opt_df, fcfs_df, kpi_df, comp_df
 
 
-@st.cache_data(ttl=600)
+@st.cache_data(ttl=5)
 def load_job_and_machine_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Loads processed Job and Machine datasets safely.
@@ -86,7 +86,7 @@ def load_job_and_machine_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
     return jobs_df, machines_df
 
 
-@st.cache_data(ttl=600)
+@st.cache_data(ttl=5)
 def load_markdown_report(report_filename: str) -> str:
     """
     Reads markdown report file content securely.

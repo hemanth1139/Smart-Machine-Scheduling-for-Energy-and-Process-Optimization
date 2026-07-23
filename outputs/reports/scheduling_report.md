@@ -21,7 +21,7 @@ electricity costs, peak-hour load, changeovers, and delays.
 | **Peak-Hour Electricity Load (kWh)** | `8,611.04` | `8,611.04` | **0.00 kWh (0.0% reduction)** |
 | **Makespan (Hours)** | `128.75` hrs | `128.75` hrs | **0 min reduction** |
 | **On-Time Job Completion Rate (%)** | `42.6%` | `42.6%` | **+0.0%** |
-| **Machine Utilization (%)** | `446.56%` | `446.56%` | **+0.0%** |
+| **Machine Utilization (%)** | `83.24%` | `83.24%` | **+0.0%** |
 | **Average Job Waiting Time (min)** | `3067.41` min | `3067.41` min | **Optimized queue management** |
 | **Late Jobs Count** | `287` jobs | `287` jobs | **Zero / Minimized delays** |
 

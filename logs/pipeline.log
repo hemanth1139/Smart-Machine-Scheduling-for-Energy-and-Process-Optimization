@@ -132,3 +132,55 @@
 [2026-07-23 23:00:21] [INFO] [SmartMachineSchedulingSystem:main.py:66] - END-TO-END PIPELINE COMPLETED SUCCESSFULLY IN 19.39 SECONDS!
 [2026-07-23 23:00:21] [INFO] [SmartMachineSchedulingSystem:main.py:67] - Outputs generated in: outputs/forecasting, outputs/scheduling, outputs/reports
 [2026-07-23 23:00:21] [INFO] [SmartMachineSchedulingSystem:main.py:68] - ==================================================================================
+[2026-07-23 23:22:36] [INFO] [scheduler.data_loader:data_loader.py:66] - Loading Job dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\jobs_cleaned.csv
+[2026-07-23 23:22:36] [INFO] [scheduler.data_loader:data_loader.py:110] - Successfully parsed 500 jobs. Baseline Timestamp: 2026-01-01 00:00:00
+[2026-07-23 23:22:36] [INFO] [scheduler.data_loader:data_loader.py:125] - Loading Machine dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\machines_cleaned.csv
+[2026-07-23 23:22:36] [INFO] [scheduler.data_loader:data_loader.py:154] - Successfully parsed 10 machines.
+[2026-07-23 23:22:36] [INFO] [scheduler.data_loader:data_loader.py:172] - Loading Phase 2 energy demand predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-23 23:22:36] [INFO] [scheduler.data_loader:data_loader.py:197] - Constructed energy cost rate profile for 96 time slots.
+[2026-07-23 23:22:36] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-23 23:22:36] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 500 jobs.
+[2026-07-23 23:22:36] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-23 23:22:36] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-23 23:22:36] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹515.89
+[2026-07-23 23:22:36] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              8611.04 kWh
+[2026-07-23 23:22:36] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    128.75 hours (7725 min)
+[2026-07-23 23:22:36] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         83.24%
+[2026-07-23 23:22:36] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        3067.41 min
+[2026-07-23 23:22:36] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      287 jobs (42.6% On-Time)
+[2026-07-23 23:22:36] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-23 23:22:36] [INFO] [scheduler.optimizer:optimizer.py:49] - ==================================================
+[2026-07-23 23:22:36] [INFO] [scheduler.optimizer:optimizer.py:50] - Starting Google OR-Tools CP-SAT Optimization Engine
+[2026-07-23 23:22:36] [INFO] [scheduler.optimizer:optimizer.py:51] - ==================================================
+[2026-07-23 23:22:36] [INFO] [scheduler.optimizer:optimizer.py:59] - Generating FCFS baseline warm-start hints for CP-SAT solver...
+[2026-07-23 23:22:36] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-23 23:22:36] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 500 jobs.
+[2026-07-23 23:22:36] [INFO] [scheduler.constraints:constraints.py:35] - Formulating CP-SAT decision variables and constraints (Horizon=525 slots)...
+[2026-07-23 23:22:36] [INFO] [scheduler.constraints:constraints.py:106] - Decision variables and physical scheduling constraints successfully added.
+[2026-07-23 23:22:36] [INFO] [scheduler.objective:objective.py:43] - Formulating multi-objective cost minimization function...
+[2026-07-23 23:22:37] [INFO] [scheduler.objective:objective.py:114] - Multi-objective time-slot energy cost function successfully formulated.
+[2026-07-23 23:22:37] [INFO] [scheduler.optimizer:optimizer.py:112] - Solving CP-SAT model (horizon=525 slots, time_limit=60.0s)...
+[2026-07-23 23:22:38] [INFO] [scheduler.optimizer:optimizer.py:118] - CP-SAT Solver Finished. Status: 'INFEASIBLE', Wall Time: 0.94s
+[2026-07-23 23:22:38] [WARNING] [scheduler.optimizer:optimizer.py:121] - CP-SAT Solver failed to improve hint. Returning FCFS baseline schedule.
+[2026-07-23 23:22:38] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-23 23:22:38] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-23 23:22:38] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹515.89
+[2026-07-23 23:22:38] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              8611.04 kWh
+[2026-07-23 23:22:38] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    128.75 hours (7725 min)
+[2026-07-23 23:22:38] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         83.24%
+[2026-07-23 23:22:38] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        3067.41 min
+[2026-07-23 23:22:38] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      287 jobs (42.6% On-Time)
+[2026-07-23 23:22:38] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-23 23:22:38] [INFO] [scheduler.visualization:visualization.py:46] - Starting automated scheduling visualization plot generation...
+[2026-07-23 23:22:41] [INFO] [scheduler.visualization:visualization.py:105] - Saved: gantt_chart.png
+[2026-07-23 23:22:42] [INFO] [scheduler.visualization:visualization.py:124] - Saved: machine_timeline.png
+[2026-07-23 23:22:43] [INFO] [scheduler.visualization:visualization.py:154] - Saved: job_allocation.png
+[2026-07-23 23:22:43] [INFO] [scheduler.visualization:visualization.py:186] - Saved: machine_utilization.png
+[2026-07-23 23:22:44] [INFO] [scheduler.visualization:visualization.py:221] - Saved: cost_comparison.png
+[2026-07-23 23:22:45] [INFO] [scheduler.visualization:visualization.py:253] - Saved: kpi_dashboard.png
+[2026-07-23 23:22:45] [INFO] [scheduler.visualization:visualization.py:290] - Saved: peak_load_comparison.png
+[2026-07-23 23:22:45] [INFO] [scheduler.visualization:visualization.py:56] - All 7 scheduling figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-23 23:22:45] [INFO] [scheduler.export:export.py:40] - Exporting scheduling output CSV files to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-23 23:22:45] [INFO] [scheduler.export:export.py:77] - Saved: optimized_schedule.csv, fcfs_schedule.csv, kpi_summary.csv, comparison_report.csv
+[2026-07-23 23:22:45] [INFO] [scheduler.export:export.py:102] - Generating scheduling report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-23 23:22:45] [INFO] [scheduler.export:export.py:164] - Markdown scheduling report saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
