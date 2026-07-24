@@ -17,8 +17,9 @@ logger = get_logger(__name__)
 class ObjectiveFormulator:
     """Class responsible for building multi-objective cost function in CP-SAT model."""
 
-    def __init__(self, model: cp_model.CpModel, cfg: Config = config):
+    def __init__(self, model: cp_model.CpModel, horizon_slots: int = 96, cfg: Config = config):
         self.model = model
+        self.horizon_slots = horizon_slots
         self.cfg = cfg
 
     def add_objective_function(
@@ -47,11 +48,11 @@ class ObjectiveFormulator:
         job_machines = var_containers["job_machines"]
         job_delays = var_containers["job_delays"]
 
-        horizon = self.cfg.SCHEDULING_HORIZON_SLOTS
+        horizon = self.horizon_slots
         slot_hours = self.cfg.SLOT_DURATION_MIN / 60.0
 
         # 1. Makespan Variable: max(end_j) across all jobs
-        makespan_var = self.model.NewIntVar(0, horizon + 200, "makespan")
+        makespan_var = self.model.NewIntVar(0, horizon + 2000, "makespan")
         for j in jobs:
             self.model.Add(makespan_var >= job_ends[j.job_id])
 
@@ -59,8 +60,8 @@ class ObjectiveFormulator:
         deadline_penalty_terms = []
         for j in jobs:
             delay_var = job_delays[j.job_id]
-            # Multiply delay by job priority weight and configured penalty weight
-            weighted_delay = delay_var * int(j.priority_weight * self.cfg.WEIGHT_DEADLINE_PENALTY * 100)
+            # Priority-weighted delay penalty
+            weighted_delay = delay_var * int(j.priority_weight * 20)
             deadline_penalty_terms.append(weighted_delay)
 
         # 3. Dynamic Time-Slot Energy Cost Optimization
@@ -82,17 +83,17 @@ class ObjectiveFormulator:
                 cost_array = []
                 for s in range(horizon + 1):
                     job_kwh_cost = 0.0
-                    for t in range(s, min(s + j.duration_slots, len(energy_rates))):
+                    for t in range(s, s + j.duration_slots):
                         rate = energy_rates[t] if t < len(energy_rates) else (energy_rates[-1] if energy_rates else 0.15)
                         kwh = m.active_power_kw * slot_hours
                         job_kwh_cost += kwh * rate
 
-                    # Scale to integer (x 100) for CP-SAT solver precision
+                    # Scale energy cost (x 100) so energy savings strongly drive optimization
                     cost_int = int(round(job_kwh_cost * 100 * self.cfg.WEIGHT_ENERGY_COST))
                     cost_array.append(cost_int)
 
                 # CP-SAT Element constraint: cost_for_slot = cost_array[start_var]
-                max_cost_val = max(cost_array) if cost_array else 10000
+                max_cost_val = max(cost_array) if cost_array else 1000000
                 cost_for_slot = self.model.NewIntVar(0, max_cost_val, f"slot_cost_{j.job_id}_{m_id}")
                 self.model.AddElement(start_var, cost_array, cost_for_slot)
 
@@ -107,7 +108,7 @@ class ObjectiveFormulator:
         total_objective = (
             sum(energy_cost_terms)
             + sum(deadline_penalty_terms)
-            + (makespan_var * int(self.cfg.WEIGHT_MAKESPAN * 10))
+            + (makespan_var * 1)
         )
 
         self.model.Minimize(total_objective)

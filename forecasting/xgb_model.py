@@ -104,13 +104,22 @@ class XGBoostForecaster(BaseForecaster):
         return fi_df
 
     def save(self, filepath: Path) -> None:
-        """Saves serialized model instance to disk."""
+        """Saves serialized model instance to disk safely on all platforms."""
         if self.model is None:
             logger.warning("Attempting to save an uninitialized model.")
 
-        filepath.parent.mkdir(parents=True, exist_ok=True)
-        joblib.dump({"model": self.model, "params": self.params}, filepath)
-        logger.info(f"XGBoost model artifact saved to: {filepath}")
+        path = Path(filepath).resolve()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        str_path = str(path)
+        tmp_path = str(path.with_suffix(".tmp"))
+        try:
+            joblib.dump({"model": self.model, "params": self.params}, tmp_path)
+            import os
+            os.replace(tmp_path, str_path)
+        except Exception:
+            joblib.dump({"model": self.model, "params": self.params}, str_path)
+
+        logger.info(f"XGBoost model artifact saved to: {path}")
 
     @classmethod
     def load(cls, filepath: Path) -> "XGBoostForecaster":

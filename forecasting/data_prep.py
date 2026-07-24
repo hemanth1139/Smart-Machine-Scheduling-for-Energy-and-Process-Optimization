@@ -134,15 +134,24 @@ class DataPreparer:
         return X_train, y_train, X_test, y_test, dates_train, dates_test
 
     def save_preprocessor(self, filepath: Path) -> None:
-        """Saves encoder/scaler preprocessor state to disk."""
-        filepath.parent.mkdir(parents=True, exist_ok=True)
+        """Saves encoder/scaler preprocessor state to disk safely on all platforms."""
+        path = Path(filepath).resolve()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        str_path = str(path)
+        tmp_path = str(path.with_suffix(".tmp"))
         state = {
             "encoder": self.encoder,
             "scaler": self.scaler,
             "feature_columns": self.feature_columns,
         }
-        joblib.dump(state, filepath)
-        logger.info(f"Preprocessor artifact saved to: {filepath}")
+        try:
+            joblib.dump(state, tmp_path)
+            import os
+            os.replace(tmp_path, str_path)
+        except Exception:
+            joblib.dump(state, str_path)
+
+        logger.info(f"Preprocessor artifact saved to: {path}")
 
     @classmethod
     def load_preprocessor(cls, filepath: Path) -> "DataPreparer":

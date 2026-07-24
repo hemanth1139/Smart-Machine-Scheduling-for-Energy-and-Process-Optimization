@@ -98,6 +98,4 @@ def calculate_slot_energy_rate(
         float: Cost rate for the slot.
     """
     tariff = peak_rate if is_peak_slot(slot, slot_duration_min) else offpeak_rate
-    # 15 minutes is 0.25 hours
-    hours_frac = slot_duration_min / 60.0
-    return tariff * forecasted_usage * hours_frac
+    return tariff * forecasted_usage

@@ -184,3 +184,1286 @@
 [2026-07-23 23:22:45] [INFO] [scheduler.export:export.py:77] - Saved: optimized_schedule.csv, fcfs_schedule.csv, kpi_summary.csv, comparison_report.csv
 [2026-07-23 23:22:45] [INFO] [scheduler.export:export.py:102] - Generating scheduling report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
 [2026-07-23 23:22:45] [INFO] [scheduler.export:export.py:164] - Markdown scheduling report saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 09:45:00] [INFO] [SmartMachineSchedulingSystem:main.py:38] - ==================================================================================
+[2026-07-24 09:45:00] [INFO] [SmartMachineSchedulingSystem:main.py:39] - STARTING COMPLETE END-TO-END PIPELINE: SMART MACHINE SCHEDULING & ENERGY AI
+[2026-07-24 09:45:00] [INFO] [SmartMachineSchedulingSystem:main.py:40] - ==================================================================================
+[2026-07-24 09:45:00] [INFO] [SmartMachineSchedulingSystem:main.py:47] - ▶ [Stage 1/3] Phase 1: Data Cleaning, Validation & Time-Series Feature Engineering
+[2026-07-24 09:45:00] [INFO] [preprocessing.loader:loader.py:83] - Loading all project datasets (Energy, Job, Machine)...
+[2026-07-24 09:45:00] [INFO] [preprocessing.loader:loader.py:35] - Loading Energy dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\Steel_industry_data.csv
+[2026-07-24 09:45:00] [INFO] [preprocessing.loader:loader.py:37] - Energy dataset successfully loaded with shape: (35040, 11)
+[2026-07-24 09:45:00] [INFO] [preprocessing.loader:loader.py:53] - Loading Job dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\job_table.csv
+[2026-07-24 09:45:00] [INFO] [preprocessing.loader:loader.py:55] - Job dataset successfully loaded with shape: (500, 6)
+[2026-07-24 09:45:00] [INFO] [preprocessing.loader:loader.py:71] - Loading Machine dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\machine_table.csv
+[2026-07-24 09:45:00] [INFO] [preprocessing.loader:loader.py:73] - Machine dataset successfully loaded with shape: (10, 7)
+[2026-07-24 09:45:00] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Energy
+[2026-07-24 09:45:00] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Energy. Rows: 35040, Cols: 11, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 09:45:00] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Job
+[2026-07-24 09:45:00] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Job. Rows: 500, Cols: 6, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 09:45:00] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Machine
+[2026-07-24 09:45:00] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Machine. Rows: 10, Cols: 7, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 09:45:00] [INFO] [preprocessing.validator:validator.py:216] - Data validation report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\data_validation_report.md
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:177] - Starting cleaning pipeline for Energy Dataset...
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'date' to datetime. Sample: 2018-01-01 00:15:00
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:191] - Energy Dataset cleaning pipeline complete.
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:204] - Starting cleaning pipeline for Job Dataset...
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Deadline' to datetime. Sample: 2026-01-01 05:41:00
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Arrival_Time' to datetime. Sample: 2026-01-01 02:41:00
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:213] - Job Dataset cleaning pipeline complete.
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:226] - Starting cleaning pipeline for Machine Dataset...
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 09:45:00] [INFO] [preprocessing.cleaner:cleaner.py:234] - Machine Dataset cleaning pipeline complete.
+[2026-07-24 09:45:00] [INFO] [preprocessing.feature_engineering:feature_engineering.py:174] - Starting complete Feature Engineering transformation pipeline...
+[2026-07-24 09:45:00] [INFO] [preprocessing.feature_engineering:feature_engineering.py:65] - Extracting temporal and cyclical features from 'date'...
+[2026-07-24 09:45:00] [INFO] [preprocessing.feature_engineering:feature_engineering.py:86] - Temporal and cyclical feature extraction completed.
+[2026-07-24 09:45:00] [INFO] [preprocessing.feature_engineering:feature_engineering.py:105] - Generating lag features for 'Usage_kWh' using steps: [1, 2, 4, 96]...
+[2026-07-24 09:45:00] [INFO] [preprocessing.feature_engineering:feature_engineering.py:114] - Lag features generated successfully.
+[2026-07-24 09:45:00] [INFO] [preprocessing.feature_engineering:feature_engineering.py:133] - Generating rolling window features for 'Usage_kWh' with windows: [4, 96]...
+[2026-07-24 09:45:00] [INFO] [preprocessing.feature_engineering:feature_engineering.py:160] - Rolling window features generated successfully.
+[2026-07-24 09:45:00] [INFO] [preprocessing.feature_engineering:feature_engineering.py:184] - Filled initial lag/rolling NA values (Initial NAs: 111, Final NAs: 0).
+[2026-07-24 09:45:00] [INFO] [preprocessing.feature_engineering:feature_engineering.py:186] - Feature engineering transformation completed successfully. New Dataset Shape: (35040, 37)
+[2026-07-24 09:45:01] [INFO] [SmartMachineSchedulingSystem:main.py:51] - ▶ [Stage 2/3] Phase 2: Time-Series Energy Forecasting (XGBoost Regressor)
+[2026-07-24 09:45:01] [INFO] [SmartMachineSchedulingSystem:main.py:57] - Existing trained XGBoost model checkpoint found at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib. Proceeding.
+[2026-07-24 09:45:01] [INFO] [forecasting.data_prep:data_prep.py:57] - Starting data preparation. Input dataset shape: (35040, 37)
+[2026-07-24 09:45:01] [INFO] [forecasting.data_prep:data_prep.py:99] - Encoding categorical features via OrdinalEncoder: ['WeekStatus', 'Day_of_week', 'Load_Type']
+  → Confirmed tariff-proxy features present: ['Load_Type', 'WeekStatus', 'Day_of_week']
+[2026-07-24 09:45:01] [INFO] [forecasting.data_prep:data_prep.py:125] - Time-series chronological split complete (80% Train / 20% Test): Train Shape: (28032, 34), Test Shape: (7008, 34)
+[2026-07-24 09:45:01] [INFO] [forecasting.data_prep:data_prep.py:129] - Train Period: 2018-01-01 00:00:00 to 2018-10-19 23:45:00 | Test Period: 2018-10-20 00:00:00 to 2018-12-31 23:45:00
+[2026-07-24 09:45:01] [INFO] [forecasting.data_prep:data_prep.py:145] - Preprocessor artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\preprocessor.joblib
+[2026-07-24 09:45:01] [INFO] [forecasting.trainer:trainer.py:53] - ==================================================
+[2026-07-24 09:45:01] [INFO] [forecasting.trainer:trainer.py:54] - Starting Energy Demand Forecasting Model Training
+[2026-07-24 09:45:01] [INFO] [forecasting.trainer:trainer.py:55] - ==================================================
+[2026-07-24 09:45:01] [INFO] [forecasting.xgb_model:xgb_model.py:46] - Initializing XGBoost Regressor with parameters: {'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 3, 'random_state': 42, 'n_jobs': -1, 'objective': 'reg:squarederror'}
+[2026-07-24 09:45:01] [INFO] [forecasting.xgb_model:xgb_model.py:56] - Fitting XGBoost model on 28032 samples...
+[2026-07-24 09:45:03] [INFO] [forecasting.xgb_model:xgb_model.py:58] - XGBoost model training completed successfully.
+[2026-07-24 09:45:03] [INFO] [forecasting.xgb_model:xgb_model.py:113] - XGBoost model artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 09:45:03] [INFO] [forecasting.trainer:trainer.py:62] - Model training successfully completed. Saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 09:45:03] [INFO] [forecasting.evaluator:evaluator.py:68] - --------------------------------------------------
+[2026-07-24 09:45:03] [INFO] [forecasting.evaluator:evaluator.py:69] - ENERGY DEMAND FORECASTING MODEL EVALUATION RESULTS:
+[2026-07-24 09:45:03] [INFO] [forecasting.evaluator:evaluator.py:70] -   • MAE  (Mean Absolute Error):      0.5078 kWh
+[2026-07-24 09:45:03] [INFO] [forecasting.evaluator:evaluator.py:71] -   • RMSE (Root Mean Squared Error):  0.9976 kWh
+[2026-07-24 09:45:03] [INFO] [forecasting.evaluator:evaluator.py:72] -   • R²   (Coefficient of Determ.):   0.999
+[2026-07-24 09:45:03] [INFO] [forecasting.evaluator:evaluator.py:73] -   • MAPE (Mean Abs Pct Error):       2.4718%
+[2026-07-24 09:45:03] [INFO] [forecasting.evaluator:evaluator.py:74] - --------------------------------------------------
+[2026-07-24 09:45:03] [INFO] [forecasting.predictor:predictor.py:49] - Generating energy demand predictions for 7008 test samples...
+[2026-07-24 09:45:03] [INFO] [forecasting.predictor:predictor.py:66] - Test predictions exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 09:45:03] [INFO] [forecasting.predictor:predictor.py:93] - Generating future energy demand forecast for next 96 time slots (24 hours)...
+[2026-07-24 09:45:03] [INFO] [forecasting.predictor:predictor.py:137] - Future 96-step forecast exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 09:45:03] [INFO] [forecasting.visualizer:visualizer.py:45] - Starting automated forecast visualization generation...
+[2026-07-24 09:45:04] [INFO] [forecasting.visualizer:visualizer.py:75] - Saved: actual_vs_predicted.png
+[2026-07-24 09:45:04] [INFO] [forecasting.visualizer:visualizer.py:99] - Saved: error_distribution.png
+[2026-07-24 09:45:05] [INFO] [forecasting.visualizer:visualizer.py:129] - Saved: feature_importance.png
+[2026-07-24 09:45:06] [INFO] [forecasting.visualizer:visualizer.py:147] - Saved: residual_plot.png
+[2026-07-24 09:45:07] [INFO] [forecasting.visualizer:visualizer.py:175] - Saved: timeseries_forecast_curve.png
+[2026-07-24 09:45:07] [INFO] [forecasting.visualizer:visualizer.py:53] - All forecast figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting
+[2026-07-24 09:45:07] [INFO] [forecasting.report_generator:report_generator.py:56] - Generating forecasting performance report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 09:45:07] [INFO] [forecasting.report_generator:report_generator.py:142] - Forecasting report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 09:45:07] [INFO] [SmartMachineSchedulingSystem:main.py:61] - ▶ [Stage 3/3] Phase 3: Intelligent Machine Scheduling Engine (Google OR-Tools CP-SAT)
+[2026-07-24 09:45:07] [INFO] [scheduler.data_loader:data_loader.py:66] - Loading Job dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\jobs_cleaned.csv
+[2026-07-24 09:45:07] [INFO] [scheduler.data_loader:data_loader.py:110] - Successfully parsed 500 jobs. Baseline Timestamp: 2026-01-01 00:00:00
+[2026-07-24 09:45:07] [INFO] [scheduler.data_loader:data_loader.py:125] - Loading Machine dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\machines_cleaned.csv
+[2026-07-24 09:45:07] [INFO] [scheduler.data_loader:data_loader.py:154] - Successfully parsed 10 machines.
+[2026-07-24 09:45:07] [INFO] [scheduler.data_loader:data_loader.py:172] - Loading Phase 2 energy demand predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 09:45:07] [INFO] [scheduler.data_loader:data_loader.py:197] - Constructed energy cost rate profile for 96 time slots.
+[2026-07-24 09:45:07] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 09:45:07] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 500 jobs.
+[2026-07-24 09:45:07] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 09:45:07] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 09:45:07] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹2063.63
+[2026-07-24 09:45:07] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              8611.04 kWh
+[2026-07-24 09:45:07] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    128.75 hours (7725 min)
+[2026-07-24 09:45:07] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         83.24%
+[2026-07-24 09:45:07] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        3067.41 min
+[2026-07-24 09:45:07] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      287 jobs (42.6% On-Time)
+[2026-07-24 09:45:07] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 09:45:07] [INFO] [scheduler.optimizer:optimizer.py:49] - ==================================================
+[2026-07-24 09:45:07] [INFO] [scheduler.optimizer:optimizer.py:50] - Starting Google OR-Tools CP-SAT Optimization Engine
+[2026-07-24 09:45:07] [INFO] [scheduler.optimizer:optimizer.py:51] - ==================================================
+[2026-07-24 09:45:07] [INFO] [scheduler.optimizer:optimizer.py:59] - Generating FCFS baseline warm-start hints for CP-SAT solver...
+[2026-07-24 09:45:07] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 09:45:07] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 500 jobs.
+[2026-07-24 09:45:07] [INFO] [scheduler.constraints:constraints.py:35] - Formulating CP-SAT decision variables and constraints (Horizon=565 slots)...
+[2026-07-24 09:45:07] [INFO] [scheduler.constraints:constraints.py:106] - Decision variables and physical scheduling constraints successfully added.
+[2026-07-24 09:45:07] [INFO] [scheduler.objective:objective.py:44] - Formulating multi-objective cost minimization function...
+[2026-07-24 09:45:08] [INFO] [scheduler.objective:objective.py:115] - Multi-objective time-slot energy cost function successfully formulated.
+[2026-07-24 09:45:08] [INFO] [scheduler.optimizer:optimizer.py:116] - Solving CP-SAT model (horizon=565 slots, time_limit=60.0s)...
+[2026-07-24 09:46:09] [INFO] [scheduler.optimizer:optimizer.py:122] - CP-SAT Solver Finished. Status: 'UNKNOWN', Wall Time: 60.66s
+[2026-07-24 09:46:09] [WARNING] [scheduler.optimizer:optimizer.py:125] - CP-SAT Solver failed to improve hint. Returning FCFS baseline schedule.
+[2026-07-24 09:46:09] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 09:46:09] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 09:46:09] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹2063.63
+[2026-07-24 09:46:09] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              8611.04 kWh
+[2026-07-24 09:46:09] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    128.75 hours (7725 min)
+[2026-07-24 09:46:09] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         83.24%
+[2026-07-24 09:46:09] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        3067.41 min
+[2026-07-24 09:46:09] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      287 jobs (42.6% On-Time)
+[2026-07-24 09:46:09] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 09:46:09] [INFO] [scheduler.visualization:visualization.py:46] - Starting automated scheduling visualization plot generation...
+[2026-07-24 09:46:12] [INFO] [scheduler.visualization:visualization.py:105] - Saved: gantt_chart.png
+[2026-07-24 09:46:12] [INFO] [scheduler.visualization:visualization.py:124] - Saved: machine_timeline.png
+[2026-07-24 09:46:13] [INFO] [scheduler.visualization:visualization.py:154] - Saved: job_allocation.png
+[2026-07-24 09:46:13] [INFO] [scheduler.visualization:visualization.py:186] - Saved: machine_utilization.png
+[2026-07-24 09:46:14] [INFO] [scheduler.visualization:visualization.py:221] - Saved: cost_comparison.png
+[2026-07-24 09:46:14] [INFO] [scheduler.visualization:visualization.py:253] - Saved: kpi_dashboard.png
+[2026-07-24 09:46:15] [INFO] [scheduler.visualization:visualization.py:290] - Saved: peak_load_comparison.png
+[2026-07-24 09:46:15] [INFO] [scheduler.visualization:visualization.py:56] - All 7 scheduling figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 09:46:15] [INFO] [scheduler.export:export.py:40] - Exporting scheduling output CSV files to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 09:46:15] [INFO] [scheduler.export:export.py:77] - Saved: optimized_schedule.csv, fcfs_schedule.csv, kpi_summary.csv, comparison_report.csv
+[2026-07-24 09:46:15] [INFO] [scheduler.export:export.py:102] - Generating scheduling report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 09:46:15] [INFO] [scheduler.export:export.py:164] - Markdown scheduling report saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 09:46:15] [INFO] [SmartMachineSchedulingSystem:main.py:65] - ==================================================================================
+[2026-07-24 09:46:15] [INFO] [SmartMachineSchedulingSystem:main.py:66] - END-TO-END PIPELINE COMPLETED SUCCESSFULLY IN 75.39 SECONDS!
+[2026-07-24 09:46:15] [INFO] [SmartMachineSchedulingSystem:main.py:67] - Outputs generated in: outputs/forecasting, outputs/scheduling, outputs/reports
+[2026-07-24 09:46:15] [INFO] [SmartMachineSchedulingSystem:main.py:68] - ==================================================================================
+[2026-07-24 09:52:29] [INFO] [SmartMachineSchedulingSystem:main.py:38] - ==================================================================================
+[2026-07-24 09:52:29] [INFO] [SmartMachineSchedulingSystem:main.py:39] - STARTING COMPLETE END-TO-END PIPELINE: SMART MACHINE SCHEDULING & ENERGY AI
+[2026-07-24 09:52:29] [INFO] [SmartMachineSchedulingSystem:main.py:40] - ==================================================================================
+[2026-07-24 09:52:29] [INFO] [SmartMachineSchedulingSystem:main.py:47] - ▶ [Stage 1/3] Phase 1: Data Cleaning, Validation & Time-Series Feature Engineering
+[2026-07-24 09:52:29] [INFO] [preprocessing.loader:loader.py:83] - Loading all project datasets (Energy, Job, Machine)...
+[2026-07-24 09:52:29] [INFO] [preprocessing.loader:loader.py:35] - Loading Energy dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\Steel_industry_data.csv
+[2026-07-24 09:52:29] [INFO] [preprocessing.loader:loader.py:37] - Energy dataset successfully loaded with shape: (35040, 11)
+[2026-07-24 09:52:29] [INFO] [preprocessing.loader:loader.py:53] - Loading Job dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\job_table.csv
+[2026-07-24 09:52:29] [INFO] [preprocessing.loader:loader.py:55] - Job dataset successfully loaded with shape: (500, 6)
+[2026-07-24 09:52:29] [INFO] [preprocessing.loader:loader.py:71] - Loading Machine dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\machine_table.csv
+[2026-07-24 09:52:29] [INFO] [preprocessing.loader:loader.py:73] - Machine dataset successfully loaded with shape: (10, 7)
+[2026-07-24 09:52:29] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Energy
+[2026-07-24 09:52:29] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Energy. Rows: 35040, Cols: 11, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 09:52:29] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Job
+[2026-07-24 09:52:29] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Job. Rows: 500, Cols: 6, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 09:52:29] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Machine
+[2026-07-24 09:52:29] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Machine. Rows: 10, Cols: 7, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 09:52:29] [INFO] [preprocessing.validator:validator.py:216] - Data validation report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\data_validation_report.md
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:177] - Starting cleaning pipeline for Energy Dataset...
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'date' to datetime. Sample: 2018-01-01 00:15:00
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:191] - Energy Dataset cleaning pipeline complete.
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:204] - Starting cleaning pipeline for Job Dataset...
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Deadline' to datetime. Sample: 2026-01-01 05:41:00
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Arrival_Time' to datetime. Sample: 2026-01-01 02:41:00
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:213] - Job Dataset cleaning pipeline complete.
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:226] - Starting cleaning pipeline for Machine Dataset...
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 09:52:29] [INFO] [preprocessing.cleaner:cleaner.py:234] - Machine Dataset cleaning pipeline complete.
+[2026-07-24 09:52:29] [INFO] [preprocessing.feature_engineering:feature_engineering.py:174] - Starting complete Feature Engineering transformation pipeline...
+[2026-07-24 09:52:29] [INFO] [preprocessing.feature_engineering:feature_engineering.py:65] - Extracting temporal and cyclical features from 'date'...
+[2026-07-24 09:52:29] [INFO] [preprocessing.feature_engineering:feature_engineering.py:86] - Temporal and cyclical feature extraction completed.
+[2026-07-24 09:52:29] [INFO] [preprocessing.feature_engineering:feature_engineering.py:105] - Generating lag features for 'Usage_kWh' using steps: [1, 2, 4, 96]...
+[2026-07-24 09:52:29] [INFO] [preprocessing.feature_engineering:feature_engineering.py:114] - Lag features generated successfully.
+[2026-07-24 09:52:29] [INFO] [preprocessing.feature_engineering:feature_engineering.py:133] - Generating rolling window features for 'Usage_kWh' with windows: [4, 96]...
+[2026-07-24 09:52:29] [INFO] [preprocessing.feature_engineering:feature_engineering.py:160] - Rolling window features generated successfully.
+[2026-07-24 09:52:29] [INFO] [preprocessing.feature_engineering:feature_engineering.py:184] - Filled initial lag/rolling NA values (Initial NAs: 111, Final NAs: 0).
+[2026-07-24 09:52:29] [INFO] [preprocessing.feature_engineering:feature_engineering.py:186] - Feature engineering transformation completed successfully. New Dataset Shape: (35040, 37)
+[2026-07-24 09:52:30] [INFO] [SmartMachineSchedulingSystem:main.py:51] - ▶ [Stage 2/3] Phase 2: Time-Series Energy Forecasting (XGBoost Regressor)
+[2026-07-24 09:52:30] [INFO] [SmartMachineSchedulingSystem:main.py:57] - Existing trained XGBoost model checkpoint found at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib. Proceeding.
+[2026-07-24 09:52:30] [INFO] [forecasting.data_prep:data_prep.py:57] - Starting data preparation. Input dataset shape: (35040, 37)
+[2026-07-24 09:52:30] [INFO] [forecasting.data_prep:data_prep.py:99] - Encoding categorical features via OrdinalEncoder: ['WeekStatus', 'Day_of_week', 'Load_Type']
+  → Confirmed tariff-proxy features present: ['Load_Type', 'WeekStatus', 'Day_of_week']
+[2026-07-24 09:52:30] [INFO] [forecasting.data_prep:data_prep.py:125] - Time-series chronological split complete (80% Train / 20% Test): Train Shape: (28032, 34), Test Shape: (7008, 34)
+[2026-07-24 09:52:30] [INFO] [forecasting.data_prep:data_prep.py:129] - Train Period: 2018-01-01 00:00:00 to 2018-10-19 23:45:00 | Test Period: 2018-10-20 00:00:00 to 2018-12-31 23:45:00
+[2026-07-24 09:52:30] [INFO] [forecasting.data_prep:data_prep.py:145] - Preprocessor artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\preprocessor.joblib
+[2026-07-24 09:52:30] [INFO] [forecasting.trainer:trainer.py:53] - ==================================================
+[2026-07-24 09:52:30] [INFO] [forecasting.trainer:trainer.py:54] - Starting Energy Demand Forecasting Model Training
+[2026-07-24 09:52:30] [INFO] [forecasting.trainer:trainer.py:55] - ==================================================
+[2026-07-24 09:52:30] [INFO] [forecasting.xgb_model:xgb_model.py:46] - Initializing XGBoost Regressor with parameters: {'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 3, 'random_state': 42, 'n_jobs': -1, 'objective': 'reg:squarederror'}
+[2026-07-24 09:52:30] [INFO] [forecasting.xgb_model:xgb_model.py:56] - Fitting XGBoost model on 28032 samples...
+[2026-07-24 09:52:32] [INFO] [forecasting.xgb_model:xgb_model.py:58] - XGBoost model training completed successfully.
+[2026-07-24 09:52:32] [INFO] [forecasting.xgb_model:xgb_model.py:113] - XGBoost model artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 09:52:32] [INFO] [forecasting.trainer:trainer.py:62] - Model training successfully completed. Saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 09:52:32] [INFO] [forecasting.evaluator:evaluator.py:68] - --------------------------------------------------
+[2026-07-24 09:52:32] [INFO] [forecasting.evaluator:evaluator.py:69] - ENERGY DEMAND FORECASTING MODEL EVALUATION RESULTS:
+[2026-07-24 09:52:32] [INFO] [forecasting.evaluator:evaluator.py:70] -   • MAE  (Mean Absolute Error):      0.5078 kWh
+[2026-07-24 09:52:32] [INFO] [forecasting.evaluator:evaluator.py:71] -   • RMSE (Root Mean Squared Error):  0.9976 kWh
+[2026-07-24 09:52:32] [INFO] [forecasting.evaluator:evaluator.py:72] -   • R²   (Coefficient of Determ.):   0.999
+[2026-07-24 09:52:32] [INFO] [forecasting.evaluator:evaluator.py:73] -   • MAPE (Mean Abs Pct Error):       2.4718%
+[2026-07-24 09:52:32] [INFO] [forecasting.evaluator:evaluator.py:74] - --------------------------------------------------
+[2026-07-24 09:52:32] [INFO] [forecasting.predictor:predictor.py:49] - Generating energy demand predictions for 7008 test samples...
+[2026-07-24 09:52:32] [INFO] [forecasting.predictor:predictor.py:66] - Test predictions exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 09:52:32] [INFO] [forecasting.predictor:predictor.py:93] - Generating future energy demand forecast for next 96 time slots (24 hours)...
+[2026-07-24 09:52:32] [INFO] [forecasting.predictor:predictor.py:137] - Future 96-step forecast exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 09:52:32] [INFO] [forecasting.visualizer:visualizer.py:45] - Starting automated forecast visualization generation...
+[2026-07-24 09:52:33] [INFO] [forecasting.visualizer:visualizer.py:75] - Saved: actual_vs_predicted.png
+[2026-07-24 09:52:33] [INFO] [forecasting.visualizer:visualizer.py:99] - Saved: error_distribution.png
+[2026-07-24 09:52:34] [INFO] [forecasting.visualizer:visualizer.py:129] - Saved: feature_importance.png
+[2026-07-24 09:52:35] [INFO] [forecasting.visualizer:visualizer.py:147] - Saved: residual_plot.png
+[2026-07-24 09:52:35] [INFO] [forecasting.visualizer:visualizer.py:175] - Saved: timeseries_forecast_curve.png
+[2026-07-24 09:52:35] [INFO] [forecasting.visualizer:visualizer.py:53] - All forecast figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting
+[2026-07-24 09:52:35] [INFO] [forecasting.report_generator:report_generator.py:56] - Generating forecasting performance report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 09:52:35] [INFO] [forecasting.report_generator:report_generator.py:142] - Forecasting report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 09:52:35] [INFO] [SmartMachineSchedulingSystem:main.py:61] - ▶ [Stage 3/3] Phase 3: Intelligent Machine Scheduling Engine (Google OR-Tools CP-SAT)
+[2026-07-24 09:52:35] [INFO] [scheduler.data_loader:data_loader.py:66] - Loading Job dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\jobs_cleaned.csv
+[2026-07-24 09:52:36] [INFO] [scheduler.data_loader:data_loader.py:110] - Successfully parsed 500 jobs. Baseline Timestamp: 2026-01-01 00:00:00
+[2026-07-24 09:52:36] [INFO] [scheduler.data_loader:data_loader.py:125] - Loading Machine dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\machines_cleaned.csv
+[2026-07-24 09:52:36] [INFO] [scheduler.data_loader:data_loader.py:154] - Successfully parsed 10 machines.
+[2026-07-24 09:52:36] [INFO] [scheduler.data_loader:data_loader.py:172] - Loading Phase 2 energy demand predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 09:52:36] [INFO] [scheduler.data_loader:data_loader.py:197] - Constructed energy cost rate profile for 96 time slots.
+[2026-07-24 09:52:36] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 09:52:36] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 500 jobs.
+[2026-07-24 09:52:36] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 09:52:36] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 09:52:36] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹2063.63
+[2026-07-24 09:52:36] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              8611.04 kWh
+[2026-07-24 09:52:36] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    128.75 hours (7725 min)
+[2026-07-24 09:52:36] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         83.24%
+[2026-07-24 09:52:36] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        3067.41 min
+[2026-07-24 09:52:36] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      287 jobs (42.6% On-Time)
+[2026-07-24 09:52:36] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 09:52:36] [INFO] [scheduler.optimizer:optimizer.py:49] - ==================================================
+[2026-07-24 09:52:36] [INFO] [scheduler.optimizer:optimizer.py:50] - Starting Google OR-Tools CP-SAT Optimization Engine
+[2026-07-24 09:52:36] [INFO] [scheduler.optimizer:optimizer.py:51] - ==================================================
+[2026-07-24 09:52:36] [INFO] [scheduler.optimizer:optimizer.py:59] - Generating FCFS baseline warm-start hints for CP-SAT solver...
+[2026-07-24 09:52:36] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 09:52:36] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 500 jobs.
+[2026-07-24 09:52:36] [INFO] [scheduler.constraints:constraints.py:35] - Formulating CP-SAT decision variables and constraints (Horizon=1500 slots)...
+[2026-07-24 09:52:36] [INFO] [scheduler.constraints:constraints.py:106] - Decision variables and physical scheduling constraints successfully added.
+[2026-07-24 09:52:36] [INFO] [scheduler.objective:objective.py:44] - Formulating multi-objective cost minimization function...
+[2026-07-24 09:52:38] [INFO] [scheduler.objective:objective.py:115] - Multi-objective time-slot energy cost function successfully formulated.
+[2026-07-24 09:52:38] [INFO] [scheduler.optimizer:optimizer.py:116] - Solving CP-SAT model (horizon=1500 slots, time_limit=60.0s)...
+[2026-07-24 09:53:41] [INFO] [scheduler.optimizer:optimizer.py:122] - CP-SAT Solver Finished. Status: 'UNKNOWN', Wall Time: 62.57s
+[2026-07-24 09:53:41] [WARNING] [scheduler.optimizer:optimizer.py:125] - CP-SAT Solver failed to improve hint. Returning FCFS baseline schedule.
+[2026-07-24 09:53:41] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 09:53:41] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 09:53:41] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹2063.63
+[2026-07-24 09:53:41] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              8611.04 kWh
+[2026-07-24 09:53:41] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    128.75 hours (7725 min)
+[2026-07-24 09:53:41] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         83.24%
+[2026-07-24 09:53:41] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        3067.41 min
+[2026-07-24 09:53:41] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      287 jobs (42.6% On-Time)
+[2026-07-24 09:53:41] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 09:53:41] [INFO] [scheduler.visualization:visualization.py:46] - Starting automated scheduling visualization plot generation...
+[2026-07-24 09:53:43] [INFO] [scheduler.visualization:visualization.py:105] - Saved: gantt_chart.png
+[2026-07-24 09:53:44] [INFO] [scheduler.visualization:visualization.py:124] - Saved: machine_timeline.png
+[2026-07-24 09:53:44] [INFO] [scheduler.visualization:visualization.py:154] - Saved: job_allocation.png
+[2026-07-24 09:53:44] [INFO] [scheduler.visualization:visualization.py:186] - Saved: machine_utilization.png
+[2026-07-24 09:53:45] [INFO] [scheduler.visualization:visualization.py:221] - Saved: cost_comparison.png
+[2026-07-24 09:53:45] [INFO] [scheduler.visualization:visualization.py:253] - Saved: kpi_dashboard.png
+[2026-07-24 09:53:46] [INFO] [scheduler.visualization:visualization.py:290] - Saved: peak_load_comparison.png
+[2026-07-24 09:53:46] [INFO] [scheduler.visualization:visualization.py:56] - All 7 scheduling figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 09:53:46] [INFO] [scheduler.export:export.py:40] - Exporting scheduling output CSV files to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 09:53:46] [INFO] [scheduler.export:export.py:77] - Saved: optimized_schedule.csv, fcfs_schedule.csv, kpi_summary.csv, comparison_report.csv
+[2026-07-24 09:53:46] [INFO] [scheduler.export:export.py:102] - Generating scheduling report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 09:53:46] [INFO] [scheduler.export:export.py:164] - Markdown scheduling report saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 09:53:46] [INFO] [SmartMachineSchedulingSystem:main.py:65] - ==================================================================================
+[2026-07-24 09:53:46] [INFO] [SmartMachineSchedulingSystem:main.py:66] - END-TO-END PIPELINE COMPLETED SUCCESSFULLY IN 76.64 SECONDS!
+[2026-07-24 09:53:46] [INFO] [SmartMachineSchedulingSystem:main.py:67] - Outputs generated in: outputs/forecasting, outputs/scheduling, outputs/reports
+[2026-07-24 09:53:46] [INFO] [SmartMachineSchedulingSystem:main.py:68] - ==================================================================================
+[2026-07-24 09:53:57] [INFO] [SmartMachineSchedulingSystem:main.py:82] - ==================================================================================
+[2026-07-24 09:53:57] [INFO] [SmartMachineSchedulingSystem:main.py:83] - LAUNCHING PHASE 4 STREAMLIT INTERACTIVE ANALYTICS DASHBOARD
+[2026-07-24 09:53:57] [INFO] [SmartMachineSchedulingSystem:main.py:84] - Command: streamlit run D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\dashboard\app.py
+[2026-07-24 09:53:57] [INFO] [SmartMachineSchedulingSystem:main.py:85] - Access the web UI at: http://localhost:8501
+[2026-07-24 09:53:57] [INFO] [SmartMachineSchedulingSystem:main.py:86] - ==================================================================================
+[2026-07-24 09:54:31] [INFO] [SmartMachineSchedulingSystem:main.py:91] - Streamlit dashboard shut down by user.
+[2026-07-24 09:57:59] [INFO] [SmartMachineSchedulingSystem:main.py:38] - ==================================================================================
+[2026-07-24 09:57:59] [INFO] [SmartMachineSchedulingSystem:main.py:39] - STARTING COMPLETE END-TO-END PIPELINE: SMART MACHINE SCHEDULING & ENERGY AI
+[2026-07-24 09:57:59] [INFO] [SmartMachineSchedulingSystem:main.py:40] - ==================================================================================
+[2026-07-24 09:57:59] [INFO] [SmartMachineSchedulingSystem:main.py:47] - ▶ [Stage 1/3] Phase 1: Data Cleaning, Validation & Time-Series Feature Engineering
+[2026-07-24 09:57:59] [INFO] [preprocessing.loader:loader.py:83] - Loading all project datasets (Energy, Job, Machine)...
+[2026-07-24 09:57:59] [INFO] [preprocessing.loader:loader.py:35] - Loading Energy dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\Steel_industry_data.csv
+[2026-07-24 09:57:59] [INFO] [preprocessing.loader:loader.py:37] - Energy dataset successfully loaded with shape: (35040, 11)
+[2026-07-24 09:57:59] [INFO] [preprocessing.loader:loader.py:53] - Loading Job dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\job_table.csv
+[2026-07-24 09:57:59] [INFO] [preprocessing.loader:loader.py:55] - Job dataset successfully loaded with shape: (500, 6)
+[2026-07-24 09:57:59] [INFO] [preprocessing.loader:loader.py:71] - Loading Machine dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\machine_table.csv
+[2026-07-24 09:57:59] [INFO] [preprocessing.loader:loader.py:73] - Machine dataset successfully loaded with shape: (10, 7)
+[2026-07-24 09:57:59] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Energy
+[2026-07-24 09:57:59] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Energy. Rows: 35040, Cols: 11, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 09:57:59] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Job
+[2026-07-24 09:57:59] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Job. Rows: 500, Cols: 6, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 09:57:59] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Machine
+[2026-07-24 09:57:59] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Machine. Rows: 10, Cols: 7, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 09:57:59] [INFO] [preprocessing.validator:validator.py:216] - Data validation report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\data_validation_report.md
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:177] - Starting cleaning pipeline for Energy Dataset...
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'date' to datetime. Sample: 2018-01-01 00:15:00
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:191] - Energy Dataset cleaning pipeline complete.
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:204] - Starting cleaning pipeline for Job Dataset...
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Deadline' to datetime. Sample: 2026-01-01 05:41:00
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Arrival_Time' to datetime. Sample: 2026-01-01 02:41:00
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:213] - Job Dataset cleaning pipeline complete.
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:226] - Starting cleaning pipeline for Machine Dataset...
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 09:57:59] [INFO] [preprocessing.cleaner:cleaner.py:234] - Machine Dataset cleaning pipeline complete.
+[2026-07-24 09:57:59] [INFO] [preprocessing.feature_engineering:feature_engineering.py:174] - Starting complete Feature Engineering transformation pipeline...
+[2026-07-24 09:57:59] [INFO] [preprocessing.feature_engineering:feature_engineering.py:65] - Extracting temporal and cyclical features from 'date'...
+[2026-07-24 09:57:59] [INFO] [preprocessing.feature_engineering:feature_engineering.py:86] - Temporal and cyclical feature extraction completed.
+[2026-07-24 09:57:59] [INFO] [preprocessing.feature_engineering:feature_engineering.py:105] - Generating lag features for 'Usage_kWh' using steps: [1, 2, 4, 96]...
+[2026-07-24 09:57:59] [INFO] [preprocessing.feature_engineering:feature_engineering.py:114] - Lag features generated successfully.
+[2026-07-24 09:57:59] [INFO] [preprocessing.feature_engineering:feature_engineering.py:133] - Generating rolling window features for 'Usage_kWh' with windows: [4, 96]...
+[2026-07-24 09:57:59] [INFO] [preprocessing.feature_engineering:feature_engineering.py:160] - Rolling window features generated successfully.
+[2026-07-24 09:57:59] [INFO] [preprocessing.feature_engineering:feature_engineering.py:184] - Filled initial lag/rolling NA values (Initial NAs: 111, Final NAs: 0).
+[2026-07-24 09:57:59] [INFO] [preprocessing.feature_engineering:feature_engineering.py:186] - Feature engineering transformation completed successfully. New Dataset Shape: (35040, 37)
+[2026-07-24 09:58:00] [INFO] [SmartMachineSchedulingSystem:main.py:51] - ▶ [Stage 2/3] Phase 2: Time-Series Energy Forecasting (XGBoost Regressor)
+[2026-07-24 09:58:00] [INFO] [SmartMachineSchedulingSystem:main.py:57] - Existing trained XGBoost model checkpoint found at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib. Proceeding.
+[2026-07-24 09:58:00] [INFO] [forecasting.data_prep:data_prep.py:57] - Starting data preparation. Input dataset shape: (35040, 37)
+[2026-07-24 09:58:00] [INFO] [forecasting.data_prep:data_prep.py:99] - Encoding categorical features via OrdinalEncoder: ['WeekStatus', 'Day_of_week', 'Load_Type']
+  → Confirmed tariff-proxy features present: ['Load_Type', 'WeekStatus', 'Day_of_week']
+[2026-07-24 09:58:00] [INFO] [forecasting.data_prep:data_prep.py:125] - Time-series chronological split complete (80% Train / 20% Test): Train Shape: (28032, 34), Test Shape: (7008, 34)
+[2026-07-24 09:58:00] [INFO] [forecasting.data_prep:data_prep.py:129] - Train Period: 2018-01-01 00:00:00 to 2018-10-19 23:45:00 | Test Period: 2018-10-20 00:00:00 to 2018-12-31 23:45:00
+[2026-07-24 09:58:00] [INFO] [forecasting.data_prep:data_prep.py:145] - Preprocessor artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\preprocessor.joblib
+[2026-07-24 09:58:00] [INFO] [forecasting.trainer:trainer.py:53] - ==================================================
+[2026-07-24 09:58:00] [INFO] [forecasting.trainer:trainer.py:54] - Starting Energy Demand Forecasting Model Training
+[2026-07-24 09:58:00] [INFO] [forecasting.trainer:trainer.py:55] - ==================================================
+[2026-07-24 09:58:00] [INFO] [forecasting.xgb_model:xgb_model.py:46] - Initializing XGBoost Regressor with parameters: {'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 3, 'random_state': 42, 'n_jobs': -1, 'objective': 'reg:squarederror'}
+[2026-07-24 09:58:00] [INFO] [forecasting.xgb_model:xgb_model.py:56] - Fitting XGBoost model on 28032 samples...
+[2026-07-24 09:58:02] [INFO] [forecasting.xgb_model:xgb_model.py:58] - XGBoost model training completed successfully.
+[2026-07-24 09:58:02] [ERROR] [SmartMachineSchedulingSystem:main.py:71] - Fatal error during end-to-end pipeline execution: [Errno 22] Invalid argument: 'D:\\ma project\\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\\models\\energy_xgb_model.joblib'
+Traceback (most recent call last):
+  File "D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\main.py", line 58, in run_full_end_to_end_pipeline
+    run_phase_2_pipeline()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\main_phase2.py", line 67, in run_phase_2_pipeline
+    forecaster = trainer.train(
+        X_train=X_train,
+    ...<3 lines>...
+        model_save_path=Config.MODEL_OUTPUT_PATH,
+    )
+  File "D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\forecasting\trainer.py", line 61, in train
+    self.forecaster.save(model_save_path)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\forecasting\xgb_model.py", line 112, in save
+    joblib.dump({"model": self.model, "params": self.params}, filepath)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\smart\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\joblib\numpy_pickle.py", line 599, in dump
+    with open(filename, "wb") as f:
+         ~~~~^^^^^^^^^^^^^^^^
+OSError: [Errno 22] Invalid argument: 'D:\\ma project\\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\\models\\energy_xgb_model.joblib'
+[2026-07-24 09:59:53] [INFO] [SmartMachineSchedulingSystem:main.py:38] - ==================================================================================
+[2026-07-24 09:59:53] [INFO] [SmartMachineSchedulingSystem:main.py:39] - STARTING COMPLETE END-TO-END PIPELINE: SMART MACHINE SCHEDULING & ENERGY AI
+[2026-07-24 09:59:53] [INFO] [SmartMachineSchedulingSystem:main.py:40] - ==================================================================================
+[2026-07-24 09:59:53] [INFO] [SmartMachineSchedulingSystem:main.py:47] - ▶ [Stage 1/3] Phase 1: Data Cleaning, Validation & Time-Series Feature Engineering
+[2026-07-24 09:59:53] [INFO] [preprocessing.loader:loader.py:83] - Loading all project datasets (Energy, Job, Machine)...
+[2026-07-24 09:59:53] [INFO] [preprocessing.loader:loader.py:35] - Loading Energy dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\Steel_industry_data.csv
+[2026-07-24 09:59:53] [INFO] [preprocessing.loader:loader.py:37] - Energy dataset successfully loaded with shape: (35040, 11)
+[2026-07-24 09:59:53] [INFO] [preprocessing.loader:loader.py:53] - Loading Job dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\job_table.csv
+[2026-07-24 09:59:53] [INFO] [preprocessing.loader:loader.py:55] - Job dataset successfully loaded with shape: (500, 6)
+[2026-07-24 09:59:53] [INFO] [preprocessing.loader:loader.py:71] - Loading Machine dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\machine_table.csv
+[2026-07-24 09:59:53] [INFO] [preprocessing.loader:loader.py:73] - Machine dataset successfully loaded with shape: (10, 7)
+[2026-07-24 09:59:53] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Energy
+[2026-07-24 09:59:53] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Energy. Rows: 35040, Cols: 11, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 09:59:53] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Job
+[2026-07-24 09:59:53] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Job. Rows: 500, Cols: 6, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 09:59:53] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Machine
+[2026-07-24 09:59:53] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Machine. Rows: 10, Cols: 7, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 09:59:53] [INFO] [preprocessing.validator:validator.py:216] - Data validation report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\data_validation_report.md
+[2026-07-24 09:59:53] [INFO] [preprocessing.cleaner:cleaner.py:177] - Starting cleaning pipeline for Energy Dataset...
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'date' to datetime. Sample: 2018-01-01 00:15:00
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:191] - Energy Dataset cleaning pipeline complete.
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:204] - Starting cleaning pipeline for Job Dataset...
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Deadline' to datetime. Sample: 2026-01-01 05:41:00
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Arrival_Time' to datetime. Sample: 2026-01-01 02:41:00
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:213] - Job Dataset cleaning pipeline complete.
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:226] - Starting cleaning pipeline for Machine Dataset...
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 09:59:54] [INFO] [preprocessing.cleaner:cleaner.py:234] - Machine Dataset cleaning pipeline complete.
+[2026-07-24 09:59:54] [INFO] [preprocessing.feature_engineering:feature_engineering.py:174] - Starting complete Feature Engineering transformation pipeline...
+[2026-07-24 09:59:54] [INFO] [preprocessing.feature_engineering:feature_engineering.py:65] - Extracting temporal and cyclical features from 'date'...
+[2026-07-24 09:59:54] [INFO] [preprocessing.feature_engineering:feature_engineering.py:86] - Temporal and cyclical feature extraction completed.
+[2026-07-24 09:59:54] [INFO] [preprocessing.feature_engineering:feature_engineering.py:105] - Generating lag features for 'Usage_kWh' using steps: [1, 2, 4, 96]...
+[2026-07-24 09:59:54] [INFO] [preprocessing.feature_engineering:feature_engineering.py:114] - Lag features generated successfully.
+[2026-07-24 09:59:54] [INFO] [preprocessing.feature_engineering:feature_engineering.py:133] - Generating rolling window features for 'Usage_kWh' with windows: [4, 96]...
+[2026-07-24 09:59:54] [INFO] [preprocessing.feature_engineering:feature_engineering.py:160] - Rolling window features generated successfully.
+[2026-07-24 09:59:54] [INFO] [preprocessing.feature_engineering:feature_engineering.py:184] - Filled initial lag/rolling NA values (Initial NAs: 111, Final NAs: 0).
+[2026-07-24 09:59:54] [INFO] [preprocessing.feature_engineering:feature_engineering.py:186] - Feature engineering transformation completed successfully. New Dataset Shape: (35040, 37)
+[2026-07-24 09:59:54] [INFO] [SmartMachineSchedulingSystem:main.py:51] - ▶ [Stage 2/3] Phase 2: Time-Series Energy Forecasting (XGBoost Regressor)
+[2026-07-24 09:59:54] [INFO] [SmartMachineSchedulingSystem:main.py:57] - Existing trained XGBoost model checkpoint found at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib. Proceeding.
+[2026-07-24 09:59:55] [INFO] [forecasting.data_prep:data_prep.py:57] - Starting data preparation. Input dataset shape: (35040, 37)
+[2026-07-24 09:59:55] [INFO] [forecasting.data_prep:data_prep.py:99] - Encoding categorical features via OrdinalEncoder: ['WeekStatus', 'Day_of_week', 'Load_Type']
+  → Confirmed tariff-proxy features present: ['Load_Type', 'WeekStatus', 'Day_of_week']
+[2026-07-24 09:59:55] [INFO] [forecasting.data_prep:data_prep.py:125] - Time-series chronological split complete (80% Train / 20% Test): Train Shape: (28032, 34), Test Shape: (7008, 34)
+[2026-07-24 09:59:55] [INFO] [forecasting.data_prep:data_prep.py:129] - Train Period: 2018-01-01 00:00:00 to 2018-10-19 23:45:00 | Test Period: 2018-10-20 00:00:00 to 2018-12-31 23:45:00
+[2026-07-24 09:59:55] [INFO] [forecasting.data_prep:data_prep.py:154] - Preprocessor artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\preprocessor.joblib
+[2026-07-24 09:59:55] [INFO] [forecasting.trainer:trainer.py:53] - ==================================================
+[2026-07-24 09:59:55] [INFO] [forecasting.trainer:trainer.py:54] - Starting Energy Demand Forecasting Model Training
+[2026-07-24 09:59:55] [INFO] [forecasting.trainer:trainer.py:55] - ==================================================
+[2026-07-24 09:59:55] [INFO] [forecasting.xgb_model:xgb_model.py:46] - Initializing XGBoost Regressor with parameters: {'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 3, 'random_state': 42, 'n_jobs': -1, 'objective': 'reg:squarederror'}
+[2026-07-24 09:59:55] [INFO] [forecasting.xgb_model:xgb_model.py:56] - Fitting XGBoost model on 28032 samples...
+[2026-07-24 09:59:56] [INFO] [forecasting.xgb_model:xgb_model.py:58] - XGBoost model training completed successfully.
+[2026-07-24 09:59:56] [INFO] [forecasting.xgb_model:xgb_model.py:122] - XGBoost model artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 09:59:56] [INFO] [forecasting.trainer:trainer.py:62] - Model training successfully completed. Saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 09:59:56] [INFO] [forecasting.evaluator:evaluator.py:68] - --------------------------------------------------
+[2026-07-24 09:59:56] [INFO] [forecasting.evaluator:evaluator.py:69] - ENERGY DEMAND FORECASTING MODEL EVALUATION RESULTS:
+[2026-07-24 09:59:56] [INFO] [forecasting.evaluator:evaluator.py:70] -   • MAE  (Mean Absolute Error):      0.5078 kWh
+[2026-07-24 09:59:56] [INFO] [forecasting.evaluator:evaluator.py:71] -   • RMSE (Root Mean Squared Error):  0.9976 kWh
+[2026-07-24 09:59:56] [INFO] [forecasting.evaluator:evaluator.py:72] -   • R²   (Coefficient of Determ.):   0.999
+[2026-07-24 09:59:56] [INFO] [forecasting.evaluator:evaluator.py:73] -   • MAPE (Mean Abs Pct Error):       2.4718%
+[2026-07-24 09:59:56] [INFO] [forecasting.evaluator:evaluator.py:74] - --------------------------------------------------
+[2026-07-24 09:59:56] [INFO] [forecasting.predictor:predictor.py:49] - Generating energy demand predictions for 7008 test samples...
+[2026-07-24 09:59:56] [INFO] [forecasting.predictor:predictor.py:66] - Test predictions exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 09:59:56] [INFO] [forecasting.predictor:predictor.py:93] - Generating future energy demand forecast for next 96 time slots (24 hours)...
+[2026-07-24 09:59:57] [INFO] [forecasting.predictor:predictor.py:137] - Future 96-step forecast exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 09:59:57] [INFO] [forecasting.visualizer:visualizer.py:45] - Starting automated forecast visualization generation...
+[2026-07-24 09:59:57] [INFO] [forecasting.visualizer:visualizer.py:75] - Saved: actual_vs_predicted.png
+[2026-07-24 09:59:58] [INFO] [forecasting.visualizer:visualizer.py:99] - Saved: error_distribution.png
+[2026-07-24 09:59:58] [INFO] [forecasting.visualizer:visualizer.py:129] - Saved: feature_importance.png
+[2026-07-24 09:59:59] [INFO] [forecasting.visualizer:visualizer.py:147] - Saved: residual_plot.png
+[2026-07-24 09:59:59] [INFO] [forecasting.visualizer:visualizer.py:175] - Saved: timeseries_forecast_curve.png
+[2026-07-24 09:59:59] [INFO] [forecasting.visualizer:visualizer.py:53] - All forecast figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting
+[2026-07-24 09:59:59] [INFO] [forecasting.report_generator:report_generator.py:56] - Generating forecasting performance report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 09:59:59] [INFO] [forecasting.report_generator:report_generator.py:142] - Forecasting report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 09:59:59] [INFO] [SmartMachineSchedulingSystem:main.py:61] - ▶ [Stage 3/3] Phase 3: Intelligent Machine Scheduling Engine (Google OR-Tools CP-SAT)
+[2026-07-24 09:59:59] [INFO] [scheduler.data_loader:data_loader.py:66] - Loading Job dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\jobs_cleaned.csv
+[2026-07-24 10:00:00] [INFO] [scheduler.data_loader:data_loader.py:110] - Successfully parsed 500 jobs. Baseline Timestamp: 2026-01-01 00:00:00
+[2026-07-24 10:00:00] [INFO] [scheduler.data_loader:data_loader.py:125] - Loading Machine dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\machines_cleaned.csv
+[2026-07-24 10:00:00] [INFO] [scheduler.data_loader:data_loader.py:154] - Successfully parsed 10 machines.
+[2026-07-24 10:00:00] [INFO] [scheduler.data_loader:data_loader.py:172] - Loading Phase 2 energy demand predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:00:00] [INFO] [scheduler.data_loader:data_loader.py:197] - Constructed energy cost rate profile for 96 time slots.
+[2026-07-24 10:00:00] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:00:00] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 500 jobs.
+[2026-07-24 10:00:00] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:00:00] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:00:00] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹2063.63
+[2026-07-24 10:00:00] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              8611.04 kWh
+[2026-07-24 10:00:00] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    128.75 hours (7725 min)
+[2026-07-24 10:00:00] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         83.24%
+[2026-07-24 10:00:00] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        3067.41 min
+[2026-07-24 10:00:00] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      287 jobs (42.6% On-Time)
+[2026-07-24 10:00:00] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:00:00] [INFO] [scheduler.optimizer:optimizer.py:49] - ==================================================
+[2026-07-24 10:00:00] [INFO] [scheduler.optimizer:optimizer.py:50] - Starting Google OR-Tools CP-SAT Optimization Engine
+[2026-07-24 10:00:00] [INFO] [scheduler.optimizer:optimizer.py:51] - ==================================================
+[2026-07-24 10:00:00] [INFO] [scheduler.optimizer:optimizer.py:59] - Generating FCFS baseline warm-start hints for CP-SAT solver...
+[2026-07-24 10:00:00] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:00:00] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 500 jobs.
+[2026-07-24 10:00:00] [INFO] [scheduler.constraints:constraints.py:35] - Formulating CP-SAT decision variables and constraints (Horizon=1500 slots)...
+[2026-07-24 10:00:00] [INFO] [scheduler.constraints:constraints.py:106] - Decision variables and physical scheduling constraints successfully added.
+[2026-07-24 10:00:00] [INFO] [scheduler.objective:objective.py:44] - Formulating multi-objective cost minimization function...
+[2026-07-24 10:00:02] [INFO] [scheduler.objective:objective.py:115] - Multi-objective time-slot energy cost function successfully formulated.
+[2026-07-24 10:00:02] [INFO] [scheduler.optimizer:optimizer.py:117] - Solving CP-SAT model (horizon=1500 slots, time_limit=60.0s)...
+[2026-07-24 10:01:04] [INFO] [scheduler.optimizer:optimizer.py:123] - CP-SAT Solver Finished. Status: 'UNKNOWN', Wall Time: 62.28s
+[2026-07-24 10:01:04] [WARNING] [scheduler.optimizer:optimizer.py:126] - CP-SAT Solver failed to improve hint. Returning FCFS baseline schedule.
+[2026-07-24 10:01:04] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:01:04] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:01:04] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹2063.63
+[2026-07-24 10:01:04] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              8611.04 kWh
+[2026-07-24 10:01:04] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    128.75 hours (7725 min)
+[2026-07-24 10:01:04] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         83.24%
+[2026-07-24 10:01:04] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        3067.41 min
+[2026-07-24 10:01:04] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      287 jobs (42.6% On-Time)
+[2026-07-24 10:01:04] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:01:04] [INFO] [scheduler.visualization:visualization.py:46] - Starting automated scheduling visualization plot generation...
+[2026-07-24 10:01:07] [INFO] [scheduler.visualization:visualization.py:105] - Saved: gantt_chart.png
+[2026-07-24 10:01:07] [INFO] [scheduler.visualization:visualization.py:124] - Saved: machine_timeline.png
+[2026-07-24 10:01:08] [INFO] [scheduler.visualization:visualization.py:154] - Saved: job_allocation.png
+[2026-07-24 10:01:08] [INFO] [scheduler.visualization:visualization.py:186] - Saved: machine_utilization.png
+[2026-07-24 10:01:08] [INFO] [scheduler.visualization:visualization.py:221] - Saved: cost_comparison.png
+[2026-07-24 10:01:09] [INFO] [scheduler.visualization:visualization.py:253] - Saved: kpi_dashboard.png
+[2026-07-24 10:01:09] [INFO] [scheduler.visualization:visualization.py:290] - Saved: peak_load_comparison.png
+[2026-07-24 10:01:09] [INFO] [scheduler.visualization:visualization.py:56] - All 7 scheduling figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:01:09] [INFO] [scheduler.export:export.py:40] - Exporting scheduling output CSV files to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:01:09] [INFO] [scheduler.export:export.py:77] - Saved: optimized_schedule.csv, fcfs_schedule.csv, kpi_summary.csv, comparison_report.csv
+[2026-07-24 10:01:09] [INFO] [scheduler.export:export.py:102] - Generating scheduling report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:01:09] [INFO] [scheduler.export:export.py:164] - Markdown scheduling report saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:01:09] [INFO] [SmartMachineSchedulingSystem:main.py:65] - ==================================================================================
+[2026-07-24 10:01:09] [INFO] [SmartMachineSchedulingSystem:main.py:66] - END-TO-END PIPELINE COMPLETED SUCCESSFULLY IN 76.07 SECONDS!
+[2026-07-24 10:01:09] [INFO] [SmartMachineSchedulingSystem:main.py:67] - Outputs generated in: outputs/forecasting, outputs/scheduling, outputs/reports
+[2026-07-24 10:01:09] [INFO] [SmartMachineSchedulingSystem:main.py:68] - ==================================================================================
+[2026-07-24 10:02:25] [INFO] [SmartMachineSchedulingSystem:main.py:82] - ==================================================================================
+[2026-07-24 10:02:25] [INFO] [SmartMachineSchedulingSystem:main.py:83] - LAUNCHING PHASE 4 STREAMLIT INTERACTIVE ANALYTICS DASHBOARD
+[2026-07-24 10:02:25] [INFO] [SmartMachineSchedulingSystem:main.py:84] - Command: streamlit run D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\dashboard\app.py
+[2026-07-24 10:02:25] [INFO] [SmartMachineSchedulingSystem:main.py:85] - Access the web UI at: http://localhost:8501
+[2026-07-24 10:02:25] [INFO] [SmartMachineSchedulingSystem:main.py:86] - ==================================================================================
+[2026-07-24 10:08:04] [INFO] [SmartMachineSchedulingSystem:main.py:91] - Streamlit dashboard shut down by user.
+[2026-07-24 10:08:13] [INFO] [SmartMachineSchedulingSystem:main.py:38] - ==================================================================================
+[2026-07-24 10:08:13] [INFO] [SmartMachineSchedulingSystem:main.py:39] - STARTING COMPLETE END-TO-END PIPELINE: SMART MACHINE SCHEDULING & ENERGY AI
+[2026-07-24 10:08:13] [INFO] [SmartMachineSchedulingSystem:main.py:40] - ==================================================================================
+[2026-07-24 10:08:13] [INFO] [SmartMachineSchedulingSystem:main.py:47] - ▶ [Stage 1/3] Phase 1: Data Cleaning, Validation & Time-Series Feature Engineering
+[2026-07-24 10:08:13] [INFO] [preprocessing.loader:loader.py:83] - Loading all project datasets (Energy, Job, Machine)...
+[2026-07-24 10:08:13] [INFO] [preprocessing.loader:loader.py:35] - Loading Energy dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\Steel_industry_data.csv
+[2026-07-24 10:08:13] [INFO] [preprocessing.loader:loader.py:37] - Energy dataset successfully loaded with shape: (35040, 11)
+[2026-07-24 10:08:13] [INFO] [preprocessing.loader:loader.py:53] - Loading Job dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\job_table.csv
+[2026-07-24 10:08:13] [INFO] [preprocessing.loader:loader.py:55] - Job dataset successfully loaded with shape: (500, 6)
+[2026-07-24 10:08:13] [INFO] [preprocessing.loader:loader.py:71] - Loading Machine dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\machine_table.csv
+[2026-07-24 10:08:13] [INFO] [preprocessing.loader:loader.py:73] - Machine dataset successfully loaded with shape: (10, 7)
+[2026-07-24 10:08:13] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Energy
+[2026-07-24 10:08:13] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Energy. Rows: 35040, Cols: 11, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:08:13] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Job
+[2026-07-24 10:08:13] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Job. Rows: 500, Cols: 6, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:08:13] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Machine
+[2026-07-24 10:08:13] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Machine. Rows: 10, Cols: 7, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:08:13] [INFO] [preprocessing.validator:validator.py:216] - Data validation report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\data_validation_report.md
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:177] - Starting cleaning pipeline for Energy Dataset...
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'date' to datetime. Sample: 2018-01-01 00:15:00
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:191] - Energy Dataset cleaning pipeline complete.
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:204] - Starting cleaning pipeline for Job Dataset...
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Deadline' to datetime. Sample: 2026-01-01 05:41:00
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Arrival_Time' to datetime. Sample: 2026-01-01 02:41:00
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:213] - Job Dataset cleaning pipeline complete.
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:226] - Starting cleaning pipeline for Machine Dataset...
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:08:13] [INFO] [preprocessing.cleaner:cleaner.py:234] - Machine Dataset cleaning pipeline complete.
+[2026-07-24 10:08:13] [INFO] [preprocessing.feature_engineering:feature_engineering.py:174] - Starting complete Feature Engineering transformation pipeline...
+[2026-07-24 10:08:13] [INFO] [preprocessing.feature_engineering:feature_engineering.py:65] - Extracting temporal and cyclical features from 'date'...
+[2026-07-24 10:08:13] [INFO] [preprocessing.feature_engineering:feature_engineering.py:86] - Temporal and cyclical feature extraction completed.
+[2026-07-24 10:08:13] [INFO] [preprocessing.feature_engineering:feature_engineering.py:105] - Generating lag features for 'Usage_kWh' using steps: [1, 2, 4, 96]...
+[2026-07-24 10:08:13] [INFO] [preprocessing.feature_engineering:feature_engineering.py:114] - Lag features generated successfully.
+[2026-07-24 10:08:13] [INFO] [preprocessing.feature_engineering:feature_engineering.py:133] - Generating rolling window features for 'Usage_kWh' with windows: [4, 96]...
+[2026-07-24 10:08:13] [INFO] [preprocessing.feature_engineering:feature_engineering.py:160] - Rolling window features generated successfully.
+[2026-07-24 10:08:13] [INFO] [preprocessing.feature_engineering:feature_engineering.py:184] - Filled initial lag/rolling NA values (Initial NAs: 111, Final NAs: 0).
+[2026-07-24 10:08:13] [INFO] [preprocessing.feature_engineering:feature_engineering.py:186] - Feature engineering transformation completed successfully. New Dataset Shape: (35040, 37)
+[2026-07-24 10:08:14] [INFO] [SmartMachineSchedulingSystem:main.py:51] - ▶ [Stage 2/3] Phase 2: Time-Series Energy Forecasting (XGBoost Regressor)
+[2026-07-24 10:08:14] [INFO] [SmartMachineSchedulingSystem:main.py:57] - Existing trained XGBoost model checkpoint found at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib. Proceeding.
+[2026-07-24 10:08:14] [INFO] [forecasting.data_prep:data_prep.py:57] - Starting data preparation. Input dataset shape: (35040, 37)
+[2026-07-24 10:08:14] [INFO] [forecasting.data_prep:data_prep.py:99] - Encoding categorical features via OrdinalEncoder: ['WeekStatus', 'Day_of_week', 'Load_Type']
+  → Confirmed tariff-proxy features present: ['Load_Type', 'WeekStatus', 'Day_of_week']
+[2026-07-24 10:08:14] [INFO] [forecasting.data_prep:data_prep.py:125] - Time-series chronological split complete (80% Train / 20% Test): Train Shape: (28032, 34), Test Shape: (7008, 34)
+[2026-07-24 10:08:14] [INFO] [forecasting.data_prep:data_prep.py:129] - Train Period: 2018-01-01 00:00:00 to 2018-10-19 23:45:00 | Test Period: 2018-10-20 00:00:00 to 2018-12-31 23:45:00
+[2026-07-24 10:08:14] [INFO] [forecasting.data_prep:data_prep.py:154] - Preprocessor artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\preprocessor.joblib
+[2026-07-24 10:08:14] [INFO] [forecasting.trainer:trainer.py:53] - ==================================================
+[2026-07-24 10:08:14] [INFO] [forecasting.trainer:trainer.py:54] - Starting Energy Demand Forecasting Model Training
+[2026-07-24 10:08:14] [INFO] [forecasting.trainer:trainer.py:55] - ==================================================
+[2026-07-24 10:08:14] [INFO] [forecasting.xgb_model:xgb_model.py:46] - Initializing XGBoost Regressor with parameters: {'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 3, 'random_state': 42, 'n_jobs': -1, 'objective': 'reg:squarederror'}
+[2026-07-24 10:08:14] [INFO] [forecasting.xgb_model:xgb_model.py:56] - Fitting XGBoost model on 28032 samples...
+[2026-07-24 10:08:16] [INFO] [forecasting.xgb_model:xgb_model.py:58] - XGBoost model training completed successfully.
+[2026-07-24 10:08:16] [INFO] [forecasting.xgb_model:xgb_model.py:122] - XGBoost model artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 10:08:16] [INFO] [forecasting.trainer:trainer.py:62] - Model training successfully completed. Saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 10:08:16] [INFO] [forecasting.evaluator:evaluator.py:68] - --------------------------------------------------
+[2026-07-24 10:08:16] [INFO] [forecasting.evaluator:evaluator.py:69] - ENERGY DEMAND FORECASTING MODEL EVALUATION RESULTS:
+[2026-07-24 10:08:16] [INFO] [forecasting.evaluator:evaluator.py:70] -   • MAE  (Mean Absolute Error):      0.5078 kWh
+[2026-07-24 10:08:16] [INFO] [forecasting.evaluator:evaluator.py:71] -   • RMSE (Root Mean Squared Error):  0.9976 kWh
+[2026-07-24 10:08:16] [INFO] [forecasting.evaluator:evaluator.py:72] -   • R²   (Coefficient of Determ.):   0.999
+[2026-07-24 10:08:16] [INFO] [forecasting.evaluator:evaluator.py:73] -   • MAPE (Mean Abs Pct Error):       2.4718%
+[2026-07-24 10:08:16] [INFO] [forecasting.evaluator:evaluator.py:74] - --------------------------------------------------
+[2026-07-24 10:08:16] [INFO] [forecasting.predictor:predictor.py:49] - Generating energy demand predictions for 7008 test samples...
+[2026-07-24 10:08:16] [INFO] [forecasting.predictor:predictor.py:66] - Test predictions exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 10:08:16] [INFO] [forecasting.predictor:predictor.py:93] - Generating future energy demand forecast for next 96 time slots (24 hours)...
+[2026-07-24 10:08:17] [INFO] [forecasting.predictor:predictor.py:137] - Future 96-step forecast exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:08:17] [INFO] [forecasting.visualizer:visualizer.py:45] - Starting automated forecast visualization generation...
+[2026-07-24 10:08:17] [INFO] [forecasting.visualizer:visualizer.py:75] - Saved: actual_vs_predicted.png
+[2026-07-24 10:08:18] [INFO] [forecasting.visualizer:visualizer.py:99] - Saved: error_distribution.png
+[2026-07-24 10:08:18] [INFO] [forecasting.visualizer:visualizer.py:129] - Saved: feature_importance.png
+[2026-07-24 10:08:19] [INFO] [forecasting.visualizer:visualizer.py:147] - Saved: residual_plot.png
+[2026-07-24 10:08:19] [INFO] [forecasting.visualizer:visualizer.py:175] - Saved: timeseries_forecast_curve.png
+[2026-07-24 10:08:19] [INFO] [forecasting.visualizer:visualizer.py:53] - All forecast figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting
+[2026-07-24 10:08:19] [INFO] [forecasting.report_generator:report_generator.py:56] - Generating forecasting performance report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 10:08:19] [INFO] [forecasting.report_generator:report_generator.py:142] - Forecasting report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 10:08:19] [INFO] [SmartMachineSchedulingSystem:main.py:61] - ▶ [Stage 3/3] Phase 3: Intelligent Machine Scheduling Engine (Google OR-Tools CP-SAT)
+[2026-07-24 10:08:19] [INFO] [scheduler.data_loader:data_loader.py:66] - Loading Job dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\jobs_cleaned.csv
+[2026-07-24 10:08:20] [INFO] [scheduler.data_loader:data_loader.py:110] - Successfully parsed 500 jobs. Baseline Timestamp: 2026-01-01 00:00:00
+[2026-07-24 10:08:20] [INFO] [scheduler.data_loader:data_loader.py:125] - Loading Machine dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\machines_cleaned.csv
+[2026-07-24 10:08:20] [INFO] [scheduler.data_loader:data_loader.py:154] - Successfully parsed 10 machines.
+[2026-07-24 10:08:20] [INFO] [scheduler.data_loader:data_loader.py:172] - Loading Phase 2 energy demand predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:08:20] [INFO] [scheduler.data_loader:data_loader.py:197] - Constructed energy cost rate profile for 96 time slots.
+[2026-07-24 10:08:20] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:08:20] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 500 jobs.
+[2026-07-24 10:08:20] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:08:20] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:08:20] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹2063.63
+[2026-07-24 10:08:20] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              8611.04 kWh
+[2026-07-24 10:08:20] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    128.75 hours (7725 min)
+[2026-07-24 10:08:20] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         83.24%
+[2026-07-24 10:08:20] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        3067.41 min
+[2026-07-24 10:08:20] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      287 jobs (42.6% On-Time)
+[2026-07-24 10:08:20] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:08:20] [INFO] [scheduler.optimizer:optimizer.py:62] - ==================================================
+[2026-07-24 10:08:20] [INFO] [scheduler.optimizer:optimizer.py:63] - Starting Energy-Aware Greedy Optimizer
+[2026-07-24 10:08:20] [INFO] [scheduler.optimizer:optimizer.py:64] - ==================================================
+[2026-07-24 10:08:20] [INFO] [scheduler.optimizer:optimizer.py:84] - Running FCFS baseline...
+[2026-07-24 10:08:20] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:08:20] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 500 jobs.
+[2026-07-24 10:08:21] [INFO] [scheduler.optimizer:optimizer.py:216] - Energy-Aware Greedy Optimizer complete in 1.07s
+[2026-07-24 10:08:21] [INFO] [scheduler.optimizer:optimizer.py:217] -   FCFS Total Cost:       ₹2063.63
+[2026-07-24 10:08:21] [INFO] [scheduler.optimizer:optimizer.py:218] -   Optimized Total Cost:  ₹5355.47
+[2026-07-24 10:08:21] [INFO] [scheduler.optimizer:optimizer.py:219] -   Energy Savings:        ₹-3291.84 (-159.5%)
+[2026-07-24 10:08:21] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:08:21] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:08:21] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹5355.47
+[2026-07-24 10:08:21] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              2276.12 kWh
+[2026-07-24 10:08:21] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    887.75 hours (53265 min)
+[2026-07-24 10:08:21] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         11.81%
+[2026-07-24 10:08:21] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        29079.99 min
+[2026-07-24 10:08:21] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      375 jobs (25.0% On-Time)
+[2026-07-24 10:08:21] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:08:21] [INFO] [scheduler.visualization:visualization.py:46] - Starting automated scheduling visualization plot generation...
+[2026-07-24 10:08:23] [INFO] [scheduler.visualization:visualization.py:105] - Saved: gantt_chart.png
+[2026-07-24 10:08:24] [INFO] [scheduler.visualization:visualization.py:124] - Saved: machine_timeline.png
+[2026-07-24 10:08:24] [INFO] [scheduler.visualization:visualization.py:154] - Saved: job_allocation.png
+[2026-07-24 10:08:24] [INFO] [scheduler.visualization:visualization.py:186] - Saved: machine_utilization.png
+[2026-07-24 10:08:25] [INFO] [scheduler.visualization:visualization.py:221] - Saved: cost_comparison.png
+[2026-07-24 10:08:25] [INFO] [scheduler.visualization:visualization.py:253] - Saved: kpi_dashboard.png
+[2026-07-24 10:08:26] [INFO] [scheduler.visualization:visualization.py:290] - Saved: peak_load_comparison.png
+[2026-07-24 10:08:26] [INFO] [scheduler.visualization:visualization.py:56] - All 7 scheduling figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:08:26] [INFO] [scheduler.export:export.py:40] - Exporting scheduling output CSV files to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:08:26] [INFO] [scheduler.export:export.py:77] - Saved: optimized_schedule.csv, fcfs_schedule.csv, kpi_summary.csv, comparison_report.csv
+[2026-07-24 10:08:26] [INFO] [scheduler.export:export.py:102] - Generating scheduling report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:08:26] [INFO] [scheduler.export:export.py:164] - Markdown scheduling report saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:08:26] [INFO] [SmartMachineSchedulingSystem:main.py:65] - ==================================================================================
+[2026-07-24 10:08:26] [INFO] [SmartMachineSchedulingSystem:main.py:66] - END-TO-END PIPELINE COMPLETED SUCCESSFULLY IN 12.72 SECONDS!
+[2026-07-24 10:08:26] [INFO] [SmartMachineSchedulingSystem:main.py:67] - Outputs generated in: outputs/forecasting, outputs/scheduling, outputs/reports
+[2026-07-24 10:08:26] [INFO] [SmartMachineSchedulingSystem:main.py:68] - ==================================================================================
+[2026-07-24 10:16:30] [INFO] [SmartMachineSchedulingSystem:main.py:38] - ==================================================================================
+[2026-07-24 10:16:30] [INFO] [SmartMachineSchedulingSystem:main.py:39] - STARTING COMPLETE END-TO-END PIPELINE: SMART MACHINE SCHEDULING & ENERGY AI
+[2026-07-24 10:16:30] [INFO] [SmartMachineSchedulingSystem:main.py:40] - ==================================================================================
+[2026-07-24 10:16:30] [INFO] [SmartMachineSchedulingSystem:main.py:47] - ▶ [Stage 1/3] Phase 1: Data Cleaning, Validation & Time-Series Feature Engineering
+[2026-07-24 10:16:30] [INFO] [preprocessing.loader:loader.py:83] - Loading all project datasets (Energy, Job, Machine)...
+[2026-07-24 10:16:30] [INFO] [preprocessing.loader:loader.py:35] - Loading Energy dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\Steel_industry_data.csv
+[2026-07-24 10:16:30] [INFO] [preprocessing.loader:loader.py:37] - Energy dataset successfully loaded with shape: (35040, 11)
+[2026-07-24 10:16:30] [INFO] [preprocessing.loader:loader.py:53] - Loading Job dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\job_table.csv
+[2026-07-24 10:16:30] [INFO] [preprocessing.loader:loader.py:55] - Job dataset successfully loaded with shape: (100, 6)
+[2026-07-24 10:16:30] [INFO] [preprocessing.loader:loader.py:71] - Loading Machine dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\machine_table.csv
+[2026-07-24 10:16:30] [INFO] [preprocessing.loader:loader.py:73] - Machine dataset successfully loaded with shape: (10, 7)
+[2026-07-24 10:16:30] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Energy
+[2026-07-24 10:16:30] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Energy. Rows: 35040, Cols: 11, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:16:30] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Job
+[2026-07-24 10:16:30] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Job. Rows: 100, Cols: 6, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:16:30] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Machine
+[2026-07-24 10:16:30] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Machine. Rows: 10, Cols: 7, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:16:30] [INFO] [preprocessing.validator:validator.py:216] - Data validation report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\data_validation_report.md
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:177] - Starting cleaning pipeline for Energy Dataset...
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'date' to datetime. Sample: 2018-01-01 00:15:00
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:191] - Energy Dataset cleaning pipeline complete.
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:204] - Starting cleaning pipeline for Job Dataset...
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Deadline' to datetime. Sample: 2026-01-01 22:30:00
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Arrival_Time' to datetime. Sample: 2026-01-01 08:30:00
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:213] - Job Dataset cleaning pipeline complete.
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:226] - Starting cleaning pipeline for Machine Dataset...
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:16:30] [INFO] [preprocessing.cleaner:cleaner.py:234] - Machine Dataset cleaning pipeline complete.
+[2026-07-24 10:16:30] [INFO] [preprocessing.feature_engineering:feature_engineering.py:174] - Starting complete Feature Engineering transformation pipeline...
+[2026-07-24 10:16:30] [INFO] [preprocessing.feature_engineering:feature_engineering.py:65] - Extracting temporal and cyclical features from 'date'...
+[2026-07-24 10:16:30] [INFO] [preprocessing.feature_engineering:feature_engineering.py:86] - Temporal and cyclical feature extraction completed.
+[2026-07-24 10:16:30] [INFO] [preprocessing.feature_engineering:feature_engineering.py:105] - Generating lag features for 'Usage_kWh' using steps: [1, 2, 4, 96]...
+[2026-07-24 10:16:30] [INFO] [preprocessing.feature_engineering:feature_engineering.py:114] - Lag features generated successfully.
+[2026-07-24 10:16:30] [INFO] [preprocessing.feature_engineering:feature_engineering.py:133] - Generating rolling window features for 'Usage_kWh' with windows: [4, 96]...
+[2026-07-24 10:16:30] [INFO] [preprocessing.feature_engineering:feature_engineering.py:160] - Rolling window features generated successfully.
+[2026-07-24 10:16:30] [INFO] [preprocessing.feature_engineering:feature_engineering.py:184] - Filled initial lag/rolling NA values (Initial NAs: 111, Final NAs: 0).
+[2026-07-24 10:16:30] [INFO] [preprocessing.feature_engineering:feature_engineering.py:186] - Feature engineering transformation completed successfully. New Dataset Shape: (35040, 37)
+[2026-07-24 10:16:31] [INFO] [SmartMachineSchedulingSystem:main.py:51] - ▶ [Stage 2/3] Phase 2: Time-Series Energy Forecasting (XGBoost Regressor)
+[2026-07-24 10:16:31] [INFO] [SmartMachineSchedulingSystem:main.py:57] - Existing trained XGBoost model checkpoint found at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib. Proceeding.
+[2026-07-24 10:16:31] [INFO] [forecasting.data_prep:data_prep.py:57] - Starting data preparation. Input dataset shape: (35040, 37)
+[2026-07-24 10:16:31] [INFO] [forecasting.data_prep:data_prep.py:99] - Encoding categorical features via OrdinalEncoder: ['WeekStatus', 'Day_of_week', 'Load_Type']
+  → Confirmed tariff-proxy features present: ['Load_Type', 'WeekStatus', 'Day_of_week']
+[2026-07-24 10:16:31] [INFO] [forecasting.data_prep:data_prep.py:125] - Time-series chronological split complete (80% Train / 20% Test): Train Shape: (28032, 34), Test Shape: (7008, 34)
+[2026-07-24 10:16:31] [INFO] [forecasting.data_prep:data_prep.py:129] - Train Period: 2018-01-01 00:00:00 to 2018-10-19 23:45:00 | Test Period: 2018-10-20 00:00:00 to 2018-12-31 23:45:00
+[2026-07-24 10:16:31] [INFO] [forecasting.data_prep:data_prep.py:154] - Preprocessor artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\preprocessor.joblib
+[2026-07-24 10:16:31] [INFO] [forecasting.trainer:trainer.py:53] - ==================================================
+[2026-07-24 10:16:31] [INFO] [forecasting.trainer:trainer.py:54] - Starting Energy Demand Forecasting Model Training
+[2026-07-24 10:16:31] [INFO] [forecasting.trainer:trainer.py:55] - ==================================================
+[2026-07-24 10:16:31] [INFO] [forecasting.xgb_model:xgb_model.py:46] - Initializing XGBoost Regressor with parameters: {'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 3, 'random_state': 42, 'n_jobs': -1, 'objective': 'reg:squarederror'}
+[2026-07-24 10:16:31] [INFO] [forecasting.xgb_model:xgb_model.py:56] - Fitting XGBoost model on 28032 samples...
+[2026-07-24 10:16:33] [INFO] [forecasting.xgb_model:xgb_model.py:58] - XGBoost model training completed successfully.
+[2026-07-24 10:16:33] [INFO] [forecasting.xgb_model:xgb_model.py:122] - XGBoost model artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 10:16:33] [INFO] [forecasting.trainer:trainer.py:62] - Model training successfully completed. Saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 10:16:33] [INFO] [forecasting.evaluator:evaluator.py:68] - --------------------------------------------------
+[2026-07-24 10:16:33] [INFO] [forecasting.evaluator:evaluator.py:69] - ENERGY DEMAND FORECASTING MODEL EVALUATION RESULTS:
+[2026-07-24 10:16:33] [INFO] [forecasting.evaluator:evaluator.py:70] -   • MAE  (Mean Absolute Error):      0.5078 kWh
+[2026-07-24 10:16:33] [INFO] [forecasting.evaluator:evaluator.py:71] -   • RMSE (Root Mean Squared Error):  0.9976 kWh
+[2026-07-24 10:16:33] [INFO] [forecasting.evaluator:evaluator.py:72] -   • R²   (Coefficient of Determ.):   0.999
+[2026-07-24 10:16:33] [INFO] [forecasting.evaluator:evaluator.py:73] -   • MAPE (Mean Abs Pct Error):       2.4718%
+[2026-07-24 10:16:33] [INFO] [forecasting.evaluator:evaluator.py:74] - --------------------------------------------------
+[2026-07-24 10:16:33] [INFO] [forecasting.predictor:predictor.py:49] - Generating energy demand predictions for 7008 test samples...
+[2026-07-24 10:16:33] [INFO] [forecasting.predictor:predictor.py:66] - Test predictions exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 10:16:33] [INFO] [forecasting.predictor:predictor.py:93] - Generating future energy demand forecast for next 96 time slots (24 hours)...
+[2026-07-24 10:16:33] [INFO] [forecasting.predictor:predictor.py:137] - Future 96-step forecast exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:16:33] [INFO] [forecasting.visualizer:visualizer.py:45] - Starting automated forecast visualization generation...
+[2026-07-24 10:16:34] [INFO] [forecasting.visualizer:visualizer.py:75] - Saved: actual_vs_predicted.png
+[2026-07-24 10:16:34] [INFO] [forecasting.visualizer:visualizer.py:99] - Saved: error_distribution.png
+[2026-07-24 10:16:35] [INFO] [forecasting.visualizer:visualizer.py:129] - Saved: feature_importance.png
+[2026-07-24 10:16:35] [INFO] [forecasting.visualizer:visualizer.py:147] - Saved: residual_plot.png
+[2026-07-24 10:16:36] [INFO] [forecasting.visualizer:visualizer.py:175] - Saved: timeseries_forecast_curve.png
+[2026-07-24 10:16:36] [INFO] [forecasting.visualizer:visualizer.py:53] - All forecast figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting
+[2026-07-24 10:16:36] [INFO] [forecasting.report_generator:report_generator.py:56] - Generating forecasting performance report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 10:16:36] [INFO] [forecasting.report_generator:report_generator.py:142] - Forecasting report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 10:16:36] [INFO] [SmartMachineSchedulingSystem:main.py:61] - ▶ [Stage 3/3] Phase 3: Intelligent Machine Scheduling Engine (Google OR-Tools CP-SAT)
+[2026-07-24 10:16:36] [INFO] [scheduler.data_loader:data_loader.py:66] - Loading Job dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\jobs_cleaned.csv
+[2026-07-24 10:16:36] [INFO] [scheduler.data_loader:data_loader.py:110] - Successfully parsed 100 jobs. Baseline Timestamp: 2026-01-01 00:00:00
+[2026-07-24 10:16:36] [INFO] [scheduler.data_loader:data_loader.py:125] - Loading Machine dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\machines_cleaned.csv
+[2026-07-24 10:16:36] [INFO] [scheduler.data_loader:data_loader.py:154] - Successfully parsed 10 machines.
+[2026-07-24 10:16:36] [INFO] [scheduler.data_loader:data_loader.py:172] - Loading Phase 2 energy demand predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:16:36] [INFO] [scheduler.data_loader:data_loader.py:197] - Constructed energy cost rate profile for 96 time slots.
+[2026-07-24 10:16:36] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:16:36] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 100 jobs.
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹1542.07
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              1587.96 kWh
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    19.0 hours (1140 min)
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         51.67%
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        236.7 min
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      0 jobs (100.0% On-Time)
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:16:36] [INFO] [scheduler.optimizer:optimizer.py:68] - ==================================================
+[2026-07-24 10:16:36] [INFO] [scheduler.optimizer:optimizer.py:69] - Starting Off-Peak Shift Optimizer (Energy-Aware)
+[2026-07-24 10:16:36] [INFO] [scheduler.optimizer:optimizer.py:70] - ==================================================
+[2026-07-24 10:16:36] [INFO] [scheduler.optimizer:optimizer.py:91] - Running FCFS baseline schedule...
+[2026-07-24 10:16:36] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:16:36] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 100 jobs.
+[2026-07-24 10:16:36] [INFO] [scheduler.optimizer:optimizer.py:94] - FCFS baseline: 100 jobs scheduled.
+[2026-07-24 10:16:36] [INFO] [scheduler.optimizer:optimizer.py:223] - Off-Peak Shift Optimizer complete in 0.02s
+[2026-07-24 10:16:36] [INFO] [scheduler.optimizer:optimizer.py:224] -   FCFS Total Cost:      ₹1542.07
+[2026-07-24 10:16:36] [INFO] [scheduler.optimizer:optimizer.py:225] -   Optimized Total Cost: ₹1209.02
+[2026-07-24 10:16:36] [INFO] [scheduler.optimizer:optimizer.py:226] -   Energy Savings:       ₹333.05 (21.6% reduction)
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹1209.02
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              767.29 kWh
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    35.75 hours (2145 min)
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         30.33%
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        589.35 min
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      0 jobs (100.0% On-Time)
+[2026-07-24 10:16:36] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:16:36] [INFO] [scheduler.visualization:visualization.py:46] - Starting automated scheduling visualization plot generation...
+[2026-07-24 10:16:37] [INFO] [scheduler.visualization:visualization.py:105] - Saved: gantt_chart.png
+[2026-07-24 10:16:38] [INFO] [scheduler.visualization:visualization.py:124] - Saved: machine_timeline.png
+[2026-07-24 10:16:38] [INFO] [scheduler.visualization:visualization.py:154] - Saved: job_allocation.png
+[2026-07-24 10:16:38] [INFO] [scheduler.visualization:visualization.py:186] - Saved: machine_utilization.png
+[2026-07-24 10:16:39] [INFO] [scheduler.visualization:visualization.py:221] - Saved: cost_comparison.png
+[2026-07-24 10:16:39] [INFO] [scheduler.visualization:visualization.py:253] - Saved: kpi_dashboard.png
+[2026-07-24 10:16:40] [INFO] [scheduler.visualization:visualization.py:290] - Saved: peak_load_comparison.png
+[2026-07-24 10:16:40] [INFO] [scheduler.visualization:visualization.py:56] - All 7 scheduling figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:16:40] [INFO] [scheduler.export:export.py:40] - Exporting scheduling output CSV files to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:16:40] [INFO] [scheduler.export:export.py:77] - Saved: optimized_schedule.csv, fcfs_schedule.csv, kpi_summary.csv, comparison_report.csv
+[2026-07-24 10:16:40] [INFO] [scheduler.export:export.py:102] - Generating scheduling report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:16:40] [INFO] [scheduler.export:export.py:164] - Markdown scheduling report saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:16:40] [INFO] [SmartMachineSchedulingSystem:main.py:65] - ==================================================================================
+[2026-07-24 10:16:40] [INFO] [SmartMachineSchedulingSystem:main.py:66] - END-TO-END PIPELINE COMPLETED SUCCESSFULLY IN 10.25 SECONDS!
+[2026-07-24 10:16:40] [INFO] [SmartMachineSchedulingSystem:main.py:67] - Outputs generated in: outputs/forecasting, outputs/scheduling, outputs/reports
+[2026-07-24 10:16:40] [INFO] [SmartMachineSchedulingSystem:main.py:68] - ==================================================================================
+[2026-07-24 10:26:54] [INFO] [SmartMachineSchedulingSystem:main.py:38] - ==================================================================================
+[2026-07-24 10:26:54] [INFO] [SmartMachineSchedulingSystem:main.py:39] - STARTING COMPLETE END-TO-END PIPELINE: SMART MACHINE SCHEDULING & ENERGY AI
+[2026-07-24 10:26:54] [INFO] [SmartMachineSchedulingSystem:main.py:40] - ==================================================================================
+[2026-07-24 10:26:54] [INFO] [SmartMachineSchedulingSystem:main.py:47] - ▶ [Stage 1/3] Phase 1: Data Cleaning, Validation & Time-Series Feature Engineering
+[2026-07-24 10:26:54] [INFO] [preprocessing.loader:loader.py:83] - Loading all project datasets (Energy, Job, Machine)...
+[2026-07-24 10:26:54] [INFO] [preprocessing.loader:loader.py:35] - Loading Energy dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\Steel_industry_data.csv
+[2026-07-24 10:26:55] [INFO] [preprocessing.loader:loader.py:37] - Energy dataset successfully loaded with shape: (35040, 11)
+[2026-07-24 10:26:55] [INFO] [preprocessing.loader:loader.py:53] - Loading Job dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\job_table.csv
+[2026-07-24 10:26:55] [INFO] [preprocessing.loader:loader.py:55] - Job dataset successfully loaded with shape: (100, 6)
+[2026-07-24 10:26:55] [INFO] [preprocessing.loader:loader.py:71] - Loading Machine dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\machine_table.csv
+[2026-07-24 10:26:55] [INFO] [preprocessing.loader:loader.py:73] - Machine dataset successfully loaded with shape: (10, 7)
+[2026-07-24 10:26:55] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Energy
+[2026-07-24 10:26:55] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Energy. Rows: 35040, Cols: 11, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:26:55] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Job
+[2026-07-24 10:26:55] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Job. Rows: 100, Cols: 6, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:26:55] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Machine
+[2026-07-24 10:26:55] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Machine. Rows: 10, Cols: 7, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:26:55] [INFO] [preprocessing.validator:validator.py:216] - Data validation report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\data_validation_report.md
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:177] - Starting cleaning pipeline for Energy Dataset...
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'date' to datetime. Sample: 2018-01-01 00:15:00
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:191] - Energy Dataset cleaning pipeline complete.
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:204] - Starting cleaning pipeline for Job Dataset...
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Deadline' to datetime. Sample: 2026-01-01 20:00:00
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Arrival_Time' to datetime. Sample: 2026-01-01 08:00:00
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:213] - Job Dataset cleaning pipeline complete.
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:226] - Starting cleaning pipeline for Machine Dataset...
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:26:55] [INFO] [preprocessing.cleaner:cleaner.py:234] - Machine Dataset cleaning pipeline complete.
+[2026-07-24 10:26:55] [INFO] [preprocessing.feature_engineering:feature_engineering.py:174] - Starting complete Feature Engineering transformation pipeline...
+[2026-07-24 10:26:55] [INFO] [preprocessing.feature_engineering:feature_engineering.py:65] - Extracting temporal and cyclical features from 'date'...
+[2026-07-24 10:26:55] [INFO] [preprocessing.feature_engineering:feature_engineering.py:86] - Temporal and cyclical feature extraction completed.
+[2026-07-24 10:26:55] [INFO] [preprocessing.feature_engineering:feature_engineering.py:105] - Generating lag features for 'Usage_kWh' using steps: [1, 2, 4, 96]...
+[2026-07-24 10:26:55] [INFO] [preprocessing.feature_engineering:feature_engineering.py:114] - Lag features generated successfully.
+[2026-07-24 10:26:55] [INFO] [preprocessing.feature_engineering:feature_engineering.py:133] - Generating rolling window features for 'Usage_kWh' with windows: [4, 96]...
+[2026-07-24 10:26:55] [INFO] [preprocessing.feature_engineering:feature_engineering.py:160] - Rolling window features generated successfully.
+[2026-07-24 10:26:55] [INFO] [preprocessing.feature_engineering:feature_engineering.py:184] - Filled initial lag/rolling NA values (Initial NAs: 111, Final NAs: 0).
+[2026-07-24 10:26:55] [INFO] [preprocessing.feature_engineering:feature_engineering.py:186] - Feature engineering transformation completed successfully. New Dataset Shape: (35040, 37)
+[2026-07-24 10:26:56] [INFO] [SmartMachineSchedulingSystem:main.py:51] - ▶ [Stage 2/3] Phase 2: Time-Series Energy Forecasting (XGBoost Regressor)
+[2026-07-24 10:26:56] [INFO] [SmartMachineSchedulingSystem:main.py:57] - Existing trained XGBoost model checkpoint found at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib. Proceeding.
+[2026-07-24 10:26:56] [INFO] [forecasting.data_prep:data_prep.py:57] - Starting data preparation. Input dataset shape: (35040, 37)
+[2026-07-24 10:26:56] [INFO] [forecasting.data_prep:data_prep.py:99] - Encoding categorical features via OrdinalEncoder: ['WeekStatus', 'Day_of_week', 'Load_Type']
+  → Confirmed tariff-proxy features present: ['Load_Type', 'WeekStatus', 'Day_of_week']
+[2026-07-24 10:26:56] [INFO] [forecasting.data_prep:data_prep.py:125] - Time-series chronological split complete (80% Train / 20% Test): Train Shape: (28032, 34), Test Shape: (7008, 34)
+[2026-07-24 10:26:56] [INFO] [forecasting.data_prep:data_prep.py:129] - Train Period: 2018-01-01 00:00:00 to 2018-10-19 23:45:00 | Test Period: 2018-10-20 00:00:00 to 2018-12-31 23:45:00
+[2026-07-24 10:26:56] [INFO] [forecasting.data_prep:data_prep.py:154] - Preprocessor artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\preprocessor.joblib
+[2026-07-24 10:26:56] [INFO] [forecasting.trainer:trainer.py:53] - ==================================================
+[2026-07-24 10:26:56] [INFO] [forecasting.trainer:trainer.py:54] - Starting Energy Demand Forecasting Model Training
+[2026-07-24 10:26:56] [INFO] [forecasting.trainer:trainer.py:55] - ==================================================
+[2026-07-24 10:26:56] [INFO] [forecasting.xgb_model:xgb_model.py:46] - Initializing XGBoost Regressor with parameters: {'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 3, 'random_state': 42, 'n_jobs': -1, 'objective': 'reg:squarederror'}
+[2026-07-24 10:26:56] [INFO] [forecasting.xgb_model:xgb_model.py:56] - Fitting XGBoost model on 28032 samples...
+[2026-07-24 10:26:57] [INFO] [forecasting.xgb_model:xgb_model.py:58] - XGBoost model training completed successfully.
+[2026-07-24 10:26:57] [INFO] [forecasting.xgb_model:xgb_model.py:122] - XGBoost model artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 10:26:57] [INFO] [forecasting.trainer:trainer.py:62] - Model training successfully completed. Saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 10:26:57] [INFO] [forecasting.evaluator:evaluator.py:68] - --------------------------------------------------
+[2026-07-24 10:26:57] [INFO] [forecasting.evaluator:evaluator.py:69] - ENERGY DEMAND FORECASTING MODEL EVALUATION RESULTS:
+[2026-07-24 10:26:57] [INFO] [forecasting.evaluator:evaluator.py:70] -   • MAE  (Mean Absolute Error):      0.5078 kWh
+[2026-07-24 10:26:57] [INFO] [forecasting.evaluator:evaluator.py:71] -   • RMSE (Root Mean Squared Error):  0.9976 kWh
+[2026-07-24 10:26:57] [INFO] [forecasting.evaluator:evaluator.py:72] -   • R²   (Coefficient of Determ.):   0.999
+[2026-07-24 10:26:57] [INFO] [forecasting.evaluator:evaluator.py:73] -   • MAPE (Mean Abs Pct Error):       2.4718%
+[2026-07-24 10:26:57] [INFO] [forecasting.evaluator:evaluator.py:74] - --------------------------------------------------
+[2026-07-24 10:26:57] [INFO] [forecasting.predictor:predictor.py:49] - Generating energy demand predictions for 7008 test samples...
+[2026-07-24 10:26:57] [INFO] [forecasting.predictor:predictor.py:66] - Test predictions exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 10:26:57] [INFO] [forecasting.predictor:predictor.py:93] - Generating future energy demand forecast for next 96 time slots (24 hours)...
+[2026-07-24 10:26:58] [INFO] [forecasting.predictor:predictor.py:137] - Future 96-step forecast exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:26:58] [INFO] [forecasting.visualizer:visualizer.py:45] - Starting automated forecast visualization generation...
+[2026-07-24 10:26:58] [INFO] [forecasting.visualizer:visualizer.py:75] - Saved: actual_vs_predicted.png
+[2026-07-24 10:26:59] [INFO] [forecasting.visualizer:visualizer.py:99] - Saved: error_distribution.png
+[2026-07-24 10:26:59] [INFO] [forecasting.visualizer:visualizer.py:129] - Saved: feature_importance.png
+[2026-07-24 10:27:00] [INFO] [forecasting.visualizer:visualizer.py:147] - Saved: residual_plot.png
+[2026-07-24 10:27:00] [INFO] [forecasting.visualizer:visualizer.py:175] - Saved: timeseries_forecast_curve.png
+[2026-07-24 10:27:00] [INFO] [forecasting.visualizer:visualizer.py:53] - All forecast figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting
+[2026-07-24 10:27:00] [INFO] [forecasting.report_generator:report_generator.py:56] - Generating forecasting performance report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 10:27:00] [INFO] [forecasting.report_generator:report_generator.py:142] - Forecasting report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 10:27:00] [INFO] [SmartMachineSchedulingSystem:main.py:61] - ▶ [Stage 3/3] Phase 3: Intelligent Machine Scheduling Engine (Google OR-Tools CP-SAT)
+[2026-07-24 10:27:00] [INFO] [scheduler.data_loader:data_loader.py:66] - Loading Job dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\jobs_cleaned.csv
+[2026-07-24 10:27:01] [INFO] [scheduler.data_loader:data_loader.py:110] - Successfully parsed 100 jobs. Baseline Timestamp: 2026-01-01 00:00:00
+[2026-07-24 10:27:01] [INFO] [scheduler.data_loader:data_loader.py:125] - Loading Machine dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\machines_cleaned.csv
+[2026-07-24 10:27:01] [INFO] [scheduler.data_loader:data_loader.py:154] - Successfully parsed 10 machines.
+[2026-07-24 10:27:01] [INFO] [scheduler.data_loader:data_loader.py:172] - Loading Phase 2 energy demand predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:27:01] [INFO] [scheduler.data_loader:data_loader.py:197] - Constructed energy cost rate profile for 96 time slots.
+[2026-07-24 10:27:01] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:27:01] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 100 jobs.
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹1489.16
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              1558.96 kWh
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    16.25 hours (975 min)
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         48.97%
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        385.05 min
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      25 jobs (75.0% On-Time)
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:27:01] [INFO] [scheduler.optimizer:optimizer.py:77] - ==================================================
+[2026-07-24 10:27:01] [INFO] [scheduler.optimizer:optimizer.py:78] - Starting Priority-Aware Energy-Efficient Optimizer
+[2026-07-24 10:27:01] [INFO] [scheduler.optimizer:optimizer.py:79] - ==================================================
+[2026-07-24 10:27:01] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:27:01] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 100 jobs.
+[2026-07-24 10:27:01] [INFO] [scheduler.optimizer:optimizer.py:224] - Priority-Aware Optimizer complete in 0.14s
+[2026-07-24 10:27:01] [INFO] [scheduler.optimizer:optimizer.py:225] -   FCFS Total Cost:      ₹1489.16
+[2026-07-24 10:27:01] [INFO] [scheduler.optimizer:optimizer.py:226] -   Optimized Total Cost: ₹736.10
+[2026-07-24 10:27:01] [INFO] [scheduler.optimizer:optimizer.py:227] -   Energy Savings:       ₹753.06 (50.6% reduction)
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹736.1
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              386.52 kWh
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    83.0 hours (4980 min)
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         12.53%
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        1436.55 min
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      89 jobs (11.0% On-Time)
+[2026-07-24 10:27:01] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:27:01] [INFO] [scheduler.visualization:visualization.py:46] - Starting automated scheduling visualization plot generation...
+[2026-07-24 10:27:02] [INFO] [scheduler.visualization:visualization.py:105] - Saved: gantt_chart.png
+[2026-07-24 10:27:02] [INFO] [scheduler.visualization:visualization.py:124] - Saved: machine_timeline.png
+[2026-07-24 10:27:02] [INFO] [scheduler.visualization:visualization.py:154] - Saved: job_allocation.png
+[2026-07-24 10:27:03] [INFO] [scheduler.visualization:visualization.py:186] - Saved: machine_utilization.png
+[2026-07-24 10:27:03] [INFO] [scheduler.visualization:visualization.py:221] - Saved: cost_comparison.png
+[2026-07-24 10:27:04] [INFO] [scheduler.visualization:visualization.py:253] - Saved: kpi_dashboard.png
+[2026-07-24 10:27:04] [INFO] [scheduler.visualization:visualization.py:290] - Saved: peak_load_comparison.png
+[2026-07-24 10:27:04] [INFO] [scheduler.visualization:visualization.py:56] - All 7 scheduling figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:27:04] [INFO] [scheduler.export:export.py:40] - Exporting scheduling output CSV files to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:27:04] [INFO] [scheduler.export:export.py:77] - Saved: optimized_schedule.csv, fcfs_schedule.csv, kpi_summary.csv, comparison_report.csv
+[2026-07-24 10:27:04] [INFO] [scheduler.export:export.py:102] - Generating scheduling report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:27:04] [INFO] [scheduler.export:export.py:164] - Markdown scheduling report saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:27:04] [INFO] [SmartMachineSchedulingSystem:main.py:65] - ==================================================================================
+[2026-07-24 10:27:04] [INFO] [SmartMachineSchedulingSystem:main.py:66] - END-TO-END PIPELINE COMPLETED SUCCESSFULLY IN 9.6 SECONDS!
+[2026-07-24 10:27:04] [INFO] [SmartMachineSchedulingSystem:main.py:67] - Outputs generated in: outputs/forecasting, outputs/scheduling, outputs/reports
+[2026-07-24 10:27:04] [INFO] [SmartMachineSchedulingSystem:main.py:68] - ==================================================================================
+[2026-07-24 10:45:30] [INFO] [SmartMachineSchedulingSystem:main.py:38] - ==================================================================================
+[2026-07-24 10:45:30] [INFO] [SmartMachineSchedulingSystem:main.py:39] - STARTING COMPLETE END-TO-END PIPELINE: SMART MACHINE SCHEDULING & ENERGY AI
+[2026-07-24 10:45:30] [INFO] [SmartMachineSchedulingSystem:main.py:40] - ==================================================================================
+[2026-07-24 10:45:30] [INFO] [SmartMachineSchedulingSystem:main.py:47] - ▶ [Stage 1/3] Phase 1: Data Cleaning, Validation & Time-Series Feature Engineering
+[2026-07-24 10:45:30] [INFO] [preprocessing.loader:loader.py:83] - Loading all project datasets (Energy, Job, Machine)...
+[2026-07-24 10:45:30] [INFO] [preprocessing.loader:loader.py:35] - Loading Energy dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\Steel_industry_data.csv
+[2026-07-24 10:45:30] [INFO] [preprocessing.loader:loader.py:37] - Energy dataset successfully loaded with shape: (35040, 11)
+[2026-07-24 10:45:30] [INFO] [preprocessing.loader:loader.py:53] - Loading Job dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\job_table.csv
+[2026-07-24 10:45:30] [INFO] [preprocessing.loader:loader.py:55] - Job dataset successfully loaded with shape: (100, 6)
+[2026-07-24 10:45:30] [INFO] [preprocessing.loader:loader.py:71] - Loading Machine dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\machine_table.csv
+[2026-07-24 10:45:30] [INFO] [preprocessing.loader:loader.py:73] - Machine dataset successfully loaded with shape: (10, 7)
+[2026-07-24 10:45:30] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Energy
+[2026-07-24 10:45:30] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Energy. Rows: 35040, Cols: 11, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:45:30] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Job
+[2026-07-24 10:45:30] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Job. Rows: 100, Cols: 6, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:45:30] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Machine
+[2026-07-24 10:45:30] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Machine. Rows: 10, Cols: 7, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:45:30] [INFO] [preprocessing.validator:validator.py:216] - Data validation report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\data_validation_report.md
+[2026-07-24 10:45:30] [INFO] [preprocessing.cleaner:cleaner.py:177] - Starting cleaning pipeline for Energy Dataset...
+[2026-07-24 10:45:30] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:45:30] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'date' to datetime. Sample: 2018-01-01 00:15:00
+[2026-07-24 10:45:31] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:45:31] [INFO] [preprocessing.cleaner:cleaner.py:191] - Energy Dataset cleaning pipeline complete.
+[2026-07-24 10:45:31] [INFO] [preprocessing.cleaner:cleaner.py:204] - Starting cleaning pipeline for Job Dataset...
+[2026-07-24 10:45:31] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:45:31] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Deadline' to datetime. Sample: 2026-01-01 20:00:00
+[2026-07-24 10:45:31] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Arrival_Time' to datetime. Sample: 2026-01-01 08:00:00
+[2026-07-24 10:45:31] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:45:31] [INFO] [preprocessing.cleaner:cleaner.py:213] - Job Dataset cleaning pipeline complete.
+[2026-07-24 10:45:31] [INFO] [preprocessing.cleaner:cleaner.py:226] - Starting cleaning pipeline for Machine Dataset...
+[2026-07-24 10:45:31] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:45:31] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:45:31] [INFO] [preprocessing.cleaner:cleaner.py:234] - Machine Dataset cleaning pipeline complete.
+[2026-07-24 10:45:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:174] - Starting complete Feature Engineering transformation pipeline...
+[2026-07-24 10:45:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:65] - Extracting temporal and cyclical features from 'date'...
+[2026-07-24 10:45:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:86] - Temporal and cyclical feature extraction completed.
+[2026-07-24 10:45:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:105] - Generating lag features for 'Usage_kWh' using steps: [1, 2, 4, 96]...
+[2026-07-24 10:45:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:114] - Lag features generated successfully.
+[2026-07-24 10:45:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:133] - Generating rolling window features for 'Usage_kWh' with windows: [4, 96]...
+[2026-07-24 10:45:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:160] - Rolling window features generated successfully.
+[2026-07-24 10:45:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:184] - Filled initial lag/rolling NA values (Initial NAs: 111, Final NAs: 0).
+[2026-07-24 10:45:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:186] - Feature engineering transformation completed successfully. New Dataset Shape: (35040, 37)
+[2026-07-24 10:45:31] [INFO] [SmartMachineSchedulingSystem:main.py:51] - ▶ [Stage 2/3] Phase 2: Time-Series Energy Forecasting (XGBoost Regressor)
+[2026-07-24 10:45:31] [INFO] [SmartMachineSchedulingSystem:main.py:57] - Existing trained XGBoost model checkpoint found at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib. Proceeding.
+[2026-07-24 10:45:32] [INFO] [forecasting.data_prep:data_prep.py:57] - Starting data preparation. Input dataset shape: (35040, 37)
+[2026-07-24 10:45:32] [INFO] [forecasting.data_prep:data_prep.py:99] - Encoding categorical features via OrdinalEncoder: ['WeekStatus', 'Day_of_week', 'Load_Type']
+  → Confirmed tariff-proxy features present: ['Load_Type', 'WeekStatus', 'Day_of_week']
+[2026-07-24 10:45:32] [INFO] [forecasting.data_prep:data_prep.py:125] - Time-series chronological split complete (80% Train / 20% Test): Train Shape: (28032, 34), Test Shape: (7008, 34)
+[2026-07-24 10:45:32] [INFO] [forecasting.data_prep:data_prep.py:129] - Train Period: 2018-01-01 00:00:00 to 2018-10-19 23:45:00 | Test Period: 2018-10-20 00:00:00 to 2018-12-31 23:45:00
+[2026-07-24 10:45:32] [INFO] [forecasting.data_prep:data_prep.py:154] - Preprocessor artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\preprocessor.joblib
+[2026-07-24 10:45:32] [INFO] [forecasting.trainer:trainer.py:53] - ==================================================
+[2026-07-24 10:45:32] [INFO] [forecasting.trainer:trainer.py:54] - Starting Energy Demand Forecasting Model Training
+[2026-07-24 10:45:32] [INFO] [forecasting.trainer:trainer.py:55] - ==================================================
+[2026-07-24 10:45:32] [INFO] [forecasting.xgb_model:xgb_model.py:46] - Initializing XGBoost Regressor with parameters: {'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 3, 'random_state': 42, 'n_jobs': -1, 'objective': 'reg:squarederror'}
+[2026-07-24 10:45:32] [INFO] [forecasting.xgb_model:xgb_model.py:56] - Fitting XGBoost model on 28032 samples...
+[2026-07-24 10:45:33] [INFO] [forecasting.xgb_model:xgb_model.py:58] - XGBoost model training completed successfully.
+[2026-07-24 10:45:33] [INFO] [forecasting.xgb_model:xgb_model.py:122] - XGBoost model artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 10:45:33] [INFO] [forecasting.trainer:trainer.py:62] - Model training successfully completed. Saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 10:45:33] [INFO] [forecasting.evaluator:evaluator.py:68] - --------------------------------------------------
+[2026-07-24 10:45:33] [INFO] [forecasting.evaluator:evaluator.py:69] - ENERGY DEMAND FORECASTING MODEL EVALUATION RESULTS:
+[2026-07-24 10:45:33] [INFO] [forecasting.evaluator:evaluator.py:70] -   • MAE  (Mean Absolute Error):      0.5078 kWh
+[2026-07-24 10:45:33] [INFO] [forecasting.evaluator:evaluator.py:71] -   • RMSE (Root Mean Squared Error):  0.9976 kWh
+[2026-07-24 10:45:33] [INFO] [forecasting.evaluator:evaluator.py:72] -   • R²   (Coefficient of Determ.):   0.999
+[2026-07-24 10:45:33] [INFO] [forecasting.evaluator:evaluator.py:73] -   • MAPE (Mean Abs Pct Error):       2.4718%
+[2026-07-24 10:45:33] [INFO] [forecasting.evaluator:evaluator.py:74] - --------------------------------------------------
+[2026-07-24 10:45:33] [INFO] [forecasting.predictor:predictor.py:49] - Generating energy demand predictions for 7008 test samples...
+[2026-07-24 10:45:33] [INFO] [forecasting.predictor:predictor.py:66] - Test predictions exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 10:45:33] [INFO] [forecasting.predictor:predictor.py:93] - Generating future energy demand forecast for next 96 time slots (24 hours)...
+[2026-07-24 10:45:34] [INFO] [forecasting.predictor:predictor.py:137] - Future 96-step forecast exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:45:34] [INFO] [forecasting.visualizer:visualizer.py:45] - Starting automated forecast visualization generation...
+[2026-07-24 10:45:34] [INFO] [forecasting.visualizer:visualizer.py:75] - Saved: actual_vs_predicted.png
+[2026-07-24 10:45:35] [INFO] [forecasting.visualizer:visualizer.py:99] - Saved: error_distribution.png
+[2026-07-24 10:45:35] [INFO] [forecasting.visualizer:visualizer.py:129] - Saved: feature_importance.png
+[2026-07-24 10:45:36] [INFO] [forecasting.visualizer:visualizer.py:147] - Saved: residual_plot.png
+[2026-07-24 10:45:37] [INFO] [forecasting.visualizer:visualizer.py:175] - Saved: timeseries_forecast_curve.png
+[2026-07-24 10:45:37] [INFO] [forecasting.visualizer:visualizer.py:53] - All forecast figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting
+[2026-07-24 10:45:37] [INFO] [forecasting.report_generator:report_generator.py:56] - Generating forecasting performance report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 10:45:37] [INFO] [forecasting.report_generator:report_generator.py:142] - Forecasting report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 10:45:37] [INFO] [SmartMachineSchedulingSystem:main.py:61] - ▶ [Stage 3/3] Phase 3: Intelligent Machine Scheduling Engine (Google OR-Tools CP-SAT)
+[2026-07-24 10:45:37] [INFO] [scheduler.data_loader:data_loader.py:66] - Loading Job dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\jobs_cleaned.csv
+[2026-07-24 10:45:37] [INFO] [scheduler.data_loader:data_loader.py:110] - Successfully parsed 100 jobs. Baseline Timestamp: 2026-01-01 00:00:00
+[2026-07-24 10:45:37] [INFO] [scheduler.data_loader:data_loader.py:125] - Loading Machine dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\machines_cleaned.csv
+[2026-07-24 10:45:37] [INFO] [scheduler.data_loader:data_loader.py:154] - Successfully parsed 10 machines.
+[2026-07-24 10:45:37] [INFO] [scheduler.data_loader:data_loader.py:172] - Loading Phase 2 energy demand predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:45:37] [INFO] [scheduler.data_loader:data_loader.py:197] - Constructed energy cost rate profile for 96 time slots.
+[2026-07-24 10:45:37] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:45:37] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 100 jobs.
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹1489.16
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              1558.96 kWh
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    16.25 hours (975 min)
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         48.97%
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        385.05 min
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      25 jobs (75.0% On-Time)
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:45:37] [INFO] [scheduler.optimizer:optimizer.py:57] - ==================================================
+[2026-07-24 10:45:37] [INFO] [scheduler.optimizer:optimizer.py:58] - Starting Smart Energy-Aware Machine Scheduler
+[2026-07-24 10:45:37] [INFO] [scheduler.optimizer:optimizer.py:59] - ==================================================
+[2026-07-24 10:45:37] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:45:37] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 100 jobs.
+[2026-07-24 10:45:37] [INFO] [scheduler.optimizer:optimizer.py:202] - Smart Energy Optimizer complete in 0.01s
+[2026-07-24 10:45:37] [INFO] [scheduler.optimizer:optimizer.py:203] -   FCFS Total Cost:      ₹1489.16
+[2026-07-24 10:45:37] [INFO] [scheduler.optimizer:optimizer.py:204] -   Optimized Total Cost: ₹1366.26
+[2026-07-24 10:45:37] [INFO] [scheduler.optimizer:optimizer.py:205] -   Energy Savings:       ₹122.90 (8.3% reduction)
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹1366.26
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              1379.95 kWh
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    22.0 hours (1320 min)
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         39.58%
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        432.3 min
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      26 jobs (74.0% On-Time)
+[2026-07-24 10:45:37] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:45:37] [INFO] [scheduler.visualization:visualization.py:46] - Starting automated scheduling visualization plot generation...
+[2026-07-24 10:45:38] [INFO] [scheduler.visualization:visualization.py:105] - Saved: gantt_chart.png
+[2026-07-24 10:45:38] [INFO] [scheduler.visualization:visualization.py:124] - Saved: machine_timeline.png
+[2026-07-24 10:45:38] [INFO] [scheduler.visualization:visualization.py:154] - Saved: job_allocation.png
+[2026-07-24 10:45:39] [INFO] [scheduler.visualization:visualization.py:186] - Saved: machine_utilization.png
+[2026-07-24 10:45:39] [INFO] [scheduler.visualization:visualization.py:221] - Saved: cost_comparison.png
+[2026-07-24 10:45:40] [INFO] [scheduler.visualization:visualization.py:253] - Saved: kpi_dashboard.png
+[2026-07-24 10:45:40] [INFO] [scheduler.visualization:visualization.py:290] - Saved: peak_load_comparison.png
+[2026-07-24 10:45:40] [INFO] [scheduler.visualization:visualization.py:56] - All 7 scheduling figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:45:40] [INFO] [scheduler.export:export.py:40] - Exporting scheduling output CSV files to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:45:40] [INFO] [scheduler.export:export.py:77] - Saved: optimized_schedule.csv, fcfs_schedule.csv, kpi_summary.csv, comparison_report.csv
+[2026-07-24 10:45:40] [INFO] [scheduler.export:export.py:102] - Generating scheduling report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:45:40] [INFO] [scheduler.export:export.py:173] - Markdown scheduling report saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:45:40] [INFO] [SmartMachineSchedulingSystem:main.py:65] - ==================================================================================
+[2026-07-24 10:45:40] [INFO] [SmartMachineSchedulingSystem:main.py:66] - END-TO-END PIPELINE COMPLETED SUCCESSFULLY IN 10.02 SECONDS!
+[2026-07-24 10:45:40] [INFO] [SmartMachineSchedulingSystem:main.py:67] - Outputs generated in: outputs/forecasting, outputs/scheduling, outputs/reports
+[2026-07-24 10:45:40] [INFO] [SmartMachineSchedulingSystem:main.py:68] - ==================================================================================
+[2026-07-24 10:48:05] [INFO] [SmartMachineSchedulingSystem:main.py:38] - ==================================================================================
+[2026-07-24 10:48:05] [INFO] [SmartMachineSchedulingSystem:main.py:39] - STARTING COMPLETE END-TO-END PIPELINE: SMART MACHINE SCHEDULING & ENERGY AI
+[2026-07-24 10:48:05] [INFO] [SmartMachineSchedulingSystem:main.py:40] - ==================================================================================
+[2026-07-24 10:48:05] [INFO] [SmartMachineSchedulingSystem:main.py:47] - ▶ [Stage 1/3] Phase 1: Data Cleaning, Validation & Time-Series Feature Engineering
+[2026-07-24 10:48:05] [INFO] [preprocessing.loader:loader.py:83] - Loading all project datasets (Energy, Job, Machine)...
+[2026-07-24 10:48:05] [INFO] [preprocessing.loader:loader.py:35] - Loading Energy dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\Steel_industry_data.csv
+[2026-07-24 10:48:06] [INFO] [preprocessing.loader:loader.py:37] - Energy dataset successfully loaded with shape: (35040, 11)
+[2026-07-24 10:48:06] [INFO] [preprocessing.loader:loader.py:53] - Loading Job dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\job_table.csv
+[2026-07-24 10:48:06] [INFO] [preprocessing.loader:loader.py:55] - Job dataset successfully loaded with shape: (100, 6)
+[2026-07-24 10:48:06] [INFO] [preprocessing.loader:loader.py:71] - Loading Machine dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\machine_table.csv
+[2026-07-24 10:48:06] [INFO] [preprocessing.loader:loader.py:73] - Machine dataset successfully loaded with shape: (10, 7)
+[2026-07-24 10:48:06] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Energy
+[2026-07-24 10:48:06] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Energy. Rows: 35040, Cols: 11, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:48:06] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Job
+[2026-07-24 10:48:06] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Job. Rows: 100, Cols: 6, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:48:06] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Machine
+[2026-07-24 10:48:06] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Machine. Rows: 10, Cols: 7, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:48:06] [INFO] [preprocessing.validator:validator.py:216] - Data validation report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\data_validation_report.md
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:177] - Starting cleaning pipeline for Energy Dataset...
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'date' to datetime. Sample: 2018-01-01 00:15:00
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:191] - Energy Dataset cleaning pipeline complete.
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:204] - Starting cleaning pipeline for Job Dataset...
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Deadline' to datetime. Sample: 2026-01-01 20:00:00
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Arrival_Time' to datetime. Sample: 2026-01-01 08:00:00
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:213] - Job Dataset cleaning pipeline complete.
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:226] - Starting cleaning pipeline for Machine Dataset...
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:48:06] [INFO] [preprocessing.cleaner:cleaner.py:234] - Machine Dataset cleaning pipeline complete.
+[2026-07-24 10:48:06] [INFO] [preprocessing.feature_engineering:feature_engineering.py:174] - Starting complete Feature Engineering transformation pipeline...
+[2026-07-24 10:48:06] [INFO] [preprocessing.feature_engineering:feature_engineering.py:65] - Extracting temporal and cyclical features from 'date'...
+[2026-07-24 10:48:06] [INFO] [preprocessing.feature_engineering:feature_engineering.py:86] - Temporal and cyclical feature extraction completed.
+[2026-07-24 10:48:06] [INFO] [preprocessing.feature_engineering:feature_engineering.py:105] - Generating lag features for 'Usage_kWh' using steps: [1, 2, 4, 96]...
+[2026-07-24 10:48:06] [INFO] [preprocessing.feature_engineering:feature_engineering.py:114] - Lag features generated successfully.
+[2026-07-24 10:48:06] [INFO] [preprocessing.feature_engineering:feature_engineering.py:133] - Generating rolling window features for 'Usage_kWh' with windows: [4, 96]...
+[2026-07-24 10:48:06] [INFO] [preprocessing.feature_engineering:feature_engineering.py:160] - Rolling window features generated successfully.
+[2026-07-24 10:48:06] [INFO] [preprocessing.feature_engineering:feature_engineering.py:184] - Filled initial lag/rolling NA values (Initial NAs: 111, Final NAs: 0).
+[2026-07-24 10:48:06] [INFO] [preprocessing.feature_engineering:feature_engineering.py:186] - Feature engineering transformation completed successfully. New Dataset Shape: (35040, 37)
+[2026-07-24 10:48:07] [INFO] [SmartMachineSchedulingSystem:main.py:51] - ▶ [Stage 2/3] Phase 2: Time-Series Energy Forecasting (XGBoost Regressor)
+[2026-07-24 10:48:07] [INFO] [SmartMachineSchedulingSystem:main.py:57] - Existing trained XGBoost model checkpoint found at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib. Proceeding.
+[2026-07-24 10:48:07] [INFO] [forecasting.data_prep:data_prep.py:57] - Starting data preparation. Input dataset shape: (35040, 37)
+[2026-07-24 10:48:07] [INFO] [forecasting.data_prep:data_prep.py:99] - Encoding categorical features via OrdinalEncoder: ['WeekStatus', 'Day_of_week', 'Load_Type']
+  → Confirmed tariff-proxy features present: ['Load_Type', 'WeekStatus', 'Day_of_week']
+[2026-07-24 10:48:07] [INFO] [forecasting.data_prep:data_prep.py:125] - Time-series chronological split complete (80% Train / 20% Test): Train Shape: (28032, 34), Test Shape: (7008, 34)
+[2026-07-24 10:48:07] [INFO] [forecasting.data_prep:data_prep.py:129] - Train Period: 2018-01-01 00:00:00 to 2018-10-19 23:45:00 | Test Period: 2018-10-20 00:00:00 to 2018-12-31 23:45:00
+[2026-07-24 10:48:07] [INFO] [forecasting.data_prep:data_prep.py:154] - Preprocessor artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\preprocessor.joblib
+[2026-07-24 10:48:07] [INFO] [forecasting.trainer:trainer.py:53] - ==================================================
+[2026-07-24 10:48:07] [INFO] [forecasting.trainer:trainer.py:54] - Starting Energy Demand Forecasting Model Training
+[2026-07-24 10:48:07] [INFO] [forecasting.trainer:trainer.py:55] - ==================================================
+[2026-07-24 10:48:07] [INFO] [forecasting.xgb_model:xgb_model.py:46] - Initializing XGBoost Regressor with parameters: {'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 3, 'random_state': 42, 'n_jobs': -1, 'objective': 'reg:squarederror'}
+[2026-07-24 10:48:07] [INFO] [forecasting.xgb_model:xgb_model.py:56] - Fitting XGBoost model on 28032 samples...
+[2026-07-24 10:48:08] [INFO] [forecasting.xgb_model:xgb_model.py:58] - XGBoost model training completed successfully.
+[2026-07-24 10:48:08] [INFO] [forecasting.xgb_model:xgb_model.py:122] - XGBoost model artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 10:48:08] [INFO] [forecasting.trainer:trainer.py:62] - Model training successfully completed. Saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 10:48:08] [INFO] [forecasting.evaluator:evaluator.py:68] - --------------------------------------------------
+[2026-07-24 10:48:08] [INFO] [forecasting.evaluator:evaluator.py:69] - ENERGY DEMAND FORECASTING MODEL EVALUATION RESULTS:
+[2026-07-24 10:48:08] [INFO] [forecasting.evaluator:evaluator.py:70] -   • MAE  (Mean Absolute Error):      0.5078 kWh
+[2026-07-24 10:48:08] [INFO] [forecasting.evaluator:evaluator.py:71] -   • RMSE (Root Mean Squared Error):  0.9976 kWh
+[2026-07-24 10:48:08] [INFO] [forecasting.evaluator:evaluator.py:72] -   • R²   (Coefficient of Determ.):   0.999
+[2026-07-24 10:48:08] [INFO] [forecasting.evaluator:evaluator.py:73] -   • MAPE (Mean Abs Pct Error):       2.4718%
+[2026-07-24 10:48:08] [INFO] [forecasting.evaluator:evaluator.py:74] - --------------------------------------------------
+[2026-07-24 10:48:08] [INFO] [forecasting.predictor:predictor.py:49] - Generating energy demand predictions for 7008 test samples...
+[2026-07-24 10:48:08] [INFO] [forecasting.predictor:predictor.py:66] - Test predictions exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 10:48:08] [INFO] [forecasting.predictor:predictor.py:93] - Generating future energy demand forecast for next 96 time slots (24 hours)...
+[2026-07-24 10:48:09] [INFO] [forecasting.predictor:predictor.py:137] - Future 96-step forecast exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:48:09] [INFO] [forecasting.visualizer:visualizer.py:45] - Starting automated forecast visualization generation...
+[2026-07-24 10:48:09] [INFO] [forecasting.visualizer:visualizer.py:75] - Saved: actual_vs_predicted.png
+[2026-07-24 10:48:10] [INFO] [forecasting.visualizer:visualizer.py:99] - Saved: error_distribution.png
+[2026-07-24 10:48:10] [INFO] [forecasting.visualizer:visualizer.py:129] - Saved: feature_importance.png
+[2026-07-24 10:48:11] [INFO] [forecasting.visualizer:visualizer.py:147] - Saved: residual_plot.png
+[2026-07-24 10:48:12] [INFO] [forecasting.visualizer:visualizer.py:175] - Saved: timeseries_forecast_curve.png
+[2026-07-24 10:48:12] [INFO] [forecasting.visualizer:visualizer.py:53] - All forecast figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting
+[2026-07-24 10:48:12] [INFO] [forecasting.report_generator:report_generator.py:56] - Generating forecasting performance report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 10:48:12] [INFO] [forecasting.report_generator:report_generator.py:142] - Forecasting report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 10:48:12] [INFO] [SmartMachineSchedulingSystem:main.py:61] - ▶ [Stage 3/3] Phase 3: Intelligent Machine Scheduling Engine (Google OR-Tools CP-SAT)
+[2026-07-24 10:48:12] [INFO] [scheduler.data_loader:data_loader.py:66] - Loading Job dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\jobs_cleaned.csv
+[2026-07-24 10:48:12] [INFO] [scheduler.data_loader:data_loader.py:110] - Successfully parsed 100 jobs. Baseline Timestamp: 2026-01-01 00:00:00
+[2026-07-24 10:48:12] [INFO] [scheduler.data_loader:data_loader.py:125] - Loading Machine dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\machines_cleaned.csv
+[2026-07-24 10:48:12] [INFO] [scheduler.data_loader:data_loader.py:154] - Successfully parsed 10 machines.
+[2026-07-24 10:48:12] [INFO] [scheduler.data_loader:data_loader.py:172] - Loading Phase 2 energy demand predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:48:12] [INFO] [scheduler.data_loader:data_loader.py:197] - Constructed energy cost rate profile for 96 time slots.
+[2026-07-24 10:48:12] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:48:12] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 100 jobs.
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹1489.16
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              1558.96 kWh
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    16.25 hours (975 min)
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         48.97%
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        385.05 min
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      25 jobs (75.0% On-Time)
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:48:12] [INFO] [scheduler.optimizer:optimizer.py:57] - ==================================================
+[2026-07-24 10:48:12] [INFO] [scheduler.optimizer:optimizer.py:58] - Starting Smart Energy-Aware Machine Scheduler
+[2026-07-24 10:48:12] [INFO] [scheduler.optimizer:optimizer.py:59] - ==================================================
+[2026-07-24 10:48:12] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:48:12] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 100 jobs.
+[2026-07-24 10:48:12] [INFO] [scheduler.optimizer:optimizer.py:202] - Smart Energy Optimizer complete in 0.01s
+[2026-07-24 10:48:12] [INFO] [scheduler.optimizer:optimizer.py:203] -   FCFS Total Cost:      ₹1489.16
+[2026-07-24 10:48:12] [INFO] [scheduler.optimizer:optimizer.py:204] -   Optimized Total Cost: ₹1366.26
+[2026-07-24 10:48:12] [INFO] [scheduler.optimizer:optimizer.py:205] -   Energy Savings:       ₹122.90 (8.3% reduction)
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹1366.26
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              1379.95 kWh
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    22.0 hours (1320 min)
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         39.58%
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        432.3 min
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      26 jobs (74.0% On-Time)
+[2026-07-24 10:48:12] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:48:12] [INFO] [scheduler.visualization:visualization.py:46] - Starting automated scheduling visualization plot generation...
+[2026-07-24 10:48:13] [INFO] [scheduler.visualization:visualization.py:105] - Saved: gantt_chart.png
+[2026-07-24 10:48:13] [INFO] [scheduler.visualization:visualization.py:124] - Saved: machine_timeline.png
+[2026-07-24 10:48:13] [INFO] [scheduler.visualization:visualization.py:154] - Saved: job_allocation.png
+[2026-07-24 10:48:14] [INFO] [scheduler.visualization:visualization.py:186] - Saved: machine_utilization.png
+[2026-07-24 10:48:14] [INFO] [scheduler.visualization:visualization.py:221] - Saved: cost_comparison.png
+[2026-07-24 10:48:15] [INFO] [scheduler.visualization:visualization.py:253] - Saved: kpi_dashboard.png
+[2026-07-24 10:48:15] [INFO] [scheduler.visualization:visualization.py:290] - Saved: peak_load_comparison.png
+[2026-07-24 10:48:15] [INFO] [scheduler.visualization:visualization.py:56] - All 7 scheduling figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:48:15] [INFO] [scheduler.export:export.py:40] - Exporting scheduling output CSV files to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:48:15] [INFO] [scheduler.export:export.py:77] - Saved: optimized_schedule.csv, fcfs_schedule.csv, kpi_summary.csv, comparison_report.csv
+[2026-07-24 10:48:15] [INFO] [scheduler.export:export.py:102] - Generating scheduling report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:48:15] [INFO] [scheduler.export:export.py:173] - Markdown scheduling report saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:48:15] [INFO] [SmartMachineSchedulingSystem:main.py:65] - ==================================================================================
+[2026-07-24 10:48:15] [INFO] [SmartMachineSchedulingSystem:main.py:66] - END-TO-END PIPELINE COMPLETED SUCCESSFULLY IN 9.71 SECONDS!
+[2026-07-24 10:48:15] [INFO] [SmartMachineSchedulingSystem:main.py:67] - Outputs generated in: outputs/forecasting, outputs/scheduling, outputs/reports
+[2026-07-24 10:48:15] [INFO] [SmartMachineSchedulingSystem:main.py:68] - ==================================================================================
+[2026-07-24 10:52:30] [INFO] [SmartMachineSchedulingSystem:main.py:38] - ==================================================================================
+[2026-07-24 10:52:30] [INFO] [SmartMachineSchedulingSystem:main.py:39] - STARTING COMPLETE END-TO-END PIPELINE: SMART MACHINE SCHEDULING & ENERGY AI
+[2026-07-24 10:52:30] [INFO] [SmartMachineSchedulingSystem:main.py:40] - ==================================================================================
+[2026-07-24 10:52:30] [INFO] [SmartMachineSchedulingSystem:main.py:47] - ▶ [Stage 1/3] Phase 1: Data Cleaning, Validation & Time-Series Feature Engineering
+[2026-07-24 10:52:30] [INFO] [preprocessing.loader:loader.py:83] - Loading all project datasets (Energy, Job, Machine)...
+[2026-07-24 10:52:30] [INFO] [preprocessing.loader:loader.py:35] - Loading Energy dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\Steel_industry_data.csv
+[2026-07-24 10:52:30] [INFO] [preprocessing.loader:loader.py:37] - Energy dataset successfully loaded with shape: (35040, 11)
+[2026-07-24 10:52:30] [INFO] [preprocessing.loader:loader.py:53] - Loading Job dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\job_table.csv
+[2026-07-24 10:52:30] [INFO] [preprocessing.loader:loader.py:55] - Job dataset successfully loaded with shape: (100, 6)
+[2026-07-24 10:52:30] [INFO] [preprocessing.loader:loader.py:71] - Loading Machine dataset from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\machine_table.csv
+[2026-07-24 10:52:30] [INFO] [preprocessing.loader:loader.py:73] - Machine dataset successfully loaded with shape: (10, 7)
+[2026-07-24 10:52:30] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Energy
+[2026-07-24 10:52:30] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Energy. Rows: 35040, Cols: 11, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:52:30] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Job
+[2026-07-24 10:52:30] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Job. Rows: 100, Cols: 6, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:52:30] [INFO] [preprocessing.validator:validator.py:38] - Executing data validation for dataset: Machine
+[2026-07-24 10:52:30] [INFO] [preprocessing.validator:validator.py:119] - Validation complete for Machine. Rows: 10, Cols: 7, Duplicates: 0, Missing Cells: 0, Invalid Issues: 0
+[2026-07-24 10:52:30] [INFO] [preprocessing.validator:validator.py:216] - Data validation report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\data_validation_report.md
+[2026-07-24 10:52:30] [INFO] [preprocessing.cleaner:cleaner.py:177] - Starting cleaning pipeline for Energy Dataset...
+[2026-07-24 10:52:30] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'date' to datetime. Sample: 2018-01-01 00:15:00
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:191] - Energy Dataset cleaning pipeline complete.
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:204] - Starting cleaning pipeline for Job Dataset...
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Deadline' to datetime. Sample: 2026-01-01 20:00:00
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:144] - Converted 'Arrival_Time' to datetime. Sample: 2026-01-01 08:00:00
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:213] - Job Dataset cleaning pipeline complete.
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:226] - Starting cleaning pipeline for Machine Dataset...
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:61] - No duplicate rows detected.
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:86] - No missing values found to handle.
+[2026-07-24 10:52:31] [INFO] [preprocessing.cleaner:cleaner.py:234] - Machine Dataset cleaning pipeline complete.
+[2026-07-24 10:52:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:174] - Starting complete Feature Engineering transformation pipeline...
+[2026-07-24 10:52:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:65] - Extracting temporal and cyclical features from 'date'...
+[2026-07-24 10:52:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:86] - Temporal and cyclical feature extraction completed.
+[2026-07-24 10:52:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:105] - Generating lag features for 'Usage_kWh' using steps: [1, 2, 4, 96]...
+[2026-07-24 10:52:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:114] - Lag features generated successfully.
+[2026-07-24 10:52:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:133] - Generating rolling window features for 'Usage_kWh' with windows: [4, 96]...
+[2026-07-24 10:52:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:160] - Rolling window features generated successfully.
+[2026-07-24 10:52:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:184] - Filled initial lag/rolling NA values (Initial NAs: 111, Final NAs: 0).
+[2026-07-24 10:52:31] [INFO] [preprocessing.feature_engineering:feature_engineering.py:186] - Feature engineering transformation completed successfully. New Dataset Shape: (35040, 37)
+[2026-07-24 10:52:33] [INFO] [SmartMachineSchedulingSystem:main.py:51] - ▶ [Stage 2/3] Phase 2: Time-Series Energy Forecasting (XGBoost Regressor)
+[2026-07-24 10:52:33] [INFO] [SmartMachineSchedulingSystem:main.py:57] - Existing trained XGBoost model checkpoint found at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib. Proceeding.
+[2026-07-24 10:52:33] [INFO] [forecasting.data_prep:data_prep.py:57] - Starting data preparation. Input dataset shape: (35040, 37)
+[2026-07-24 10:52:33] [INFO] [forecasting.data_prep:data_prep.py:99] - Encoding categorical features via OrdinalEncoder: ['WeekStatus', 'Day_of_week', 'Load_Type']
+  → Confirmed tariff-proxy features present: ['Load_Type', 'WeekStatus', 'Day_of_week']
+[2026-07-24 10:52:34] [INFO] [forecasting.data_prep:data_prep.py:125] - Time-series chronological split complete (80% Train / 20% Test): Train Shape: (28032, 34), Test Shape: (7008, 34)
+[2026-07-24 10:52:34] [INFO] [forecasting.data_prep:data_prep.py:129] - Train Period: 2018-01-01 00:00:00 to 2018-10-19 23:45:00 | Test Period: 2018-10-20 00:00:00 to 2018-12-31 23:45:00
+[2026-07-24 10:52:34] [INFO] [forecasting.data_prep:data_prep.py:154] - Preprocessor artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\preprocessor.joblib
+[2026-07-24 10:52:34] [INFO] [forecasting.trainer:trainer.py:53] - ==================================================
+[2026-07-24 10:52:34] [INFO] [forecasting.trainer:trainer.py:54] - Starting Energy Demand Forecasting Model Training
+[2026-07-24 10:52:34] [INFO] [forecasting.trainer:trainer.py:55] - ==================================================
+[2026-07-24 10:52:34] [INFO] [forecasting.xgb_model:xgb_model.py:46] - Initializing XGBoost Regressor with parameters: {'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 3, 'random_state': 42, 'n_jobs': -1, 'objective': 'reg:squarederror'}
+[2026-07-24 10:52:34] [INFO] [forecasting.xgb_model:xgb_model.py:56] - Fitting XGBoost model on 28032 samples...
+[2026-07-24 10:52:36] [INFO] [forecasting.xgb_model:xgb_model.py:58] - XGBoost model training completed successfully.
+[2026-07-24 10:52:36] [INFO] [forecasting.xgb_model:xgb_model.py:122] - XGBoost model artifact saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 10:52:36] [INFO] [forecasting.trainer:trainer.py:62] - Model training successfully completed. Saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\models\energy_xgb_model.joblib
+[2026-07-24 10:52:36] [INFO] [forecasting.evaluator:evaluator.py:68] - --------------------------------------------------
+[2026-07-24 10:52:36] [INFO] [forecasting.evaluator:evaluator.py:69] - ENERGY DEMAND FORECASTING MODEL EVALUATION RESULTS:
+[2026-07-24 10:52:36] [INFO] [forecasting.evaluator:evaluator.py:70] -   • MAE  (Mean Absolute Error):      0.5078 kWh
+[2026-07-24 10:52:36] [INFO] [forecasting.evaluator:evaluator.py:71] -   • RMSE (Root Mean Squared Error):  0.9976 kWh
+[2026-07-24 10:52:36] [INFO] [forecasting.evaluator:evaluator.py:72] -   • R²   (Coefficient of Determ.):   0.999
+[2026-07-24 10:52:36] [INFO] [forecasting.evaluator:evaluator.py:73] -   • MAPE (Mean Abs Pct Error):       2.4718%
+[2026-07-24 10:52:36] [INFO] [forecasting.evaluator:evaluator.py:74] - --------------------------------------------------
+[2026-07-24 10:52:36] [INFO] [forecasting.predictor:predictor.py:49] - Generating energy demand predictions for 7008 test samples...
+[2026-07-24 10:52:37] [INFO] [forecasting.predictor:predictor.py:66] - Test predictions exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 10:52:37] [INFO] [forecasting.predictor:predictor.py:93] - Generating future energy demand forecast for next 96 time slots (24 hours)...
+[2026-07-24 10:52:37] [INFO] [forecasting.predictor:predictor.py:137] - Future 96-step forecast exported to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:52:37] [INFO] [forecasting.visualizer:visualizer.py:45] - Starting automated forecast visualization generation...
+[2026-07-24 10:52:37] [INFO] [forecasting.visualizer:visualizer.py:75] - Saved: actual_vs_predicted.png
+[2026-07-24 10:52:38] [INFO] [forecasting.visualizer:visualizer.py:99] - Saved: error_distribution.png
+[2026-07-24 10:52:39] [INFO] [forecasting.visualizer:visualizer.py:129] - Saved: feature_importance.png
+[2026-07-24 10:52:39] [INFO] [forecasting.visualizer:visualizer.py:147] - Saved: residual_plot.png
+[2026-07-24 10:52:40] [INFO] [forecasting.visualizer:visualizer.py:175] - Saved: timeseries_forecast_curve.png
+[2026-07-24 10:52:40] [INFO] [forecasting.visualizer:visualizer.py:53] - All forecast figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting
+[2026-07-24 10:52:40] [INFO] [forecasting.report_generator:report_generator.py:56] - Generating forecasting performance report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 10:52:40] [INFO] [forecasting.report_generator:report_generator.py:142] - Forecasting report successfully written to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\forecasting_report.md
+[2026-07-24 10:52:40] [INFO] [SmartMachineSchedulingSystem:main.py:61] - ▶ [Stage 3/3] Phase 3: Intelligent Machine Scheduling Engine (Google OR-Tools CP-SAT)
+[2026-07-24 10:52:40] [INFO] [scheduler.data_loader:data_loader.py:66] - Loading Job dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\jobs_cleaned.csv
+[2026-07-24 10:52:40] [INFO] [scheduler.data_loader:data_loader.py:110] - Successfully parsed 100 jobs. Baseline Timestamp: 2026-01-01 00:00:00
+[2026-07-24 10:52:40] [INFO] [scheduler.data_loader:data_loader.py:125] - Loading Machine dataset for scheduling from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\data\processed\machines_cleaned.csv
+[2026-07-24 10:52:40] [INFO] [scheduler.data_loader:data_loader.py:154] - Successfully parsed 10 machines.
+[2026-07-24 10:52:40] [INFO] [scheduler.data_loader:data_loader.py:172] - Loading Phase 2 energy demand predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 10:52:40] [INFO] [scheduler.data_loader:data_loader.py:197] - Constructed energy cost rate profile for 96 time slots.
+[2026-07-24 10:52:40] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:52:40] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 100 jobs.
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹1489.16
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              1558.96 kWh
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    16.25 hours (975 min)
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         48.97%
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        385.05 min
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      25 jobs (75.0% On-Time)
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:52:40] [INFO] [scheduler.optimizer:optimizer.py:54] - ==================================================
+[2026-07-24 10:52:40] [INFO] [scheduler.optimizer:optimizer.py:55] - Starting Smart Energy-Efficient Machine Optimizer
+[2026-07-24 10:52:40] [INFO] [scheduler.optimizer:optimizer.py:56] - ==================================================
+[2026-07-24 10:52:40] [INFO] [scheduler.fcfs:fcfs.py:42] - Executing baseline First-Come-First-Served (FCFS) Scheduler...
+[2026-07-24 10:52:40] [INFO] [scheduler.fcfs:fcfs.py:112] - FCFS baseline scheduling complete. Scheduled 100 jobs.
+[2026-07-24 10:52:40] [INFO] [scheduler.optimizer:optimizer.py:186] - Smart Energy Optimizer complete in 0.01s
+[2026-07-24 10:52:40] [INFO] [scheduler.optimizer:optimizer.py:187] -   FCFS Total Cost:      ₹1489.16
+[2026-07-24 10:52:40] [INFO] [scheduler.optimizer:optimizer.py:188] -   Optimized Total Cost: ₹1488.30
+[2026-07-24 10:52:40] [INFO] [scheduler.optimizer:optimizer.py:189] -   Energy Savings:       ₹0.86 (0.1% reduction)
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:108] - --------------------------------------------------
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:109] - SCHEDULE KEY PERFORMANCE INDICATORS (KPIs):
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:110] -   • Total Energy Cost:           ₹1488.3
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:111] -   • Peak-Hour Load:              1558.65 kWh
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:112] -   • Makespan:                    16.25 hours (975 min)
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:113] -   • Machine Utilization:         48.97%
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:114] -   • Average Waiting Time:        384.6 min
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:115] -   • Late Jobs / Violations:      25 jobs (75.0% On-Time)
+[2026-07-24 10:52:40] [INFO] [scheduler.kpi:kpi.py:116] - --------------------------------------------------
+[2026-07-24 10:52:40] [INFO] [scheduler.visualization:visualization.py:46] - Starting automated scheduling visualization plot generation...
+[2026-07-24 10:52:41] [INFO] [scheduler.visualization:visualization.py:105] - Saved: gantt_chart.png
+[2026-07-24 10:52:41] [INFO] [scheduler.visualization:visualization.py:124] - Saved: machine_timeline.png
+[2026-07-24 10:52:42] [INFO] [scheduler.visualization:visualization.py:154] - Saved: job_allocation.png
+[2026-07-24 10:52:42] [INFO] [scheduler.visualization:visualization.py:186] - Saved: machine_utilization.png
+[2026-07-24 10:52:42] [INFO] [scheduler.visualization:visualization.py:221] - Saved: cost_comparison.png
+[2026-07-24 10:52:43] [INFO] [scheduler.visualization:visualization.py:253] - Saved: kpi_dashboard.png
+[2026-07-24 10:52:43] [INFO] [scheduler.visualization:visualization.py:290] - Saved: peak_load_comparison.png
+[2026-07-24 10:52:43] [INFO] [scheduler.visualization:visualization.py:56] - All 7 scheduling figures successfully saved to D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:52:43] [INFO] [scheduler.export:export.py:40] - Exporting scheduling output CSV files to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\scheduling
+[2026-07-24 10:52:43] [INFO] [scheduler.export:export.py:82] - Saved: optimized_schedule.csv, fcfs_schedule.csv, kpi_summary.csv, comparison_report.csv
+[2026-07-24 10:52:43] [INFO] [scheduler.export:export.py:107] - Generating scheduling report at: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:52:43] [INFO] [scheduler.export:export.py:178] - Markdown scheduling report saved to: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\reports\scheduling_report.md
+[2026-07-24 10:52:43] [INFO] [SmartMachineSchedulingSystem:main.py:65] - ==================================================================================
+[2026-07-24 10:52:43] [INFO] [SmartMachineSchedulingSystem:main.py:66] - END-TO-END PIPELINE COMPLETED SUCCESSFULLY IN 13.25 SECONDS!
+[2026-07-24 10:52:43] [INFO] [SmartMachineSchedulingSystem:main.py:67] - Outputs generated in: outputs/forecasting, outputs/scheduling, outputs/reports
+[2026-07-24 10:52:43] [INFO] [SmartMachineSchedulingSystem:main.py:68] - ==================================================================================

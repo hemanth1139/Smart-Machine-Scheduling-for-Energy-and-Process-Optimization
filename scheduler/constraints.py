@@ -51,7 +51,7 @@ class ConstraintFormulator:
             end_var = self.model.NewIntVar(
                 j.arrival_slot + j.duration_slots, self.horizon_slots + j.duration_slots, f"end_{j.job_id}"
             )
-            delay_var = self.model.NewIntVar(0, self.horizon_slots, f"delay_{j.job_id}")
+            delay_var = self.model.NewIntVar(0, self.horizon_slots * 10 + 5000, f"delay_{j.job_id}")
 
             self.job_starts[j.job_id] = start_var
             self.job_ends[j.job_id] = end_var

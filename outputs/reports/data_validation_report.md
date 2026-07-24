@@ -7,7 +7,7 @@ Automated quality validation executed across Energy, Job, and Machine datasets.
 | Dataset | Dimensions | Duplicates | Total Missing Cells | Empty Cols | Invalid Warnings |
 |---|---|---|---|---|---|
 | Energy | 35040 x 11 | 0 | 0 | 0 | 0 |
-| Job | 500 x 6 | 0 | 0 | 0 | 0 |
+| Job | 100 x 6 | 0 | 0 | 0 | 0 |
 | Machine | 10 x 7 | 0 | 0 | 0 | 0 |
 
 ---
@@ -47,7 +47,7 @@ Automated quality validation executed across Energy, Job, and Machine datasets.
 ---
 
 ## Dataset: Job
-- **Dimensions**: 500 rows, 6 columns
+- **Dimensions**: 100 rows, 6 columns
 - **Duplicate Rows**: 0
 - **Empty Columns**: None
 - **Missing Values**:
@@ -65,7 +65,7 @@ Automated quality validation executed across Energy, Job, and Machine datasets.
 ### Basic Numerical Statistics
 | Column | Mean | Std | Min | 25% | 50% | 75% | Max |
 |---|---|---|---|---|---|---|---|
-| `Duration_min` | 121.544 | 48.505 | 30.0 | 83.0 | 119.5 | 158.0 | 240.0 |
+| `Duration_min` | 71.25 | 11.357 | 60.0 | 60.0 | 75.0 | 75.0 | 90.0 |
 
 ---
 
