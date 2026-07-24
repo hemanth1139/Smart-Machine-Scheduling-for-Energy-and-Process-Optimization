@@ -65,7 +65,7 @@ Automated quality validation executed across Energy, Job, and Machine datasets.
 ### Basic Numerical Statistics
 | Column | Mean | Std | Min | 25% | 50% | 75% | Max |
 |---|---|---|---|---|---|---|---|
-| `Duration_min` | 71.25 | 11.357 | 60.0 | 60.0 | 75.0 | 75.0 | 90.0 |
+| `Duration_min` | 92.1 | 36.12 | 30.0 | 60.0 | 90.0 | 120.0 | 150.0 |
 
 ---
 

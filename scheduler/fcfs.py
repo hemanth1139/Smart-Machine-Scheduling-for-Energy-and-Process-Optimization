@@ -9,7 +9,7 @@ import numpy as np
 
 from scheduler.base_scheduler import BaseScheduler
 from scheduler.data_loader import ParsedJob, ParsedMachine
-from scheduler.utils import slot_to_time_str, is_peak_slot
+from scheduler.utils import slot_to_time_str, extend_energy_rates, job_energy_cost
 from config.config import Config, config
 from utils.logger import get_logger
 
@@ -46,7 +46,16 @@ class FCFSScheduler(BaseScheduler):
         parsed_machines = machines if isinstance(machines[0], ParsedMachine) else [ParsedMachine(**m) for m in machines]
 
         machine_map = {m.machine_id: m for m in parsed_machines}
-        
+
+        max_slot_needed = max(
+            (j.deadline_slot + j.duration_slots for j in parsed_jobs),
+            default=self.cfg.SCHEDULING_HORIZON_SLOTS,
+        )
+        extended_rates = extend_energy_rates(
+            list(energy_rates),
+            max(max_slot_needed + 4, self.cfg.SCHEDULING_HORIZON_SLOTS),
+        )
+
         # Track when each machine becomes free (slot index)
         machine_next_available: Dict[str, int] = {m.machine_id: m.available_from_slot for m in parsed_machines}
 
@@ -83,13 +92,8 @@ class FCFSScheduler(BaseScheduler):
             delay_slots = max(0, end_slot - j.deadline_slot)
             delay_min = delay_slots * self.cfg.SLOT_DURATION_MIN
 
-            # Compute Energy Cost
-            job_energy_cost = 0.0
-            for t in range(start_slot, min(end_slot, len(energy_rates))):
-                rate = energy_rates[t] if t < len(energy_rates) else energy_rates[-1]
-                # kWh consumed in slot = ActivePower * (15/60)
-                kwh = m_obj.active_power_kw * (self.cfg.SLOT_DURATION_MIN / 60.0)
-                job_energy_cost += kwh * rate
+            kwh_per_slot = m_obj.active_power_kw * (self.cfg.SLOT_DURATION_MIN / 60.0)
+            job_cost = job_energy_cost(start_slot, j.duration_slots, kwh_per_slot, extended_rates)
 
             scheduled_records.append({
                 "Job_ID": j.job_id,
@@ -104,7 +108,7 @@ class FCFSScheduler(BaseScheduler):
                 "Deadline_Slot": j.deadline_slot,
                 "Delay_min": delay_min,
                 "Is_Late": 1 if delay_min > 0 else 0,
-                "Energy_Cost_$": round(job_energy_cost, 2),
+                "Energy_Cost_$": round(job_cost, 2),
                 "Priority": j.priority,
             })
 

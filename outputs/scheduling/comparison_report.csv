@@ -1,6 +1,6 @@
 Metric,FCFS_Baseline,CP_SAT_Optimized,Improvement
-Total Energy Cost (₹),1489.16,1488.3,₹0.86 (0.1% reduction)
-Peak-Hour Load (kWh),1558.96,1558.65,0.31 kWh (0.0% reduction)
-Makespan (min),975,975,0 min reduction
-On-Time Completion Rate (%),75.0%,75.0%,+0.0% improvement
-Machine Utilization (%),48.97%,48.97%,+0.0% improvement
+Total Energy Cost (₹),1713.88,1394.94,₹318.94 (18.6% reduction)
+Peak-Hour Load (kWh),1605.83,947.42,658.41 kWh (41.0% reduction)
+Makespan (min),1350,2175,825 min increase
+On-Time Completion Rate (%),100.0%,91.0%,-9.0%
+Machine Utilization (%),57.92%,37.44%,-20.5%

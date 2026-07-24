@@ -3,7 +3,7 @@ Scheduling Utilities Module.
 Helper functions for discrete 15-minute time slot conversions, tariff calculations, and date parsing.
 """
 
-from typing import Tuple, Union
+from typing import Tuple, Union, List
 import datetime
 import math
 import pandas as pd
@@ -75,6 +75,35 @@ def is_peak_slot(slot: int, slot_duration_min: int = Config.SLOT_DURATION_MIN, p
     """
     hour = ((slot * slot_duration_min) // 60) % 24
     return peak_hours[0] <= hour < peak_hours[1]
+
+
+def extend_energy_rates(rates: List[float], min_length: int, default_rate: float = 0.15) -> List[float]:
+    """
+    Repeats the daily rate profile so multi-day schedules use consistent tariff cycles.
+    """
+    if min_length <= 0:
+        return []
+    if not rates:
+        return [default_rate] * min_length
+    base = list(rates)
+    if len(base) >= min_length:
+        return base[:min_length]
+    repeated = base * ((min_length // len(base)) + 2)
+    return repeated[:min_length]
+
+
+def job_energy_cost(
+    start: int,
+    duration_slots: int,
+    kwh_per_slot: float,
+    rates: List[float],
+) -> float:
+    """Total energy cost for a job running in [start, start + duration_slots)."""
+    return sum(
+        kwh_per_slot * rates[t]
+        for t in range(start, start + duration_slots)
+        if t < len(rates)
+    )
 
 
 def calculate_slot_energy_rate(

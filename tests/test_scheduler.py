@@ -77,3 +77,14 @@ def test_cp_sat_scheduler():
     j1_end = res_df[res_df["Job_ID"] == "J1"]["End_Slot"].iloc[0]
     j2_start = res_df[res_df["Job_ID"] == "J2"]["Start_Slot"].iloc[0]
     assert j2_start >= j1_end
+
+
+def test_optimizer_does_not_regress_fcfs_service_kpis():
+    """Energy optimisation must not buy savings by delaying FCFS work."""
+    jobs, machines, rates = get_sample_inputs()
+    fcfs_df = FCFSScheduler(cfg=config).solve(jobs, machines, rates)
+    opt_df = OrtoolsScheduler(cfg=config).solve(jobs, machines, rates)
+
+    assert opt_df["Energy_Cost_$"].sum() <= fcfs_df["Energy_Cost_$"].sum()
+    assert opt_df["End_Slot"].max() <= fcfs_df["End_Slot"].max()
+    assert opt_df["Is_Late"].sum() <= fcfs_df["Is_Late"].sum()
