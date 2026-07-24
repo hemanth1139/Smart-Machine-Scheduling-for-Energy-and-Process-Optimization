@@ -43,7 +43,15 @@ from dashboard.pages.settings import render_settings_page
 def _setup():
     """Load all data and sidebar filters."""
     pred_df, fut_df = load_predictions_data()
-    opt_df, fcfs_df, kpi_df, comp_df = load_scheduling_data()
+    st.sidebar.markdown("### Dataset scenario")
+    scenario = st.sidebar.selectbox(
+        "Results to display",
+        ["Original dataset", "Synthetic benchmark demo"],
+        help="The benchmark is a separate synthetic scenario for demonstrating energy-aware scheduling."
+    )
+    if scenario == "Synthetic benchmark demo":
+        st.sidebar.caption("Clearly labelled synthetic benchmark; original data is unchanged.")
+    opt_df, fcfs_df, kpi_df, comp_df = load_scheduling_data(scenario)
     jobs_df, machines_df = load_job_and_machine_data()
 
     available_machines = (

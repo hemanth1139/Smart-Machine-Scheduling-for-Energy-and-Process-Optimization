@@ -84,6 +84,6 @@ def render_kpi_page(
 
     st.markdown("#### Complete Performance Summary Table")
     if comp_df is not None and not comp_df.empty:
-        render_styled_dataframe(comp_df, height=280)
+        render_styled_dataframe(comp_df, height=620)
     else:
         st.dataframe(kpi_df, use_container_width=True)

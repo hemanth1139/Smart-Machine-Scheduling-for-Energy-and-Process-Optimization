@@ -8,8 +8,8 @@ electricity costs, peak-hour load, changeovers, and delays.
 
 - **Primary Optimization Solver**: Google OR-Tools CP-SAT Solver
 - **Benchmark Baseline**: First-Come-First-Served (FCFS) Heuristic
-- **Electricity Cost Savings**: **₹318.94** (18.6% reduction)
-- **Peak-Hour Load Reduction**: **658.41 kWh** (41.0% reduction)
+- **Electricity Cost Savings**: **₹270.10** (15.8% reduction)
+- **Peak-Hour Load Reduction**: **464.16 kWh** (28.9% reduction)
 
 ---
 
@@ -17,13 +17,13 @@ electricity costs, peak-hour load, changeovers, and delays.
 
 | Key Performance Indicator (KPI) | FCFS Baseline | CP-SAT Optimized | Improvement / Delta |
 |---|---|---|---|
-| **Total Electricity Cost (₹)** | `₹1,713.88` | `₹1,394.94` | **₹318.94 (18.6% savings)** |
-| **Peak-Hour Electricity Load (kWh)** | `1,605.83` | `947.42` | **658.41 kWh (41.0% reduction)** |
-| **Makespan (Hours)** | `22.5` hrs | `36.25` hrs | **825 min increase** |
-| **On-Time Job Completion Rate (%)** | `100.0%` | `91.0%` | **-9.0%** |
-| **Machine Utilization (%)** | `57.92%` | `37.44%` | **-20.5%** |
-| **Average Job Waiting Time (min)** | `141.9` min | `986.55` min | **Optimized queue management** |
-| **Late Jobs Count** | `0` jobs | `9` jobs | **Zero / Minimized delays** |
+| **Total Electricity Cost (₹)** | `₹1,713.88` | `₹1,443.78` | **₹270.10 (15.8% savings)** |
+| **Peak-Hour Electricity Load (kWh)** | `1,605.83` | `1,141.67` | **464.16 kWh (28.9% reduction)** |
+| **Makespan (Hours)** | `22.5` hrs | `22.5` hrs | **0 min reduction** |
+| **On-Time Job Completion Rate (%)** | `100.0%` | `100.0%` | **+0.0%** |
+| **Machine Utilization (%)** | `57.92%` | `57.92%` | **+0.0%** |
+| **Average Job Waiting Time (min)** | `141.9` min | `241.5` min | **Optimized queue management** |
+| **Late Jobs Count** | `0` jobs | `0` jobs | **Zero / Minimized delays** |
 
 ---
 

@@ -77,6 +77,8 @@ class SchedulingExporter:
             {"Metric": "On-Time Completion Rate (%)", "FCFS_Baseline": f"{fcfs_kpis.get('On_Time_Completion_%', 0)}%", "CP_SAT_Optimized": f"{opt_kpis.get('On_Time_Completion_%', 0)}%", "Improvement": ontime_str},
             {"Metric": "Machine Utilization (%)", "FCFS_Baseline": f"{fcfs_kpis.get('Machine_Utilization_%', 0)}%", "CP_SAT_Optimized": f"{opt_kpis.get('Machine_Utilization_%', 0)}%", "Improvement": util_str},
         ])
+        # Replace the legacy five-row matrix with a complete KPI comparison.
+        comp_df = self._build_complete_comparison(fcfs_kpis, opt_kpis)
         comp_df.to_csv(comp_csv_path, index=False)
 
         logger.info(f"Saved: {opt_csv_path.name}, {fcfs_csv_path.name}, {kpi_csv_path.name}, {comp_csv_path.name}")
@@ -87,6 +89,59 @@ class SchedulingExporter:
             "kpi_summary": kpi_csv_path,
             "comparison": comp_csv_path,
         }
+
+    @staticmethod
+    def _build_complete_comparison(
+        fcfs_kpis: Dict[str, Any], opt_kpis: Dict[str, Any]
+    ) -> pd.DataFrame:
+        """Build a transparent comparison covering every calculated KPI."""
+        metric_specs = [
+            ("Total Energy Cost (INR)", "Total_Energy_Cost_$", "INR", "min"),
+            ("Peak-Hour Load (kWh)", "Peak_Hour_Load_kWh", "kWh", "min"),
+            ("Makespan (min)", "Makespan_min", "min", "min"),
+            ("Makespan (hours)", "Makespan_hours", "hours", "min"),
+            ("Machine Utilization (%)", "Machine_Utilization_%", "%", "max"),
+            ("Average Waiting Time (min)", "Average_Waiting_Time_min", "min", "min"),
+            ("Total Idle Time (min)", "Total_Idle_Time_min", "min", "min"),
+            ("Total Delay (min)", "Total_Delay_min", "min", "min"),
+            ("Late Jobs", "Number_of_Late_Jobs", "jobs", "min"),
+            ("On-Time Completion (%)", "On_Time_Completion_%", "%", "max"),
+            ("Average Machine Load (%)", "Average_Machine_Load_%", "%", "max"),
+        ]
+
+        def display_value(value: float, unit: str) -> str:
+            value = float(value)
+            if unit == "INR":
+                return f"INR {value:,.2f}"
+            if unit == "%":
+                return f"{value:.2f}%"
+            if unit == "jobs":
+                return str(int(round(value)))
+            return f"{value:,.2f} {unit}"
+
+        def change_text(baseline: float, optimized: float, unit: str, direction: str) -> str:
+            delta = baseline - optimized if direction == "min" else optimized - baseline
+            if abs(delta) < 1e-9:
+                return "Maintained (no regression)"
+            if delta > 0:
+                if unit == "%":
+                    return f"+{delta:.2f} percentage-point improvement"
+                if unit == "jobs":
+                    return f"{delta:.0f} job reduction"
+                return f"{delta:,.2f} {unit} reduction"
+            if unit == "%":
+                return f"{abs(delta):.2f} percentage-point decrease"
+            return f"{abs(delta):,.2f} {unit} increase"
+
+        return pd.DataFrame([
+            {
+                "Metric": label,
+                "FCFS_Baseline": display_value(fcfs_kpis.get(key, 0), unit),
+                "CP_SAT_Optimized": display_value(opt_kpis.get(key, 0), unit),
+                "Improvement": change_text(fcfs_kpis.get(key, 0), opt_kpis.get(key, 0), unit, direction),
+            }
+            for label, key, unit, direction in metric_specs
+        ])
 
     def generate_markdown_report(
         self,

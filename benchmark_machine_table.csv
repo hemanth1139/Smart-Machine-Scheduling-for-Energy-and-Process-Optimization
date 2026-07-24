@@ -1,0 +1,4 @@
+Machine_ID,Machine_Type,Idle_Power_kW,Active_Power_kW,Changeover_Time_min,Available_From,Available_To
+BM1,Legacy High-Power Line,5.0,42.0,15,00:00,23:59
+BM2,Efficient Smart Line,2.0,9.0,15,00:00,23:59
+BM3,Standard Production Line,3.0,20.0,15,00:00,23:59

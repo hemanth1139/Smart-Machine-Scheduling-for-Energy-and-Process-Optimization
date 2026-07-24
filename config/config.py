@@ -69,6 +69,7 @@ class Config:
     EDA_OUTPUT_DIR: Path = OUTPUTS_DIR / "eda"
     FORECAST_OUTPUT_DIR: Path = OUTPUTS_DIR / "forecasting"
     SCHEDULING_OUTPUT_DIR: Path = OUTPUTS_DIR / "scheduling"
+    SCHEDULING_BENCHMARK_OUTPUT_DIR: Path = OUTPUTS_DIR / "scheduling_benchmark"
     REPORTS_OUTPUT_DIR: Path = OUTPUTS_DIR / "reports"
     CHARTS_OUTPUT_DIR: Path = OUTPUTS_DIR / "charts"
     LOGS_OUTPUT_DIR: Path = PROJECT_ROOT / "logs"
@@ -174,6 +175,7 @@ class Config:
             cls.EDA_OUTPUT_DIR,
             cls.FORECAST_OUTPUT_DIR,
             cls.SCHEDULING_OUTPUT_DIR,
+            cls.SCHEDULING_BENCHMARK_OUTPUT_DIR,
             cls.REPORTS_OUTPUT_DIR,
             cls.CHARTS_OUTPUT_DIR,
             cls.LOGS_OUTPUT_DIR,

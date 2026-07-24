@@ -244,3 +244,16 @@
 [2026-07-24 10:53:04] [INFO] [SmartSchedulingDashboard:loader.py:27] - Dashboard loading predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
 [2026-07-24 10:53:04] [INFO] [SmartSchedulingDashboard:loader.py:34] - Dashboard loading future forecast from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
 [2026-07-24 10:53:05] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-24 16:25:20] [INFO] [SmartSchedulingDashboard:loader.py:27] - Dashboard loading predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 16:25:20] [INFO] [SmartSchedulingDashboard:loader.py:34] - Dashboard loading future forecast from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 16:25:20] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-24 16:25:26] [INFO] [SmartSchedulingDashboard:loader.py:27] - Dashboard loading predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 16:25:26] [INFO] [SmartSchedulingDashboard:loader.py:34] - Dashboard loading future forecast from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 16:25:26] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-24 16:25:30] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-24 16:32:22] [INFO] [SmartSchedulingDashboard:loader.py:27] - Dashboard loading predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 16:32:22] [INFO] [SmartSchedulingDashboard:loader.py:34] - Dashboard loading future forecast from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 16:32:22] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''
+[2026-07-24 16:32:27] [INFO] [SmartSchedulingDashboard:loader.py:27] - Dashboard loading predictions from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\predictions.csv
+[2026-07-24 16:32:27] [INFO] [SmartSchedulingDashboard:loader.py:34] - Dashboard loading future forecast from: D:\ma project\Smart-Machine-Scheduling-for-Energy-and-Process-Optimization\outputs\forecasting\future_forecast.csv
+[2026-07-24 16:32:27] [INFO] [SmartSchedulingDashboard:sidebar.py:59] - Sidebar filter: Machines=10/10, Priorities=['High', 'Medium', 'Low'], Search=''

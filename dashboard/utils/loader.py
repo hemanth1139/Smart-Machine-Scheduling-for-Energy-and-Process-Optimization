@@ -41,7 +41,7 @@ def load_predictions_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
 
 
 @st.cache_data(ttl=5)
-def load_scheduling_data() -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+def load_scheduling_data(scenario: str = "Original dataset") -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """
     Loads optimized schedule, FCFS schedule, KPI summary, and comparison CSVs generated in Phase 3.
 
@@ -49,7 +49,11 @@ def load_scheduling_data() -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd
         Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         (optimized_df, fcfs_df, kpi_summary_df, comparison_df)
     """
-    out_dir = Config.SCHEDULING_OUTPUT_DIR
+    out_dir = (
+        Config.SCHEDULING_BENCHMARK_OUTPUT_DIR
+        if scenario == "Synthetic benchmark demo"
+        else Config.SCHEDULING_OUTPUT_DIR
+    )
 
     opt_path = out_dir / Config.OPTIMIZED_SCHEDULE_FILENAME
     fcfs_path = out_dir / Config.FCFS_SCHEDULE_FILENAME

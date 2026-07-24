@@ -5,6 +5,7 @@ Generates 7 publication-quality visualization figures for schedule inspection an
 
 from pathlib import Path
 from typing import Dict, Any, Optional, List
+import time
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -27,6 +28,38 @@ class SchedulingVisualizer:
         sns.set_theme(style="whitegrid", palette="colorblind")
         plt.rcParams.update({"font.sans-serif": "DejaVu Sans", "font.family": "sans-serif"})
 
+    def _save_png(self, fig: plt.Figure, filename: str, **kwargs: Any) -> None:
+        """Save a figure safely, including a Windows filename-lock fallback."""
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        save_path = (self.output_dir / filename).resolve()
+        try:
+            fig.savefig(str(save_path), format="png", **kwargs)
+            logger.info(f"Saved: {save_path.name}")
+        except OSError as exc:
+            # Windows can reject an overwrite when a previous PNG is open in
+            # Explorer, a viewer, or a dashboard. Preserve the new chart under
+            # a unique filename instead of aborting the complete pipeline.
+            fallback_dir = self.output_dir / "generated_runs"
+            fallback_dir.mkdir(parents=True, exist_ok=True)
+            fallback_path = fallback_dir / f"{save_path.stem}_{time.time_ns()}.png"
+            try:
+                fig.savefig(str(fallback_path.resolve()), format="png", **kwargs)
+                logger.warning(
+                    "Could not overwrite %s (%s). Saved chart as %s instead.",
+                    save_path.name,
+                    exc,
+                    fallback_path,
+                )
+            except OSError as fallback_exc:
+                logger.exception(
+                    "Chart export failed for %s and fallback %s: %s",
+                    save_path,
+                    fallback_path,
+                    fallback_exc,
+                )
+        finally:
+            plt.close(fig)
+
     def generate_all_plots(
         self,
         opt_df: pd.DataFrame,
@@ -45,13 +78,22 @@ class SchedulingVisualizer:
         """
         logger.info("Starting automated scheduling visualization plot generation...")
 
-        self.plot_gantt_chart(opt_df)
-        self.plot_machine_timeline(opt_df)
-        self.plot_job_allocation(opt_df)
-        self.plot_machine_utilization(opt_df)
-        self.plot_cost_comparison(opt_kpis, fcfs_kpis)
-        self.plot_kpi_dashboard(opt_kpis, fcfs_kpis)
-        self.plot_peak_load_comparison(opt_df, fcfs_df)
+        charts = [
+            ("Gantt chart", lambda: self.plot_gantt_chart(opt_df)),
+            ("machine timeline", lambda: self.plot_machine_timeline(opt_df)),
+            ("job allocation", lambda: self.plot_job_allocation(opt_df)),
+            ("machine utilization", lambda: self.plot_machine_utilization(opt_df)),
+            ("cost comparison", lambda: self.plot_cost_comparison(opt_kpis, fcfs_kpis)),
+            ("KPI dashboard", lambda: self.plot_kpi_dashboard(opt_kpis, fcfs_kpis)),
+            ("peak-load comparison", lambda: self.plot_peak_load_comparison(opt_df, fcfs_df)),
+        ]
+        for chart_name, render_chart in charts:
+            try:
+                render_chart()
+            except Exception:
+                # Visual reports are supplementary; a failure must not prevent
+                # the scheduler from exporting its CSV, KPI, and report output.
+                logger.exception("Could not generate %s; continuing pipeline.", chart_name)
 
         logger.info(f"All 7 scheduling figures successfully saved to {self.output_dir}")
 
@@ -100,9 +142,7 @@ class SchedulingVisualizer:
         ax.grid(True, linestyle=":", alpha=0.6)
 
         plt.tight_layout()
-        plt.savefig(save_path, bbox_inches="tight")
-        plt.close()
-        logger.info(f"Saved: {save_path.name}")
+        self._save_png(fig, save_path.name, bbox_inches="tight")
 
     def plot_machine_timeline(self, df: pd.DataFrame) -> None:
         """Generates Machine Activity Status Timeline (Active vs Idle status)."""
@@ -119,9 +159,7 @@ class SchedulingVisualizer:
         ax.legend(title="Machine Type", fontsize=10)
 
         plt.tight_layout()
-        plt.savefig(save_path)
-        plt.close()
-        logger.info(f"Saved: {save_path.name}")
+        self._save_png(fig, save_path.name)
 
     def plot_job_allocation(self, df: pd.DataFrame) -> None:
         """Generates Job Count Allocation breakdown across machines."""
@@ -130,7 +168,14 @@ class SchedulingVisualizer:
 
         counts = df["Assigned_Machine"].value_counts().sort_index()
 
-        sns.barplot(x=counts.index, y=counts.values, palette="viridis", ax=ax)
+        sns.barplot(
+            x=counts.index,
+            y=counts.values,
+            hue=counts.index,
+            palette="viridis",
+            legend=False,
+            ax=ax,
+        )
         
         for p in ax.patches:
             ax.annotate(
@@ -149,9 +194,7 @@ class SchedulingVisualizer:
         ax.set_ylabel("Number of Assigned Jobs", fontsize=12)
 
         plt.tight_layout()
-        plt.savefig(save_path)
-        plt.close()
-        logger.info(f"Saved: {save_path.name}")
+        self._save_png(fig, save_path.name)
 
     def plot_machine_utilization(self, df: pd.DataFrame) -> None:
         """Generates Machine Utilization Percentage Bar Chart."""
@@ -162,7 +205,14 @@ class SchedulingVisualizer:
         m_active_slots = df.groupby("Assigned_Machine").apply(lambda g: (g["End_Slot"] - g["Start_Slot"]).sum())
         m_util_pct = (m_active_slots / horizon) * 100.0
 
-        sns.barplot(x=m_util_pct.index, y=m_util_pct.values, palette="crest", ax=ax)
+        sns.barplot(
+            x=m_util_pct.index,
+            y=m_util_pct.values,
+            hue=m_util_pct.index,
+            palette="crest",
+            legend=False,
+            ax=ax,
+        )
         
         for p in ax.patches:
             ax.annotate(
@@ -181,9 +231,7 @@ class SchedulingVisualizer:
         ax.set_ylim(0, 100)
 
         plt.tight_layout()
-        plt.savefig(save_path)
-        plt.close()
-        logger.info(f"Saved: {save_path.name}")
+        self._save_png(fig, save_path.name, bbox_inches="tight")
 
     def plot_cost_comparison(self, opt_kpis: Dict[str, Any], fcfs_kpis: Dict[str, Any]) -> None:
         """Generates Total Energy Cost comparison bar chart (FCFS vs CP-SAT)."""
@@ -216,9 +264,7 @@ class SchedulingVisualizer:
         ax.set_ylabel("Total Electricity Cost (₹)", fontsize=12)
 
         plt.tight_layout()
-        plt.savefig(save_path)
-        plt.close()
-        logger.info(f"Saved: {save_path.name}")
+        self._save_png(fig, save_path.name)
 
     def plot_kpi_dashboard(self, opt_kpis: Dict[str, Any], fcfs_kpis: Dict[str, Any]) -> None:
         """Generates Multi-panel KPI summary card dashboard figure."""
@@ -248,9 +294,7 @@ class SchedulingVisualizer:
 
         plt.suptitle("Scheduling KPI Benchmark Dashboard: Baseline vs CP-SAT", fontsize=14, fontweight="bold", y=1.02)
         plt.tight_layout()
-        plt.savefig(save_path, bbox_inches="tight")
-        plt.close()
-        logger.info(f"Saved: {save_path.name}")
+        self._save_png(fig, save_path.name, bbox_inches="tight")
 
     def plot_peak_load_comparison(self, opt_df: pd.DataFrame, fcfs_df: pd.DataFrame) -> None:
         """Generates Hourly Power Load profile line plot comparing peak load shifting."""
@@ -285,6 +329,4 @@ class SchedulingVisualizer:
         ax.grid(True, linestyle=":", alpha=0.6)
 
         plt.tight_layout()
-        plt.savefig(save_path)
-        plt.close()
-        logger.info(f"Saved: {save_path.name}")
+        self._save_png(fig, save_path.name, bbox_inches="tight")

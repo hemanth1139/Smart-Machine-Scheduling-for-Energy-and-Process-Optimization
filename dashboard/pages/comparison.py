@@ -62,6 +62,6 @@ def render_comparison_page(
 
     st.markdown("#### Quantitative Improvement Matrix")
     if not comp_df.empty:
-        render_styled_dataframe(comp_df, height=280)
+        render_styled_dataframe(comp_df, height=620)
     else:
         st.dataframe(kpi_df, use_container_width=True)

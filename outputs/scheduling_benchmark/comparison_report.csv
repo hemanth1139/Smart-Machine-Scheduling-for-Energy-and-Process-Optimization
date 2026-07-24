@@ -1,0 +1,12 @@
+Metric,FCFS_Baseline,CP_SAT_Optimized,Improvement
+Total Energy Cost (INR),INR 982.36,INR 982.34,0.02 INR reduction
+Peak-Hour Load (kWh),848.00 kWh,848.00 kWh,Maintained (no regression)
+Makespan (min),"1,515.00 min","1,515.00 min",Maintained (no regression)
+Makespan (hours),25.25 hours,25.25 hours,Maintained (no regression)
+Machine Utilization (%),65.14%,65.14%,Maintained (no regression)
+Average Waiting Time (min),498.75 min,499.69 min,0.94 min increase
+Total Idle Time (min),"2,055.00 min","2,055.00 min",Maintained (no regression)
+Total Delay (min),105.00 min,105.00 min,Maintained (no regression)
+Late Jobs,1,1,Maintained (no regression)
+On-Time Completion (%),93.75%,93.75%,Maintained (no regression)
+Average Machine Load (%),65.14%,65.14%,Maintained (no regression)
