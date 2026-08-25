@@ -1,0 +1,12 @@
+Metric,FCFS_Baseline,CP_SAT_Optimized,Improvement
+Total Energy Cost (INR),₹414957.00,₹96773.68,318183.32 reduction (76.7% savings)
+Peak Grid Load (kW),1337.03 kW,1170.71 kW,166.32 reduction (12.4% savings)
+Makespan (hours),98.75 hrs,377.00 hrs,+278.25 (281.8% increase)
+Machine Utilization (%),76.04%,11.25%,-64.79% reduction
+Average Waiting Time (min),1417.2 min,5350.7 min,+3933.54 (277.6% increase)
+Total Idle Time (min),6900.0 min,25560.0 min,+18660.00 (270.4% increase)
+Total Delay (min),236310.0 min,2124000.0 min,+1887690.00 (798.8% increase)
+Late Jobs (count),300 jobs,406 jobs,+106.00 (35.3% increase)
+On-Time Completion (%),40.00%,18.80%,-21.20% reduction
+Carbon Emissions (tCO2),732.1880 t,222.9307 t,509.26 reduction (69.6% savings)
+Power Factor Penalty (INR),₹0.00,₹0.00,No Penalties Incurred

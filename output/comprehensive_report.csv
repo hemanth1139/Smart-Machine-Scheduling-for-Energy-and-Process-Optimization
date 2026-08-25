@@ -1,0 +1,12 @@
+Metric,FCFS,EDF,Makespan_Greedy,Proposed_Robust_Greedy,Deterministic_Greedy,Hybrid_Solver
+Total Energy Cost (INR),INR 414957.00,INR 374211.97,INR 414957.00,INR 79586.75,INR 79586.75,INR 96773.68
+Peak Grid Load (kW),1337.03 kW,1336.85 kW,1337.03 kW,809.30 kW,809.30 kW,1170.71 kW
+Makespan (hours),98.75 hrs,103.75 hrs,98.75 hrs,379.50 hrs,379.50 hrs,377.00 hrs
+Machine Utilization (%),76.04%,67.14%,76.04%,6.67%,6.67%,11.25%
+Average Waiting Time (min),1417.2 min,1648.1 min,1417.2 min,5635.3 min,5635.3 min,5350.7 min
+Total Idle Time (min),6900.0 min,9465.0 min,6900.0 min,26880.0 min,26880.0 min,25560.0 min
+Total Delay (min),236310.0 min,294990.0 min,236310.0 min,2248035.0 min,2248035.0 min,2124000.0 min
+Late Jobs (count),300 jobs,338 jobs,300 jobs,420 jobs,420 jobs,406 jobs
+On-Time Completion (%),40.00%,32.40%,40.00%,16.00%,16.00%,18.80%
+Carbon Emissions (tCO2),732.1880 t,670.5799 t,732.1880 t,158.3097 t,158.3097 t,222.9307 t
+Power Factor Penalty (INR),INR 0.00,INR 0.00,INR 0.00,INR 0.00,INR 0.00,INR 0.00

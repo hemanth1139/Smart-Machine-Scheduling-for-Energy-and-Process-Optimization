@@ -1,3 +1,0 @@
-Schedule_Type,Total_Energy_Cost_$,Peak_Hour_Load_kWh,Makespan_min,Makespan_hours,Machine_Utilization_%,Average_Waiting_Time_min,Total_Idle_Time_min,Total_Delay_min,Number_of_Late_Jobs,On_Time_Completion_%,Average_Machine_Load_%
-Baseline_FCFS,982.36,848.0,1515,25.25,65.14,498.75,2055,105.0,1,93.75,65.14
-CP_SAT_Optimized,982.34,848.0,1515,25.25,65.14,499.69,2055,105.0,1,93.75,65.14
