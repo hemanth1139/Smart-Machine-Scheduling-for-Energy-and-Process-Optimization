@@ -610,3 +610,43 @@
 [2026-08-25 22:27:47] [INFO] [SmartSchedulingPipeline:run_pipeline.py:359] - Power Factor Penalty (INR)         INR 0.00            INR 0.00               No Penalties Incurred
 [2026-08-25 22:27:47] [INFO] [SmartSchedulingPipeline:run_pipeline.py:360] - ======================================================================
 [2026-08-25 22:27:47] [INFO] [SmartSchedulingPipeline:run_pipeline.py:362] - Pipeline executed successfully. Outputs written to output/ directory.
+[2026-08-26 16:22:12] [INFO] [SmartSchedulingPipeline:run_pipeline.py:113] - Initializing Predict-then-Optimize End-to-End Pipeline...
+[2026-08-26 16:22:13] [INFO] [SmartSchedulingPipeline:run_pipeline.py:119] - Step 0/5: Generating synthetic job and machine datasets...
+[2026-08-26 16:22:13] [INFO] [SmartSchedulingPipeline:run_pipeline.py:121] - Datasets generated successfully.
+[2026-08-26 16:22:13] [INFO] [SmartSchedulingPipeline:run_pipeline.py:126] - Step 1/5: Running Data cleaning and feature engineering...
+[2026-08-26 16:22:15] [INFO] [SmartSchedulingPipeline:run_pipeline.py:147] - Data preprocessing completed successfully.
+[2026-08-26 16:22:15] [INFO] [SmartSchedulingPipeline:run_pipeline.py:152] - Step 2/5: Preparing features and training Quantile XGBoost forecaster...
+[2026-08-26 16:22:28] [INFO] [SmartSchedulingPipeline:run_pipeline.py:176] - Forecasting and model persistence completed.
+[2026-08-26 16:22:28] [INFO] [SmartSchedulingPipeline:run_pipeline.py:181] - Step 3/5: Running Scheduling Optimization Benchmark algorithms...
+[2026-08-26 16:22:28] [INFO] [SmartSchedulingPipeline:run_pipeline.py:184] - Solving Model 1: Proposed Robust Energy-Aware Greedy...
+[2026-08-26 16:22:28] [INFO] [SmartSchedulingPipeline:run_pipeline.py:188] - Model 1 done: 180 jobs scheduled.
+[2026-08-26 16:22:28] [INFO] [SmartSchedulingPipeline:run_pipeline.py:191] - Solving Model 2: Deterministic Energy-Aware Greedy (p50 baseline)...
+[2026-08-26 16:22:29] [INFO] [SmartSchedulingPipeline:run_pipeline.py:195] - Model 2 done: 180 jobs scheduled.
+[2026-08-26 16:22:29] [INFO] [SmartSchedulingPipeline:run_pipeline.py:198] - Solving Model 3: Makespan-Only Greedy...
+[2026-08-26 16:22:29] [INFO] [SmartSchedulingPipeline:run_pipeline.py:202] - Model 3 done: 180 jobs scheduled.
+[2026-08-26 16:22:29] [INFO] [SmartSchedulingPipeline:run_pipeline.py:205] - Solving Model 4: Earliest Deadline First (EDF)...
+[2026-08-26 16:22:29] [INFO] [SmartSchedulingPipeline:run_pipeline.py:209] - Model 4 done: 180 jobs scheduled.
+[2026-08-26 16:22:29] [INFO] [SmartSchedulingPipeline:run_pipeline.py:212] - Solving Model 5: First Come First Served (FCFS)...
+[2026-08-26 16:22:29] [INFO] [SmartSchedulingPipeline:run_pipeline.py:216] - Model 5 done: 180 jobs scheduled.
+[2026-08-26 16:22:29] [INFO] [SmartSchedulingPipeline:run_pipeline.py:219] - Solving Model 6: Hybrid FD-PDTS + CP-SAT (warm-start refinement)...
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:224] - Model 6 done: 180 jobs scheduled.
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:226] - All scheduling runs completed successfully.
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:231] - Step 4/5: Computing KPIs for all benchmark models...
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:349] - Saved comprehensive benchmark comparison report to output/comprehensive_report.csv
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:351] - ======================================================================
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:352] - BENCHMARK RESULTS SUMMARY:
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:353] - ======================================================================
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -                     Metric FCFS_Baseline CP_SAT_Optimized                        Improvement
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Total Energy Cost (INR)    INR 186096.29        INR 90135.86 95960.43 reduction (51.6% savings)
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -        Peak Grid Load (kW)     778.28 kW        155.28 kW   623.00 reduction (80.0% savings)
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -           Makespan (hours)     49.25 hrs        58.00 hrs             +8.75 (17.8% increase)
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Machine Utilization (%)        47.78%           40.57%                   -7.21% reduction
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Average Waiting Time (min)      54.6 min        524.8 min          +470.17 (861.4% increase)
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -      Total Idle Time (min)   12345.0 min      16545.0 min          +4200.00 (34.0% increase)
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -          Total Delay (min)       0.0 min       1815.0 min                  +1815.00 increase
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -          Late Jobs (count)        0 jobs          15 jobs                    +15.00 increase
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -     On-Time Completion (%)       100.00%           91.67%                   -8.33% reduction
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Carbon Emissions (tCO2)    579.1537 t       461.8573 t   117.30 reduction (20.3% savings)
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Power Factor Penalty (INR)         INR 0.00            INR 0.00              No Penalties Incurred
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:358] - ======================================================================
+[2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:360] - Pipeline executed successfully. Outputs written to output/ directory.

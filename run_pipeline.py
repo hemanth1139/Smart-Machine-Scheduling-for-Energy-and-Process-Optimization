@@ -43,18 +43,18 @@ def enrich_schedule(schedule_df: pd.DataFrame, jobs_df: pd.DataFrame, machines_d
     job_map = jobs_df.set_index("Job_ID").to_dict(orient="index")
     mach_map = machines_df.set_index("Machine_ID").to_dict(orient="index")
     
-    # Pre-calculate tariffs
-    horizon_slots = len(forecast_df)
-    tariffs = np.zeros(horizon_slots)
-    for t in range(horizon_slots):
+    # Cyclic tariffs so jobs beyond the forecast window are priced fairly
+    base_n = max(1, len(forecast_df))
+    base_tariffs = np.zeros(base_n)
+    for t in range(base_n):
         load_type = forecast_df.iloc[t].get("Load_Type", "Light_Load")
         if load_type == "Maximum_Load":
-            tariffs[t] = config.TARIFF_MAX_LOAD
+            base_tariffs[t] = config.TARIFF_MAX_LOAD
         elif load_type == "Medium_Load":
-            tariffs[t] = config.TARIFF_MED_LOAD
+            base_tariffs[t] = config.TARIFF_MED_LOAD
         else:
-            tariffs[t] = config.TARIFF_LIGHT_LOAD
-            
+            base_tariffs[t] = config.TARIFF_LIGHT_LOAD
+
     enriched_rows = []
     for _, row in schedule_df.iterrows():
         jid = row["Job_ID"]
@@ -65,17 +65,15 @@ def enrich_schedule(schedule_df: pd.DataFrame, jobs_df: pd.DataFrame, machines_d
         j_p = job_map[jid]
         m_p = mach_map[mid]
         
-        # Calculate active energy cost
+        # Calculate active energy cost (cyclic tariff extension)
         active_power = m_p["Active_Power_kW"]
         job_cost = 0.0
         for t in range(start_slot, end_slot):
-            t_idx = min(t, horizon_slots - 1)
-            job_cost += active_power * 0.25 * tariffs[t_idx]
+            job_cost += active_power * 0.25 * base_tariffs[t % base_n]
             
         # Add setup cost (setup energy * tariff at start slot)
         setup_energy = m_p["Setup_Energy_kW"]
-        start_slot_idx = min(start_slot, horizon_slots - 1)
-        job_cost += setup_energy * 0.25 * tariffs[start_slot_idx]
+        job_cost += setup_energy * 0.25 * base_tariffs[start_slot % base_n]
         
         # Format times (HH:MM relative to 00:00 start)
         start_min = start_slot * 15

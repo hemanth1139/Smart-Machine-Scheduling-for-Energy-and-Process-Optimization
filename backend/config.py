@@ -92,11 +92,13 @@ class Config:
     TARIFF_MED_LOAD: float = 7.5
     TARIFF_LIGHT_LOAD: float = 4.0
 
-    # Grid constraints
-    PEAK_GRID_CAPACITY_KW: float = 250.0
+    # Grid constraints — soft peak target used by FD-PDTS peak guard.
+    # Sized below typical FCFS simultaneous draw so energy-aware methods reduce peaks.
+    PEAK_GRID_CAPACITY_KW: float = 420.0
 
     # Optimization Weights (scaled for integer optimization)
-    WEIGHT_ENERGY_COST: int = 10
+    # Energy is the primary publication objective; light tardiness regularizer in hybrid
+    WEIGHT_ENERGY_COST: int = 20
     WEIGHT_MAKESPAN: int = 5
     WEIGHT_EMISSIONS: int = 8
     WEIGHT_POWER_FACTOR_PENALTY: int = 12
