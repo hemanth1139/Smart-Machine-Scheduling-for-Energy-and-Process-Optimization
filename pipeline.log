@@ -650,3 +650,203 @@
 [2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Power Factor Penalty (INR)         INR 0.00            INR 0.00              No Penalties Incurred
 [2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:358] - ======================================================================
 [2026-08-26 16:24:31] [INFO] [SmartSchedulingPipeline:run_pipeline.py:360] - Pipeline executed successfully. Outputs written to output/ directory.
+[2026-08-27 12:40:19] [INFO] [SmartSchedulingPipeline:run_pipeline.py:113] - Initializing Predict-then-Optimize End-to-End Pipeline...
+[2026-08-27 12:40:19] [INFO] [SmartSchedulingPipeline:run_pipeline.py:119] - Step 0/5: Generating synthetic job and machine datasets...
+[2026-08-27 12:40:19] [INFO] [SmartSchedulingPipeline:run_pipeline.py:121] - Datasets generated successfully.
+[2026-08-27 12:40:19] [INFO] [SmartSchedulingPipeline:run_pipeline.py:126] - Step 1/5: Running Data cleaning and feature engineering...
+[2026-08-27 12:40:20] [INFO] [SmartSchedulingPipeline:run_pipeline.py:147] - Data preprocessing completed successfully.
+[2026-08-27 12:40:20] [INFO] [SmartSchedulingPipeline:run_pipeline.py:152] - Step 2/5: Preparing features and training Quantile XGBoost forecaster...
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:176] - Forecasting and model persistence completed.
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:181] - Step 3/5: Running Scheduling Optimization Benchmark algorithms...
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:184] - Solving Model 1: Proposed Robust Energy-Aware Greedy...
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:188] - Model 1 done: 180 jobs scheduled.
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:191] - Solving Model 2: Deterministic Energy-Aware Greedy (p50 baseline)...
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:195] - Model 2 done: 180 jobs scheduled.
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:198] - Solving Model 3: Makespan-Only Greedy...
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:202] - Model 3 done: 180 jobs scheduled.
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:205] - Solving Model 4: Earliest Deadline First (EDF)...
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:209] - Model 4 done: 180 jobs scheduled.
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:212] - Solving Model 5: First Come First Served (FCFS)...
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:216] - Model 5 done: 180 jobs scheduled.
+[2026-08-27 12:40:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:219] - Solving Model 6: Hybrid FD-PDTS + CP-SAT (warm-start refinement)...
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:224] - Model 6 done: 180 jobs scheduled.
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:226] - All scheduling runs completed successfully.
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:231] - Step 4/5: Computing KPIs for all benchmark models...
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:349] - Saved comprehensive benchmark comparison report to output/comprehensive_report.csv
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:351] - ======================================================================
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:352] - BENCHMARK RESULTS SUMMARY:
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:353] - ======================================================================
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -                     Metric FCFS_Baseline CP_SAT_Optimized                        Improvement
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Total Energy Cost (INR)    INR 186096.29       INR 126073.09 60023.20 reduction (32.3% savings)
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -        Peak Grid Load (kW)     778.95 kW        448.95 kW   330.00 reduction (42.4% savings)
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -           Makespan (hours)     49.25 hrs        49.50 hrs              +0.25 (0.5% increase)
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Machine Utilization (%)        47.78%           47.54%                   -0.24% reduction
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Average Waiting Time (min)      54.6 min         92.1 min            +37.50 (68.7% increase)
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -      Total Idle Time (min)   12345.0 min      12465.0 min            +120.00 (1.0% increase)
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -          Total Delay (min)       0.0 min          0.0 min                     +0.00 increase
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -          Late Jobs (count)        0 jobs           0 jobs         Zero delays (100% savings)
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -     On-Time Completion (%)       100.00%          100.00%                    0.00% reduction
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Carbon Emissions (tCO2)   2950.9463 t      2206.4813 t   744.47 reduction (25.2% savings)
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Power Factor Penalty (INR)         INR 0.00            INR 0.00              No Penalties Incurred
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:358] - ======================================================================
+[2026-08-27 12:42:37] [INFO] [SmartSchedulingPipeline:run_pipeline.py:360] - Pipeline executed successfully. Outputs written to output/ directory.
+[2026-08-27 12:43:03] [INFO] [SmartSchedulingPipeline:run_pipeline.py:113] - Initializing Predict-then-Optimize End-to-End Pipeline...
+[2026-08-27 12:43:03] [INFO] [SmartSchedulingPipeline:run_pipeline.py:119] - Step 0/5: Generating synthetic job and machine datasets...
+[2026-08-27 12:43:03] [INFO] [SmartSchedulingPipeline:run_pipeline.py:121] - Datasets generated successfully.
+[2026-08-27 12:43:03] [INFO] [SmartSchedulingPipeline:run_pipeline.py:126] - Step 1/5: Running Data cleaning and feature engineering...
+[2026-08-27 12:43:03] [INFO] [SmartSchedulingPipeline:run_pipeline.py:147] - Data preprocessing completed successfully.
+[2026-08-27 12:43:03] [INFO] [SmartSchedulingPipeline:run_pipeline.py:152] - Step 2/5: Preparing features and training Quantile XGBoost forecaster...
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:176] - Forecasting and model persistence completed.
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:181] - Step 3/5: Running Scheduling Optimization Benchmark algorithms...
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:184] - Solving Model 1: Proposed Robust Energy-Aware Greedy...
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:188] - Model 1 done: 180 jobs scheduled.
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:191] - Solving Model 2: Deterministic Energy-Aware Greedy (p50 baseline)...
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:195] - Model 2 done: 180 jobs scheduled.
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:198] - Solving Model 3: Makespan-Only Greedy...
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:202] - Model 3 done: 180 jobs scheduled.
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:205] - Solving Model 4: Earliest Deadline First (EDF)...
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:209] - Model 4 done: 180 jobs scheduled.
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:212] - Solving Model 5: First Come First Served (FCFS)...
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:216] - Model 5 done: 180 jobs scheduled.
+[2026-08-27 12:43:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:219] - Solving Model 6: Hybrid FD-PDTS + CP-SAT (warm-start refinement)...
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:224] - Model 6 done: 180 jobs scheduled.
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:226] - All scheduling runs completed successfully.
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:231] - Step 4/5: Computing KPIs for all benchmark models...
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:349] - Saved comprehensive benchmark comparison report to output/comprehensive_report.csv
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:351] - ======================================================================
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:352] - BENCHMARK RESULTS SUMMARY:
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:353] - ======================================================================
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -                     Metric FCFS_Baseline CP_SAT_Optimized                        Improvement
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Total Energy Cost (INR)    INR 186096.29       INR 125664.99 60431.30 reduction (32.5% savings)
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -        Peak Grid Load (kW)     778.95 kW        448.95 kW   330.00 reduction (42.4% savings)
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -           Makespan (hours)     49.25 hrs        50.00 hrs              +0.75 (1.5% increase)
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Machine Utilization (%)        47.78%           47.06%                   -0.72% reduction
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Average Waiting Time (min)      54.6 min         94.4 min            +39.84 (73.0% increase)
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -      Total Idle Time (min)   12345.0 min      12705.0 min            +360.00 (2.9% increase)
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -          Total Delay (min)       0.0 min          0.0 min                     +0.00 increase
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -          Late Jobs (count)        0 jobs           0 jobs         Zero delays (100% savings)
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -     On-Time Completion (%)       100.00%          100.00%                    0.00% reduction
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Carbon Emissions (tCO2)   2950.9463 t      2202.9224 t   748.02 reduction (25.3% savings)
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Power Factor Penalty (INR)         INR 0.00            INR 0.00              No Penalties Incurred
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:358] - ======================================================================
+[2026-08-27 12:45:14] [INFO] [SmartSchedulingPipeline:run_pipeline.py:360] - Pipeline executed successfully. Outputs written to output/ directory.
+[2026-08-27 12:49:49] [INFO] [SmartSchedulingPipeline:run_pipeline.py:113] - Initializing Predict-then-Optimize End-to-End Pipeline...
+[2026-08-27 12:49:49] [INFO] [SmartSchedulingPipeline:run_pipeline.py:119] - Step 0/5: Generating synthetic job and machine datasets...
+[2026-08-27 12:49:49] [INFO] [SmartSchedulingPipeline:run_pipeline.py:121] - Datasets generated successfully.
+[2026-08-27 12:49:49] [INFO] [SmartSchedulingPipeline:run_pipeline.py:126] - Step 1/5: Running Data cleaning and feature engineering...
+[2026-08-27 12:49:50] [INFO] [SmartSchedulingPipeline:run_pipeline.py:147] - Data preprocessing completed successfully.
+[2026-08-27 12:49:50] [INFO] [SmartSchedulingPipeline:run_pipeline.py:152] - Step 2/5: Preparing features and training Quantile XGBoost forecaster...
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:176] - Forecasting and model persistence completed.
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:181] - Step 3/5: Running Scheduling Optimization Benchmark algorithms...
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:184] - Solving Model 1: Proposed Robust Energy-Aware Greedy...
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:188] - Model 1 done: 180 jobs scheduled.
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:191] - Solving Model 2: Deterministic Energy-Aware Greedy (p50 baseline)...
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:195] - Model 2 done: 180 jobs scheduled.
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:198] - Solving Model 3: Makespan-Only Greedy...
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:202] - Model 3 done: 180 jobs scheduled.
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:205] - Solving Model 4: Earliest Deadline First (EDF)...
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:209] - Model 4 done: 180 jobs scheduled.
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:212] - Solving Model 5: First Come First Served (FCFS)...
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:216] - Model 5 done: 180 jobs scheduled.
+[2026-08-27 12:50:06] [INFO] [SmartSchedulingPipeline:run_pipeline.py:219] - Solving Model 6: Hybrid FD-PDTS + CP-SAT (warm-start refinement)...
+[2026-08-27 12:50:23] [INFO] [SmartSchedulingPipeline:run_pipeline.py:113] - Initializing Predict-then-Optimize End-to-End Pipeline...
+[2026-08-27 12:50:23] [INFO] [SmartSchedulingPipeline:run_pipeline.py:119] - Step 0/5: Generating synthetic job and machine datasets...
+[2026-08-27 12:50:23] [INFO] [SmartSchedulingPipeline:run_pipeline.py:121] - Datasets generated successfully.
+[2026-08-27 12:50:23] [INFO] [SmartSchedulingPipeline:run_pipeline.py:126] - Step 1/5: Running Data cleaning and feature engineering...
+[2026-08-27 12:50:24] [INFO] [SmartSchedulingPipeline:run_pipeline.py:147] - Data preprocessing completed successfully.
+[2026-08-27 12:50:24] [INFO] [SmartSchedulingPipeline:run_pipeline.py:152] - Step 2/5: Preparing features and training Quantile XGBoost forecaster...
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:176] - Forecasting and model persistence completed.
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:181] - Step 3/5: Running Scheduling Optimization Benchmark algorithms...
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:184] - Solving Model 1: Proposed Robust Energy-Aware Greedy...
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:188] - Model 1 done: 180 jobs scheduled.
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:191] - Solving Model 2: Deterministic Energy-Aware Greedy (p50 baseline)...
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:195] - Model 2 done: 180 jobs scheduled.
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:198] - Solving Model 3: Makespan-Only Greedy...
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:202] - Model 3 done: 180 jobs scheduled.
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:205] - Solving Model 4: Earliest Deadline First (EDF)...
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:209] - Model 4 done: 180 jobs scheduled.
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:212] - Solving Model 5: First Come First Served (FCFS)...
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:216] - Model 5 done: 180 jobs scheduled.
+[2026-08-27 12:50:42] [INFO] [SmartSchedulingPipeline:run_pipeline.py:219] - Solving Model 6: Hybrid FD-PDTS + CP-SAT (warm-start refinement)...
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:224] - Model 6 done: 180 jobs scheduled.
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:226] - All scheduling runs completed successfully.
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:231] - Step 4/5: Computing KPIs for all benchmark models...
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:349] - Saved comprehensive benchmark comparison report to output/comprehensive_report.csv
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:351] - ======================================================================
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:352] - BENCHMARK RESULTS SUMMARY:
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:353] - ======================================================================
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -                     Metric FCFS_Baseline CP_SAT_Optimized                        Improvement
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Total Energy Cost (INR)    INR 186096.29       INR 126461.58 59634.71 reduction (32.0% savings)
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -        Peak Grid Load (kW)     778.95 kW        448.95 kW   330.00 reduction (42.4% savings)
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -           Makespan (hours)     49.25 hrs        49.50 hrs              +0.25 (0.5% increase)
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Machine Utilization (%)        47.78%           47.54%                   -0.24% reduction
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Average Waiting Time (min)      54.6 min         90.7 min            +36.09 (66.1% increase)
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -      Total Idle Time (min)   12345.0 min      12465.0 min            +120.00 (1.0% increase)
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -          Total Delay (min)       0.0 min          0.0 min                     +0.00 increase
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -          Late Jobs (count)        0 jobs           0 jobs         Zero delays (100% savings)
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -     On-Time Completion (%)       100.00%          100.00%                    0.00% reduction
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Carbon Emissions (tCO2)   2950.9463 t      2187.0227 t   763.92 reduction (25.9% savings)
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Power Factor Penalty (INR)         INR 0.00            INR 0.00              No Penalties Incurred
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:358] - ======================================================================
+[2026-08-27 12:52:07] [INFO] [SmartSchedulingPipeline:run_pipeline.py:360] - Pipeline executed successfully. Outputs written to output/ directory.
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:224] - Model 6 done: 180 jobs scheduled.
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:226] - All scheduling runs completed successfully.
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:231] - Step 4/5: Computing KPIs for all benchmark models...
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:349] - Saved comprehensive benchmark comparison report to output/comprehensive_report.csv
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:351] - ======================================================================
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:352] - BENCHMARK RESULTS SUMMARY:
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:353] - ======================================================================
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -                     Metric FCFS_Baseline CP_SAT_Optimized                        Improvement
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Total Energy Cost (INR)    INR 186096.29       INR 125834.36 60261.93 reduction (32.4% savings)
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -        Peak Grid Load (kW)     778.95 kW        448.95 kW   330.00 reduction (42.4% savings)
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -           Makespan (hours)     49.25 hrs        49.50 hrs              +0.25 (0.5% increase)
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Machine Utilization (%)        47.78%           47.54%                   -0.24% reduction
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Average Waiting Time (min)      54.6 min         92.6 min            +38.00 (69.6% increase)
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -      Total Idle Time (min)   12345.0 min      12465.0 min            +120.00 (1.0% increase)
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -          Total Delay (min)       0.0 min          0.0 min                     +0.00 increase
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -          Late Jobs (count)        0 jobs           0 jobs         Zero delays (100% savings)
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -     On-Time Completion (%)       100.00%          100.00%                    0.00% reduction
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Carbon Emissions (tCO2)   2950.9463 t      2206.4916 t   744.45 reduction (25.2% savings)
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Power Factor Penalty (INR)         INR 0.00            INR 0.00              No Penalties Incurred
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:358] - ======================================================================
+[2026-08-27 12:52:43] [INFO] [SmartSchedulingPipeline:run_pipeline.py:360] - Pipeline executed successfully. Outputs written to output/ directory.
+[2026-08-27 12:54:03] [INFO] [SmartSchedulingPipeline:run_pipeline.py:113] - Initializing Predict-then-Optimize End-to-End Pipeline...
+[2026-08-27 12:54:03] [INFO] [SmartSchedulingPipeline:run_pipeline.py:119] - Step 0/5: Generating synthetic job and machine datasets...
+[2026-08-27 12:54:03] [INFO] [SmartSchedulingPipeline:run_pipeline.py:121] - Datasets generated successfully.
+[2026-08-27 12:54:03] [INFO] [SmartSchedulingPipeline:run_pipeline.py:126] - Step 1/5: Running Data cleaning and feature engineering...
+[2026-08-27 12:54:04] [INFO] [SmartSchedulingPipeline:run_pipeline.py:147] - Data preprocessing completed successfully.
+[2026-08-27 12:54:04] [INFO] [SmartSchedulingPipeline:run_pipeline.py:152] - Step 2/5: Preparing features and training Quantile XGBoost forecaster...
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:176] - Forecasting and model persistence completed.
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:181] - Step 3/5: Running Scheduling Optimization Benchmark algorithms...
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:184] - Solving Model 1: Proposed Robust Energy-Aware Greedy...
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:188] - Model 1 done: 180 jobs scheduled.
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:191] - Solving Model 2: Deterministic Energy-Aware Greedy (p50 baseline)...
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:195] - Model 2 done: 180 jobs scheduled.
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:198] - Solving Model 3: Makespan-Only Greedy...
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:202] - Model 3 done: 180 jobs scheduled.
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:205] - Solving Model 4: Earliest Deadline First (EDF)...
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:209] - Model 4 done: 180 jobs scheduled.
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:212] - Solving Model 5: First Come First Served (FCFS)...
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:216] - Model 5 done: 180 jobs scheduled.
+[2026-08-27 12:54:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:219] - Solving Model 6: Hybrid FD-PDTS + CP-SAT (warm-start refinement)...
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:224] - Model 6 done: 180 jobs scheduled.
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:226] - All scheduling runs completed successfully.
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:231] - Step 4/5: Computing KPIs for all benchmark models...
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:349] - Saved comprehensive benchmark comparison report to output/comprehensive_report.csv
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:351] - ======================================================================
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:352] - BENCHMARK RESULTS SUMMARY:
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:353] - ======================================================================
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -                     Metric FCFS_Baseline CP_SAT_Optimized                        Improvement
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Total Energy Cost (INR)    INR 186096.29       INR 125350.00 60746.29 reduction (32.6% savings)
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -        Peak Grid Load (kW)     778.95 kW        448.95 kW   330.00 reduction (42.4% savings)
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -           Makespan (hours)     49.25 hrs        50.00 hrs              +0.75 (1.5% increase)
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Machine Utilization (%)        47.78%           47.06%                   -0.72% reduction
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Average Waiting Time (min)      54.6 min         93.9 min            +39.34 (72.1% increase)
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -      Total Idle Time (min)   12345.0 min      12705.0 min            +360.00 (2.9% increase)
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -          Total Delay (min)       0.0 min          0.0 min                     +0.00 increase
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -          Late Jobs (count)        0 jobs           0 jobs         Zero delays (100% savings)
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -     On-Time Completion (%)       100.00%          100.00%                    0.00% reduction
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] -    Carbon Emissions (tCO2)   2950.9463 t      2191.9967 t   758.95 reduction (25.7% savings)
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:357] - Power Factor Penalty (INR)         INR 0.00            INR 0.00              No Penalties Incurred
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:358] - ======================================================================
+[2026-08-27 12:56:26] [INFO] [SmartSchedulingPipeline:run_pipeline.py:360] - Pipeline executed successfully. Outputs written to output/ directory.
