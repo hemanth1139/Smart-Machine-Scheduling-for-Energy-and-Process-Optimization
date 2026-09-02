@@ -9,13 +9,13 @@ import plotly.express as px
 
 from frontend.pages.home import render_styled_benchmark_matrix
 
-DARK_LAYOUT = dict(
-    paper_bgcolor="#161e2e",
-    plot_bgcolor="#161e2e",
-    font=dict(color="#cbd5e1", family="Inter, sans-serif"),
+MINIMAL_LIGHT_LAYOUT = dict(
+    paper_bgcolor="#ffffff",
+    plot_bgcolor="#ffffff",
+    font=dict(color="#334155", family="Inter, sans-serif"),
     margin=dict(l=16, r=16, t=44, b=16),
-    xaxis=dict(gridcolor="#1f293d", zerolinecolor="#1f293d", linecolor="#1f293d"),
-    yaxis=dict(gridcolor="#1f293d", zerolinecolor="#1f293d", linecolor="#1f293d"),
+    xaxis=dict(gridcolor="#f1f5f9", zerolinecolor="#e2e8f0", linecolor="#e2e8f0"),
+    yaxis=dict(gridcolor="#f1f5f9", zerolinecolor="#e2e8f0", linecolor="#e2e8f0"),
 )
 
 
@@ -27,8 +27,8 @@ def _kv(kpi_df, stype, col, default):
 
 
 def _comparison_bar(fcfs_val, opt_val, title, unit, higher_is_better=False):
-    better_color = "#4ade80"
-    worse_color  = "#f87171"
+    better_color = "#10b981"
+    worse_color  = "#ef4444"
     fcfs_color, opt_color = worse_color, better_color
 
     fig = go.Figure()
@@ -36,28 +36,29 @@ def _comparison_bar(fcfs_val, opt_val, title, unit, higher_is_better=False):
         x=["FCFS Baseline"], y=[fcfs_val],
         name="FCFS", marker_color=fcfs_color,
         text=[f"{fcfs_val:,.2f}"], textposition="outside",
-        textfont=dict(color="#f8fafc", size=11),
+        textfont=dict(color="#475569", size=11),
     )
     fig.add_bar(
         x=["CP-SAT Optimized"], y=[opt_val],
         name="CP-SAT", marker_color=opt_color,
         text=[f"{opt_val:,.2f}"], textposition="outside",
-        textfont=dict(color="#f8fafc", size=11),
+        textfont=dict(color="#475569", size=11),
     )
     delta = abs(fcfs_val - opt_val)
     delta_pct = (delta / max(1, fcfs_val)) * 100
     fig.update_layout(
-        **DARK_LAYOUT,
+        **MINIMAL_LIGHT_LAYOUT,
         title=dict(
-            text=f"{title}<br><sup style='color:#94a3b8'>{delta:.1f} {unit} improvement ({delta_pct:.1f}%)</sup>",
-            font=dict(color="#f8fafc", size=13),
+            text=f"{title}<br><sup style='color:#64748b'>{delta:.1f} {unit} improvement ({delta_pct:.1f}%)</sup>",
+            font=dict(color="#0f172a", size=13),
         ),
         height=300, showlegend=False, bargap=0.45,
         yaxis_title=unit,
     )
-    fig.update_yaxes(tickfont=dict(color="#94a3b8"))
-    fig.update_xaxes(tickfont=dict(color="#cbd5e1", size=11))
+    fig.update_yaxes(tickfont=dict(color="#64748b"))
+    fig.update_xaxes(tickfont=dict(color="#334155", size=11))
     return fig
+
 
 
 def render_kpi_page(kpi_df, comp_df, pred_df, fut_df):
@@ -98,7 +99,7 @@ def render_kpi_page(kpi_df, comp_df, pred_df, fut_df):
     st.divider()
 
     # ── Comparison bar charts ─────────────────────────────────────────────
-    st.markdown('<p style="color:#94a3b8;font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Side-by-Side KPI Breakdown</p>', unsafe_allow_html=True)
+    st.markdown('<p style="color:#64748b;font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Side-by-Side KPI Breakdown</p>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
         st.plotly_chart(_comparison_bar(fcfs_cost, opt_cost, "Energy Cost", "₹"), use_container_width=True)

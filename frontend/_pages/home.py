@@ -6,17 +6,18 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
+import textwrap
 
-DARK_LAYOUT = dict(
-    paper_bgcolor="#161e2e",
-    plot_bgcolor="#161e2e",
-    font=dict(color="#cbd5e1", family="Inter, sans-serif"),
+MINIMAL_LIGHT_LAYOUT = dict(
+    paper_bgcolor="#ffffff",
+    plot_bgcolor="#ffffff",
+    font=dict(color="#334155", family="Inter, sans-serif"),
     margin=dict(l=16, r=16, t=42, b=16),
-    xaxis=dict(gridcolor="#1f293d", zerolinecolor="#1f293d", linecolor="#1f293d"),
-    yaxis=dict(gridcolor="#1f293d", zerolinecolor="#1f293d", linecolor="#1f293d"),
+    xaxis=dict(gridcolor="#f1f5f9", zerolinecolor="#e2e8f0", linecolor="#e2e8f0"),
+    yaxis=dict(gridcolor="#f1f5f9", zerolinecolor="#e2e8f0", linecolor="#e2e8f0"),
 )
 
-PRIORITY_COLORS = {"High": "#f87171", "Medium": "#fbbf24", "Low": "#4ade80"}
+PRIORITY_COLORS = {"High": "#ef4444", "Medium": "#f59e0b", "Low": "#10b981"}
 
 
 def _kv(kpi_df, stype, col, default):
@@ -46,40 +47,36 @@ def render_styled_benchmark_matrix(comp_df: pd.DataFrame):
             badge_class = "pill-neutral"
             icon = ""
 
-        rows_html += f"""
-        <tr>
-            <td class="metric-name-col">{metric}</td>
-            <td class="val-fcfs">{fcfs}</td>
-            <td class="val-cpsat">{cpsat}</td>
-            <td><span class="{badge_class}">{icon}{imp}</span></td>
-        </tr>
-        """
+        rows_html += (
+            f'<tr>'
+            f'<td class="metric-name-col">{metric}</td>'
+            f'<td class="val-fcfs">{fcfs}</td>'
+            f'<td class="val-cpsat">{cpsat}</td>'
+            f'<td><span class="{badge_class}">{icon}{imp}</span></td>'
+            f'</tr>\n'
+        )
 
-    html_code = f"""
-    <div class="benchmark-card">
-        <div class="benchmark-card-header">
-            <div class="benchmark-title">
-                📊 FCFS Baseline vs CP-SAT Optimization Benchmark
-            </div>
-            <div class="benchmark-status-badge">
-                CP-SAT Outperforms Across All 11 KPIs
-            </div>
-        </div>
-        <table class="styled-benchmark-table">
-            <thead>
-                <tr>
-                    <th style="width: 32%;">Key Performance Indicator</th>
-                    <th style="width: 20%;">FCFS Baseline (Greedy)</th>
-                    <th style="width: 22%;">CP-SAT Optimized (AI Engine)</th>
-                    <th style="width: 26%;">Quantified Improvement</th>
-                </tr>
-            </thead>
-            <tbody>
-                {rows_html}
-            </tbody>
-        </table>
-    </div>
-    """
+    html_code = (
+        f'<div class="benchmark-card">\n'
+        f'<div class="benchmark-card-header">\n'
+        f'<div class="benchmark-title">📊 FCFS Baseline vs CP-SAT Optimization Benchmark</div>\n'
+        f'<div class="benchmark-status-badge">CP-SAT Outperforms Across All 11 KPIs</div>\n'
+        f'</div>\n'
+        f'<table class="styled-benchmark-table">\n'
+        f'<thead>\n'
+        f'<tr>\n'
+        f'<th style="width: 32%;">Key Performance Indicator</th>\n'
+        f'<th style="width: 20%;">FCFS Baseline (Greedy)</th>\n'
+        f'<th style="width: 22%;">CP-SAT Optimized (AI Engine)</th>\n'
+        f'<th style="width: 26%;">Quantified Improvement</th>\n'
+        f'</tr>\n'
+        f'</thead>\n'
+        f'<tbody>\n'
+        f'{rows_html}'
+        f'</tbody>\n'
+        f'</table>\n'
+        f'</div>'
+    )
     st.markdown(html_code, unsafe_allow_html=True)
 
 
@@ -100,15 +97,15 @@ def _build_gantt(opt_df: pd.DataFrame):
         color_discrete_map=PRIORITY_COLORS,
     )
     fig.update_layout(
-        **DARK_LAYOUT,
-        title=dict(text="CP-SAT Job Execution Gantt Timeline", font=dict(color="#f8fafc", size=14)),
+        **MINIMAL_LIGHT_LAYOUT,
+        title=dict(text="CP-SAT Job Execution Gantt Timeline", font=dict(color="#0f172a", size=14)),
         height=380,
-        legend=dict(title="Priority", font=dict(color="#cbd5e1"), bgcolor="#111827",
-                    bordercolor="#1f293d", borderwidth=1),
+        legend=dict(title="Priority", font=dict(color="#334155"), bgcolor="#ffffff",
+                    bordercolor="#e2e8f0", borderwidth=1),
         xaxis_title="", yaxis_title="Machine Fleet",
     )
-    fig.update_yaxes(categoryorder="category ascending", tickfont=dict(color="#94a3b8"))
-    fig.update_xaxes(tickfont=dict(color="#94a3b8"))
+    fig.update_yaxes(categoryorder="category ascending", tickfont=dict(color="#64748b"))
+    fig.update_xaxes(tickfont=dict(color="#64748b"))
     return fig
 
 
@@ -124,20 +121,21 @@ def _build_demand_chart(fut_df: pd.DataFrame):
     fig.add_scatter(
         x=fut_df[ts_col], y=fut_df["predicted_kWh"],
         name="Forecasted Load (kWh)",
-        line=dict(color="#6366f1", width=2.5),
+        line=dict(color="#4f46e5", width=2.5),
         mode="lines",
         fill="tozeroy",
-        fillcolor="rgba(99, 102, 241, 0.1)",
+        fillcolor="rgba(79, 70, 229, 0.08)",
     )
 
     fig.update_layout(
-        **DARK_LAYOUT,
-        title=dict(text="24-Hour XGBoost Energy Demand Forecast & Peak Load Tariff Horizon", font=dict(color="#f8fafc", size=14)),
+        **MINIMAL_LIGHT_LAYOUT,
+        title=dict(text="24-Hour XGBoost Energy Demand Forecast & Peak Load Horizon", font=dict(color="#0f172a", size=13)),
         height=320,
         yaxis_title="Energy Consumption (kWh)",
         legend=dict(orientation="h", yanchor="bottom", y=-0.25, xanchor="center", x=0.5),
     )
     return fig
+
 
 
 def render_home_page(kpi_df, comp_df, jobs_df, machines_df, fut_df, opt_df, fcfs_df):
@@ -213,13 +211,14 @@ def render_home_page(kpi_df, comp_df, jobs_df, machines_df, fut_df, opt_df, fcfs
             # Fallback bar chart for energy cost
             fig_bar = go.Figure()
             fig_bar.add_bar(x=["FCFS Baseline", "CP-SAT Optimized"], y=[fcfs_cost, opt_cost],
-                            marker_color=["#f87171", "#4ade80"], text=[f"₹{fcfs_cost:,.2f}", f"₹{opt_cost:,.2f}"], textposition="outside")
-            fig_bar.update_layout(**DARK_LAYOUT, title=dict(text="Total Electricity Cost (INR)", font=dict(color="#f8fafc", size=13)), height=320)
+                            marker_color=["#ef4444", "#10b981"], text=[f"₹{fcfs_cost:,.2f}", f"₹{opt_cost:,.2f}"], textposition="outside", textfont=dict(color="#475569"))
+            fig_bar.update_layout(**MINIMAL_LIGHT_LAYOUT, title=dict(text="Total Electricity Cost (INR)", font=dict(color="#0f172a", size=13)), height=320)
             st.plotly_chart(fig_bar, use_container_width=True)
 
     with col_b:
         fig_compare = go.Figure()
-        fig_compare.add_bar(x=["FCFS Baseline"], y=[fcfs_peak], name="FCFS Peak Load", marker_color="#f87171", text=[f"{fcfs_peak:.1f} kWh"], textposition="outside")
-        fig_compare.add_bar(x=["CP-SAT Optimized"], y=[opt_peak], name="CP-SAT Peak Load", marker_color="#4ade80", text=[f"{opt_peak:.1f} kWh"], textposition="outside")
-        fig_compare.update_layout(**DARK_LAYOUT, title=dict(text="Peak Load Reduction Comparison (kWh)", font=dict(color="#f8fafc", size=13)), height=320, showlegend=False)
+        fig_compare.add_bar(x=["FCFS Baseline"], y=[fcfs_peak], name="FCFS Peak Load", marker_color="#ef4444", text=[f"{fcfs_peak:.1f} kWh"], textposition="outside", textfont=dict(color="#475569"))
+        fig_compare.add_bar(x=["CP-SAT Optimized"], y=[opt_peak], name="CP-SAT Peak Load", marker_color="#10b981", text=[f"{opt_peak:.1f} kWh"], textposition="outside", textfont=dict(color="#475569"))
+        fig_compare.update_layout(**MINIMAL_LIGHT_LAYOUT, title=dict(text="Peak Load Reduction Comparison (kWh)", font=dict(color="#0f172a", size=13)), height=320, showlegend=False)
         st.plotly_chart(fig_compare, use_container_width=True)
+

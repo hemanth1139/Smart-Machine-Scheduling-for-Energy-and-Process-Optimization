@@ -4,6 +4,7 @@ Consolidated Single-Page Executive Dark UI.
 """
 
 import sys
+import textwrap
 from pathlib import Path
 import streamlit as st
 import pandas as pd
@@ -26,7 +27,7 @@ from frontend.utils.loader import (
 CUSTOM_CSS = """
 <style>
 /* ── Google Fonts ────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 html, body, [class*="css"] {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
@@ -34,260 +35,256 @@ html, body, [class*="css"] {
 
 /* ── App Background ──────────────────────────────────────────────────────── */
 .stApp {
-    background: #090d16 !important;
-    color: #e2e8f0 !important;
+    background: #f8fafc !important;
+    color: #0f172a !important;
 }
 
 /* ── Sidebar ─────────────────────────────────────────────────────────────── */
 [data-testid="stSidebar"] {
-    background: #0f172a !important;
-    border-right: 1px solid #1e293b !important;
+    background: #ffffff !important;
+    border-right: 1px solid #e2e8f0 !important;
 }
 [data-testid="stSidebar"] * {
-    color: #cbd5e1 !important;
+    color: #334155 !important;
+}
+[data-testid="stSidebarNav"] {
+    display: none !important;
 }
 
 /* ── Headings ────────────────────────────────────────────────────────────── */
 h1, h2, h3, h4 {
-    color: #f8fafc !important;
-    font-weight: 800 !important;
-    letter-spacing: -0.03em !important;
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
 }
-h2 { font-size: 1.6rem !important; margin-bottom: 0.8rem !important; }
-h3 { font-size: 1.2rem !important; margin-top: 1rem !important; }
+h2 { font-size: 1.4rem !important; margin-bottom: 0.6rem !important; }
+h3 { font-size: 1.1rem !important; margin-top: 0.8rem !important; }
 
 /* ── Dividers ────────────────────────────────────────────────────────────── */
 hr {
-    border-color: #1e293b !important;
-    margin: 1.5rem 0 !important;
+    border-color: #e2e8f0 !important;
+    margin: 1.25rem 0 !important;
 }
 
 /* ── Metric Cards ────────────────────────────────────────────────────────── */
 [data-testid="stMetric"] {
-    background: linear-gradient(135deg, #131b2e 0%, #0d1323 100%) !important;
-    border: 1px solid #1e293b !important;
-    border-radius: 16px !important;
-    padding: 20px 24px !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
-    transition: all 0.25s ease !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.2s ease !important;
     position: relative;
     overflow: hidden;
 }
-[data-testid="stMetric"]::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, #6366f1, #a855f7);
-    opacity: 0.8;
-}
 [data-testid="stMetric"]:hover {
-    transform: translateY(-4px) !important;
-    border-color: #6366f1 !important;
-    box-shadow: 0 16px 35px rgba(99, 102, 241, 0.15) !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
 }
 [data-testid="stMetricLabel"] {
-    color: #94a3b8 !important;
-    font-size: 0.78rem !important;
-    font-weight: 700 !important;
+    color: #64748b !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.08em !important;
+    letter-spacing: 0.05em !important;
 }
 [data-testid="stMetricValue"] {
-    color: #ffffff !important;
-    font-size: 1.8rem !important;
-    font-weight: 800 !important;
-    letter-spacing: -0.01em !important;
+    color: #0f172a !important;
+    font-size: 1.7rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
 }
 [data-testid="stMetricDelta"] {
-    font-size: 0.85rem !important;
+    font-size: 0.82rem !important;
     font-weight: 600 !important;
 }
 
 /* ── Custom HTML Tables ──────────────────────────────────────────────────── */
 .benchmark-card {
-    background: linear-gradient(135deg, #131b2e 0%, #0d1323 100%);
-    border: 1px solid #1e293b;
-    border-radius: 18px;
-    padding: 24px;
-    margin-top: 15px;
-    margin-bottom: 25px;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-top: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 .benchmark-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid #1e293b;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
 }
 .benchmark-title {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: #f8fafc;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 .benchmark-status-badge {
-    background: rgba(99, 102, 241, 0.15);
-    color: #a5b4fc;
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    font-size: 0.78rem;
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+    font-size: 0.75rem;
     font-weight: 700;
-    padding: 6px 14px;
+    padding: 4px 12px;
     border-radius: 20px;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
 }
 .styled-benchmark-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    font-size: 0.92rem;
+    font-size: 0.88rem;
 }
 .styled-benchmark-table th {
-    background: #101626;
-    color: #94a3b8;
+    background: #f8fafc;
+    color: #475569;
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    padding: 14px 20px;
-    border-bottom: 2px solid #1e293b;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 12px 16px;
+    border-bottom: 2px solid #e2e8f0;
     text-align: left;
 }
-.styled-benchmark-table th:first-child { border-top-left-radius: 12px; }
-.styled-benchmark-table th:last-child { border-top-right-radius: 12px; }
+.styled-benchmark-table th:first-child { border-top-left-radius: 8px; }
+.styled-benchmark-table th:last-child { border-top-right-radius: 8px; }
 .styled-benchmark-table td {
-    padding: 14px 20px;
-    border-bottom: 1px solid #101626;
-    color: #cbd5e1;
+    padding: 12px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
     vertical-align: middle;
 }
 .styled-benchmark-table tr:last-child td {
     border-bottom: none;
 }
 .styled-benchmark-table tr:hover td {
-    background: rgba(99, 102, 241, 0.06);
+    background: #f8fafc;
 }
 .metric-name-col {
-    font-weight: 700;
-    color: #f1f5f9;
+    font-weight: 600;
+    color: #0f172a;
 }
 .val-fcfs {
-    color: #f87171;
+    color: #dc2626;
     font-weight: 600;
     font-family: 'JetBrains Mono', monospace;
 }
 .val-selected {
-    color: #818cf8;
+    color: #4f46e5;
     font-weight: 600;
     font-family: 'JetBrains Mono', monospace;
 }
 .pill-improvement {
-    background: rgba(16, 185, 129, 0.12);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    padding: 4px 12px;
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+    padding: 3px 10px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     gap: 4px;
 }
 .pill-neutral {
-    background: rgba(148, 163, 184, 0.1);
-    color: #94a3b8;
-    border: 1px solid rgba(148, 163, 184, 0.25);
-    padding: 4px 12px;
+    background: #f8fafc;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    padding: 3px 10px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 500;
     display: inline-flex;
 }
 .pill-worse {
-    background: rgba(244, 63, 94, 0.1);
-    color: #fb7185;
-    border: 1px solid rgba(244, 63, 94, 0.25);
-    padding: 4px 12px;
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    padding: 3px 10px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 500;
     display: inline-flex;
 }
 
 /* ── Page Header Banner ──────────────────────────────────────────────────── */
 .page-header {
-    background: linear-gradient(135deg, #131c31 0%, #080d1a 100%);
-    border: 1px solid #1e293b;
-    border-left: 5px solid #6366f1;
-    border-radius: 18px;
-    padding: 24px 32px;
-    margin-bottom: 24px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #4f46e5;
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 .page-header h2 {
     margin: 0 !important;
-    font-size: 1.7rem !important;
-    background: linear-gradient(90deg, #ffffff, #a5b4fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 1.45rem !important;
+    color: #0f172a !important;
+    font-weight: 700 !important;
 }
 .page-header p {
-    color: #94a3b8;
-    margin: 6px 0 0 0;
-    font-size: 0.95rem;
-    font-weight: 500;
+    color: #64748b;
+    margin: 4px 0 0 0;
+    font-size: 0.9rem;
+    font-weight: 400;
 }
 .section-badge {
     display: inline-block;
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
-    color: #ffffff;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
+    background: #e0e7ff;
+    color: #4338ca;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    padding: 4px 12px;
+    padding: 3px 10px;
     border-radius: 20px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 /* ── Plotly Containers ────────────────────────────────────────────────────── */
 [data-testid="stPlotlyChart"] {
-    border-radius: 16px !important;
+    border-radius: 12px !important;
     overflow: hidden !important;
-    border: 1px solid #1e293b !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
-    background: #131b2e !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    background: #ffffff !important;
 }
 
 /* ── Info Box ────────────────────────────────────────────────────────────── */
 .stAlert {
-    background: #0f172a !important;
-    border: 1px solid #1e293b !important;
-    border-radius: 14px !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    color: #334155 !important;
 }
 
 /* ── Scrollbars ──────────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: #090d16; }
-::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f8fafc; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 </style>
 """
 
-DARK_LAYOUT = dict(
-    paper_bgcolor="#131b2e",
-    plot_bgcolor="#131b2e",
-    font=dict(color="#cbd5e1", family="Plus Jakarta Sans, sans-serif"),
-    margin=dict(l=20, r=20, t=50, b=20),
-    xaxis=dict(gridcolor="#1e293b", zerolinecolor="#1e293b", linecolor="#1e293b"),
-    yaxis=dict(gridcolor="#1e293b", zerolinecolor="#1e293b", linecolor="#1e293b"),
+MINIMAL_LIGHT_LAYOUT = dict(
+    paper_bgcolor="#ffffff",
+    plot_bgcolor="#ffffff",
+    font=dict(color="#334155", family="Plus Jakarta Sans, sans-serif"),
+    margin=dict(l=20, r=20, t=45, b=20),
+    xaxis=dict(gridcolor="#f1f5f9", zerolinecolor="#e2e8f0", linecolor="#e2e8f0"),
+    yaxis=dict(gridcolor="#f1f5f9", zerolinecolor="#e2e8f0", linecolor="#e2e8f0"),
 )
 
-PRIORITY_COLORS = {"High": "#fb7185", "Medium": "#fbbf24", "Low": "#34d399"}
+PRIORITY_COLORS = {"High": "#ef4444", "Medium": "#f59e0b", "Low": "#10b981"}
+
 
 MODEL_DISPLAY_NAMES = {
     "FCFS": "First Come First Served (FCFS)",
@@ -326,15 +323,15 @@ def _build_gantt_timeline(df: pd.DataFrame, title: str):
         color_discrete_map=PRIORITY_COLORS,
     )
     fig.update_layout(
-        **DARK_LAYOUT,
-        title=dict(text=title, font=dict(color="#f8fafc", size=15, weight="bold")),
-        height=400,
-        legend=dict(title="Priority", font=dict(color="#cbd5e1"), bgcolor="#0f172a",
-                    bordercolor="#1e293b", borderwidth=1),
+        **MINIMAL_LIGHT_LAYOUT,
+        title=dict(text=title, font=dict(color="#0f172a", size=14, weight="bold")),
+        height=380,
+        legend=dict(title="Priority", font=dict(color="#334155"), bgcolor="#ffffff",
+                    bordercolor="#e2e8f0", borderwidth=1),
         xaxis_title="", yaxis_title="Machine Fleet",
     )
-    fig.update_yaxes(categoryorder="category ascending", tickfont=dict(color="#94a3b8"))
-    fig.update_xaxes(tickfont=dict(color="#94a3b8"))
+    fig.update_yaxes(categoryorder="category ascending", tickfont=dict(color="#64748b"))
+    fig.update_xaxes(tickfont=dict(color="#64748b"))
     return fig
 
 
@@ -356,8 +353,8 @@ def _build_demand_profile(fut_df: pd.DataFrame):
     if "predicted_kWh_p10" in temp_df.columns:
         fig.add_scatter(
             x=temp_df[ts_col], y=temp_df["predicted_kWh_p10"],
-            name="Lower Bound Forecast (p10)",
-            line=dict(color="#312e81", width=1, dash="dash"),
+            name="Lower Bound (p10)",
+            line=dict(color="#94a3b8", width=1.5, dash="dash"),
             mode="lines",
             showlegend=True
         )
@@ -366,25 +363,25 @@ def _build_demand_profile(fut_df: pd.DataFrame):
     if "predicted_kWh_p90" in temp_df.columns:
         fig.add_scatter(
             x=temp_df[ts_col], y=temp_df["predicted_kWh_p90"],
-            name="Upper Bound Forecast (p90 - Robust)",
-            line=dict(color="#818cf8", width=1, dash="dash"),
+            name="Upper Bound (p90 - Robust)",
+            line=dict(color="#818cf8", width=1.5, dash="dash"),
             mode="lines",
             fill="tonexty" if "predicted_kWh_p10" in temp_df.columns else None,
-            fillcolor="rgba(99, 102, 241, 0.05)",
+            fillcolor="rgba(99, 102, 241, 0.06)",
             showlegend=True
         )
         
     # Main p50 Forecasted Load
     fig.add_scatter(
         x=temp_df[ts_col], y=temp_df["predicted_kWh"],
-        name="Median Forecast (p50 / Base)",
-        line=dict(color="#6366f1", width=3),
+        name="Median Forecast (p50)",
+        line=dict(color="#4f46e5", width=2.5),
         mode="lines",
     )
 
     fig.update_layout(
-        **DARK_LAYOUT,
-        title=dict(text="24-Hour XGBoost Energy Demand Forecast (Multi-Quantile)", font=dict(color="#f8fafc", size=14, weight="bold")),
+        **MINIMAL_LIGHT_LAYOUT,
+        title=dict(text="24-Hour XGBoost Energy Demand Forecast", font=dict(color="#0f172a", size=13, weight="bold")),
         height=320,
         yaxis_title="Energy Demand (kWh)",
         legend=dict(orientation="h", yanchor="bottom", y=-0.3, xanchor="center", x=0.5, font=dict(size=9)),
@@ -405,15 +402,15 @@ def _build_machine_active_bar(df: pd.DataFrame, title_prefix: str):
         x=counts["Machine"], y=counts["Active_min"],
         marker=dict(
             color=counts["Active_min"],
-            colorscale=[[0, "#4f46e5"], [0.5, "#6366f1"], [1, "#a855f7"]],
+            colorscale=[[0, "#818cf8"], [0.5, "#4f46e5"], [1, "#3730a3"]],
             showscale=False,
         ),
         text=counts["Active_min"].astype(int).astype(str) + " min",
-        textposition="outside", textfont=dict(color="#cbd5e1", size=10),
+        textposition="outside", textfont=dict(color="#475569", size=10),
     ))
     fig.update_layout(
-        **DARK_LAYOUT,
-        title=dict(text=f"Active Operating Time per Machine ({title_prefix})", font=dict(color="#f8fafc", size=14, weight="bold")),
+        **MINIMAL_LIGHT_LAYOUT,
+        title=dict(text=f"Active Operating Time per Machine ({title_prefix})", font=dict(color="#0f172a", size=13, weight="bold")),
         height=320,
         xaxis_title="Machine ID", yaxis_title="Active Minutes",
     )
@@ -426,27 +423,27 @@ def _build_overall_comparison_bar(comp_df: pd.DataFrame, metric_row: str, title:
     
     row = comp_df.loc[metric_row]
     x_keys = ["FCFS", "EDF", "Makespan_Greedy", "Deterministic_Greedy", "Proposed_Robust_Greedy", "Hybrid_Solver"]
-    x_labels = ["FCFS (Baseline)", "EDF", "Makespan Greedy", "Det. Greedy", "Robust Greedy", "Hybrid CP-SAT"]
+    x_labels = ["FCFS", "EDF", "Makespan Greedy", "Det. Greedy", "Robust Greedy", "Hybrid CP-SAT"]
     y_vals = [parse_val(row[k]) for k in x_keys]
     
-    colors = ["#f87171", "#fca5a5", "#fca5a5", "#818cf8", "#6366f1", "#4f46e5"]
+    colors = ["#f87171", "#fca5a5", "#fca5a5", "#a5b4fc", "#6366f1", "#4f46e5"]
     
     fig = go.Figure(go.Bar(
         x=x_labels, y=y_vals,
         marker_color=colors,
         text=[(f"₹{v:,.0f}" if is_currency else format_str.format(v)) for v in y_vals],
-        textposition="outside", textfont=dict(color="#cbd5e1", size=10, weight="bold")
+        textposition="outside", textfont=dict(color="#475569", size=10, weight="bold")
     ))
     
-    # Merge DARK_LAYOUT to avoid duplicate xaxis keyword argument errors
-    layout_args = DARK_LAYOUT.copy()
-    layout_args["title"] = dict(text=title, font=dict(color="#f8fafc", size=14, weight="bold"))
+    layout_args = MINIMAL_LIGHT_LAYOUT.copy()
+    layout_args["title"] = dict(text=title, font=dict(color="#0f172a", size=13, weight="bold"))
     layout_args["height"] = 320
     layout_args["yaxis_title"] = ylabel
-    layout_args["xaxis"] = {**DARK_LAYOUT.get("xaxis", {}), "tickangle": -15, "tickfont": dict(size=10)}
+    layout_args["xaxis"] = {**MINIMAL_LIGHT_LAYOUT.get("xaxis", {}), "tickangle": -15, "tickfont": dict(size=10, color="#64748b")}
     
     fig.update_layout(**layout_args)
     return fig
+
 
 
 def main():
@@ -473,13 +470,13 @@ def main():
         st.stop()
 
     # ── 2. HEADER BANNER ─────────────────────────────────────────────────
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="page-header">
         <div class="section-badge">Predict-then-Optimize Framework</div>
         <h2>Factory Operations &amp; Energy Optimization Dashboard</h2>
         <p>Interactive machine scheduling optimized for electricity cost, carbon emissions, and peak grid load.</p>
     </div>
-    """, unsafe_allow_html=True)
+    """), unsafe_allow_html=True)
 
     # ── 3. SIDEBAR CONTROLS ───────────────────────────────────────────────
     st.sidebar.markdown("### ⚙️ Scheduling Engine Options")
@@ -620,44 +617,40 @@ def main():
                 desc = "No Penalty Incurred"
                 badge_class = "pill-neutral"
             
-            rows_html += f"""
-            <tr>
-                <td class="metric-name-col">{metric_name}</td>
-                <td class="val-fcfs">{fcfs_val}</td>
-                <td class="val-selected">{sel_val}</td>
-                <td><span class="{badge_class}">{icon}{desc}</span></td>
-            </tr>
-            """
+            rows_html += (
+                f'<tr>'
+                f'<td class="metric-name-col">{metric_name}</td>'
+                f'<td class="val-fcfs">{fcfs_val}</td>'
+                f'<td class="val-selected">{sel_val}</td>'
+                f'<td><span class="{badge_class}">{icon}{desc}</span></td>'
+                f'</tr>\n'
+            )
             
-        html_code = f"""
-        <div class="benchmark-card">
-            <div class="benchmark-card-header">
-                <div class="benchmark-title">
-                    ⚖️ {MODEL_DISPLAY_NAMES['FCFS']} vs. {selected_model_label}
-                </div>
-                <div class="benchmark-status-badge">
-                    Carbon Reduction: {carbon_pct:.1f}%
-                </div>
-            </div>
-            <table class="styled-benchmark-table">
-                <thead>
-                    <tr>
-                        <th style="width: 35%;">Key Performance Indicator</th>
-                        <th style="width: 20%;">FCFS Baseline</th>
-                        <th style="width: 25%;">{selected_model_label}</th>
-                        <th style="width: 20%;">Quantified Difference</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {rows_html}
-                </tbody>
-            </table>
-        </div>
-        """
+        html_code = (
+            f'<div class="benchmark-card">\n'
+            f'<div class="benchmark-card-header">\n'
+            f'<div class="benchmark-title">⚖️ {MODEL_DISPLAY_NAMES["FCFS"]} vs. {selected_model_label}</div>\n'
+            f'<div class="benchmark-status-badge">Carbon Reduction: {carbon_pct:.1f}%</div>\n'
+            f'</div>\n'
+            f'<table class="styled-benchmark-table">\n'
+            f'<thead>\n'
+            f'<tr>\n'
+            f'<th style="width: 35%;">Key Performance Indicator</th>\n'
+            f'<th style="width: 20%;">FCFS Baseline</th>\n'
+            f'<th style="width: 25%;">{selected_model_label}</th>\n'
+            f'<th style="width: 20%;">Quantified Difference</th>\n'
+            f'</tr>\n'
+            f'</thead>\n'
+            f'<tbody>\n'
+            f'{rows_html}'
+            f'</tbody>\n'
+            f'</table>\n'
+            f'</div>'
+        )
         st.markdown(html_code, unsafe_allow_html=True)
         
     with benchmark_tab2:
-        st.markdown("<p style='color:#94a3b8;font-size:0.85rem;margin-bottom:10px'>Full published benchmark report across all heuristics, greedy, and robust scheduling solvers.</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color:#64748b;font-size:0.85rem;margin-bottom:10px'>Full published benchmark report across all heuristics, greedy, and robust scheduling solvers.</p>", unsafe_allow_html=True)
         
         styled_comp_raw = comp_raw.copy()
         styled_comp_raw.columns = [
@@ -672,7 +665,7 @@ def main():
         st.dataframe(styled_comp_raw, use_container_width=True, hide_index=True)
         
     with benchmark_tab3:
-        st.markdown("<p style='color:#94a3b8;font-size:0.85rem;margin-bottom:10px'>Visual comparison of performance metrics for all 6 models.</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color:#64748b;font-size:0.85rem;margin-bottom:10px'>Visual comparison of performance metrics for all 6 models.</p>", unsafe_allow_html=True)
         row1, row2 = st.columns(2)
         
         with row1:
