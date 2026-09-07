@@ -1,12 +1,12 @@
 Metric,FCFS,EDF,Makespan_Greedy,Proposed_Robust_Greedy,Deterministic_Greedy,Hybrid_Solver
-Total Energy Cost (INR),INR 186096.29,INR 185686.40,INR 186096.29,INR 167723.41,INR 167723.41,INR 125832.53
-Peak Grid Load (kW),778.28 kW,778.28 kW,778.28 kW,778.28 kW,778.28 kW,448.28 kW
-Makespan (hours),49.25 hrs,49.00 hrs,49.25 hrs,49.25 hrs,49.25 hrs,49.50 hrs
-Machine Utilization (%),47.78%,48.02%,47.78%,47.78%,47.78%,47.54%
-Average Waiting Time (min),54.6 min,61.2 min,54.6 min,89.3 min,89.3 min,94.5 min
-Total Idle Time (min),12345.0 min,12225.0 min,12345.0 min,12345.0 min,12345.0 min,12465.0 min
+Total Energy Cost (INR),INR 186096.29,INR 185686.40,INR 186096.29,INR 167723.41,INR 167723.41,INR 125350.00
+Peak Grid Load (kW),778.95 kW,778.95 kW,778.95 kW,778.95 kW,778.95 kW,448.95 kW
+Makespan (hours),49.25 hrs,49.00 hrs,49.25 hrs,49.25 hrs,49.25 hrs,50.00 hrs
+Machine Utilization (%),47.78%,48.02%,47.78%,47.78%,47.78%,47.06%
+Average Waiting Time (min),54.6 min,61.2 min,54.6 min,89.3 min,89.3 min,93.9 min
+Total Idle Time (min),12345.0 min,12225.0 min,12345.0 min,12345.0 min,12345.0 min,12705.0 min
 Total Delay (min),0.0 min,0.0 min,0.0 min,0.0 min,0.0 min,0.0 min
 Late Jobs (count),0 jobs,0 jobs,0 jobs,0 jobs,0 jobs,0 jobs
 On-Time Completion (%),100.00%,100.00%,100.00%,100.00%,100.00%,100.00%
-Carbon Emissions (tCO2),579.1537 t,606.3760 t,579.1537 t,521.3897 t,521.3897 t,411.7804 t
+Carbon Emissions (tCO2),2950.9463 t,3031.2533 t,2950.9463 t,2757.8365 t,2757.8365 t,2191.9967 t
 Power Factor Penalty (INR),INR 0.00,INR 0.00,INR 0.00,INR 0.00,INR 0.00,INR 0.00

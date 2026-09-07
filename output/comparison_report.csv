@@ -1,12 +1,12 @@
 Metric,FCFS_Baseline,CP_SAT_Optimized,Improvement
-Total Energy Cost (INR),INR 186096.29,INR 125832.53,60263.76 reduction (32.4% savings)
-Peak Grid Load (kW),778.28 kW,448.28 kW,330.00 reduction (42.4% savings)
-Makespan (hours),49.25 hrs,49.50 hrs,+0.25 (0.5% increase)
-Machine Utilization (%),47.78%,47.54%,-0.24% reduction
-Average Waiting Time (min),54.6 min,94.5 min,+39.92 (73.1% increase)
-Total Idle Time (min),12345.0 min,12465.0 min,+120.00 (1.0% increase)
-Total Delay (min),0.0 min,0.0 min,+0.00 (0.0% increase)
-Late Jobs (count),0 jobs,0 jobs,+0.00 (0.0% increase)
+Total Energy Cost (INR),₹186096.29,₹125350.00,60746.29 reduction (32.6% savings)
+Peak Grid Load (kW),778.95 kW,448.95 kW,330.00 reduction (42.4% savings)
+Makespan (hours),49.25 hrs,50.00 hrs,+0.75 (1.5% increase)
+Machine Utilization (%),47.78%,47.06%,-0.72% reduction
+Average Waiting Time (min),54.6 min,93.9 min,+39.34 (72.1% increase)
+Total Idle Time (min),12345.0 min,12705.0 min,+360.00 (2.9% increase)
+Total Delay (min),0.0 min,0.0 min,+0.00 increase
+Late Jobs (count),0 jobs,0 jobs,Zero delays (100% savings)
 On-Time Completion (%),100.00%,100.00%,0.00% reduction
-Carbon Emissions (tCO2),579.1537 t,411.7804 t,167.37 reduction (28.9% savings)
-Power Factor Penalty (INR),INR 0.00,INR 0.00,No Penalties Incurred
+Carbon Emissions (tCO2),2950.9463 t,2191.9967 t,758.95 reduction (25.7% savings)
+Power Factor Penalty (INR),₹0.00,₹0.00,No Penalties Incurred
