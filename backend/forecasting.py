@@ -9,8 +9,12 @@ import pandas as pd
 import numpy as np
 import joblib
 
-from backend.config import config
-from backend.utils import get_logger
+try:
+    from backend.config import config
+    from backend.utils import get_logger
+except ImportError:
+    from config import config
+    from utils import get_logger
 
 logger = get_logger(__name__)
 

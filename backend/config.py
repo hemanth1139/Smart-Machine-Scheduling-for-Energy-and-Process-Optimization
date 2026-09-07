@@ -7,8 +7,8 @@ from typing import Dict, List, Any, Tuple
 
 
 class Config:
-    # Base Directory (Project Root)
-    PROJECT_ROOT: Path = Path(__file__).resolve().parent.parent
+    # Base Directory (Backend Root)
+    PROJECT_ROOT: Path = Path(__file__).resolve().parent
 
     # Data Directories
     DATA_DIR: Path = PROJECT_ROOT / "data"
@@ -42,7 +42,7 @@ class Config:
 
     # Output & Model Directories
     OUTPUT_DIR: Path = PROJECT_ROOT / "output"
-    MODELS_DIR: Path = PROJECT_ROOT / "backend" / "models"
+    MODELS_DIR: Path = PROJECT_ROOT / "models"
 
     # Global Constants
     RANDOM_SEED: int = 42

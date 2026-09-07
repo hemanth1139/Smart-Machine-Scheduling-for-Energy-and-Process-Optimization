@@ -14,20 +14,36 @@ project_root = Path(__file__).resolve().parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from backend.config import config
-from backend.preprocessing import DataLoader, DataCleaner, FeatureEngineer, DataPreparer
-from backend.forecasting import MultiQuantileForecaster, ForecastingPredictor
-from backend.scheduler import (
-    solve_proposed_scheduler,
-    solve_deterministic_scheduler,
-    solve_makespan_scheduler,
-    solve_edf_scheduler,
-    solve_fcfs_scheduler,
-    solve_hybrid_scheduler,
-)
-from backend.kpi_calculator import compute_schedule_kpis
-from backend.utils import setup_logger
-from backend.generate_dataset import generate_datasets
+try:
+    from backend.config import config
+    from backend.preprocessing import DataLoader, DataCleaner, FeatureEngineer, DataPreparer
+    from backend.forecasting import MultiQuantileForecaster, ForecastingPredictor
+    from backend.scheduler import (
+        solve_proposed_scheduler,
+        solve_deterministic_scheduler,
+        solve_makespan_scheduler,
+        solve_edf_scheduler,
+        solve_fcfs_scheduler,
+        solve_hybrid_scheduler,
+    )
+    from backend.kpi_calculator import compute_schedule_kpis
+    from backend.utils import setup_logger
+    from backend.generate_dataset import generate_datasets
+except ImportError:
+    from config import config
+    from preprocessing import DataLoader, DataCleaner, FeatureEngineer, DataPreparer
+    from forecasting import MultiQuantileForecaster, ForecastingPredictor
+    from scheduler import (
+        solve_proposed_scheduler,
+        solve_deterministic_scheduler,
+        solve_makespan_scheduler,
+        solve_edf_scheduler,
+        solve_fcfs_scheduler,
+        solve_hybrid_scheduler,
+    )
+    from kpi_calculator import compute_schedule_kpis
+    from utils import setup_logger
+    from generate_dataset import generate_datasets
 
 logger = setup_logger("SmartSchedulingPipeline", log_file=project_root / "pipeline.log")
 

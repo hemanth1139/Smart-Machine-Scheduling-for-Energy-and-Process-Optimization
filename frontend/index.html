@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Machine Scheduling for Energy & Process Optimization Dashboard — Predict-then-Optimize AI Benchmark">
+  <title>OptiSched AI — Smart Machine Scheduling Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <p style="font-weight: 600; color: #0f172a;">Loading Schedule AI Benchmark Data...</p>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="#" class="nav-brand">
+      <span style="color: #6366f1;">OptiSched</span> AI
+    </a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#algorithms">Algorithms</a>
+      <a href="#comparison">Analytics</a>
+      <a href="#impact">Business Impact</a>
+      <a href="#schedule">Live Schedule</a>
+    </div>
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      <span id="api-status-text">Backend API Connected</span>
+    </div>
+  </nav>
+
+  <!-- Hero Executive Banner -->
+  <header class="hero" id="overview">
+    <div class="hero-label">SMART MANUFACTURING & INDUSTRIAL ENERGY OPTIMIZATION</div>
+    <h1>Smart Machine Scheduling Platform</h1>
+    <p class="hero-subtitle">
+      Jointly optimizing electricity tariffs, peak demand penalties, carbon emissions, and on-time job delivery using 
+      <strong>Quantile XGBoost Tariff Forecasting</strong> + <strong>Google OR-Tools CP-SAT Joint Optimization</strong>.
+    </p>
+
+    <!-- Key Performance Summary Cards -->
+    <div class="hero-stats fade-in">
+      <div class="stat-item">
+        <div class="stat-value" id="stat-savings">-</div>
+        <div class="stat-label">Energy Cost Saved</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="stat-savings-pct">-</div>
+        <div class="stat-label">Electricity Cost Cut</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="stat-peak-cut">-</div>
+        <div class="stat-label">Peak Grid Load Shaved</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="stat-co2-cut">-</div>
+        <div class="stat-label">CO₂ Emissions Cut</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="stat-late-jobs">-</div>
+        <div class="stat-label">On-Time Delivery Rate</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Section 1: Algorithms & Benchmark Models -->
+    <section id="algorithms" class="container fade-in">
+      <div class="section-header">
+        <div class="section-label">ALGORITHM BENCHMARK</div>
+        <h2>Explored Scheduling Models</h2>
+        <p class="section-desc">Comparing classical heuristics, energy-aware greedy algorithms, and our proposed AI-driven hybrid CP-SAT optimization framework.</p>
+      </div>
+
+      <div id="algo-cards">
+        <!-- Injected by JS -->
+      </div>
+
+      <div class="leaderboard-wrapper">
+        <div class="table-header-title">
+          <h3>Algorithm Performance Leaderboard</h3>
+          <span class="badge-subtitle">Ranked by Total Energy Cost & Grid Efficiency</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table id="leaderboard-table">
+            <!-- Injected by JS -->
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Section 2: Performance Analytics & Head-to-Head Comparison -->
+    <section id="comparison" class="container fade-in">
+      <div class="section-header">
+        <div class="section-label">PERFORMANCE ANALYTICS</div>
+        <h2>Head-to-Head Benchmark Comparison</h2>
+        <p class="section-desc">Quantifying multi-objective gains across energy cost, peak load, carbon emissions, and turnaround efficiency.</p>
+      </div>
+
+      <div class="insight-box">
+        <div class="insight-icon">💡</div>
+        <div>
+          <strong>Key Benchmark Insight:</strong> The heatmap evaluates percentage metrics improvement relative to the standard <strong>First-Come First-Served (FCFS)</strong> industry baseline. Green cells indicate significant gains, demonstrating how energy-aware scheduling dramatically cuts tariff costs without causing job tardiness.
+        </div>
+      </div>
+
+      <div class="chart-container" id="improvement-heatmap" style="height: 420px;">
+        <!-- Injected by Plotly -->
+      </div>
+
+      <div class="chart-grid-2">
+        <div class="chart-container" id="composite-bar" style="height: 400px;">
+          <!-- Injected by Plotly -->
+        </div>
+        <div class="chart-container" id="bubble-chart" style="height: 400px;">
+          <!-- Injected by Plotly -->
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Section 3: Business Impact & Metric Breakdown -->
+    <section id="impact" class="container fade-in">
+      <div class="section-header">
+        <div class="section-label">BUSINESS IMPACT</div>
+        <h2>Why Hybrid CP-SAT Optimization Wins</h2>
+        <p class="section-desc">Enterprise cost savings, peak grid stabilization, and environmental compliance metrics.</p>
+      </div>
+
+      <div id="win-boxes">
+        <!-- Injected by JS -->
+      </div>
+
+      <div class="kpi-grid-header">
+        <h3>Detailed KPI Metric Breakdown</h3>
+        <p>Comparison between FCFS Baseline and Proposed Hybrid AI Solver:</p>
+      </div>
+
+      <div id="kpi-cards">
+        <!-- Injected by JS -->
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Section 4: Live Production Schedule Gantt Chart -->
+    <section id="schedule" class="container fade-in">
+      <div class="section-header">
+        <div class="section-label">PRODUCTION TIMELINE</div>
+        <h2>Optimized Machine Schedule Gantt Timeline</h2>
+        <p class="section-desc">Inspect job allocation, time-of-use tariff zones, machine routing, and priority sequence in real time.</p>
+      </div>
+
+      <!-- Interactive Model Switcher Bar -->
+      <div class="schedule-controls">
+        <div class="control-group">
+          <label for="model-selector"><strong>Select Schedule Model:</strong></label>
+          <select id="model-selector" class="custom-select">
+            <option value="Hybrid_Solver" selected>Hybrid CP-SAT Solver (Our Model)</option>
+            <option value="Proposed_Robust_Greedy">Robust Energy-Aware Greedy</option>
+            <option value="Deterministic_Greedy">Deterministic Energy Greedy</option>
+            <option value="Makespan_Greedy">Makespan-Only Greedy</option>
+            <option value="EDF">Earliest Deadline First (EDF)</option>
+            <option value="FCFS">First-Come First-Served (Baseline)</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="schedule-stats">
+        <!-- Injected by JS -->
+      </div>
+
+      <div class="insight-box">
+        <div class="insight-icon">⚡</div>
+        <div>
+          <strong>Time-of-Use (TOU) Tariff Awareness:</strong> Shaded background zones indicate utility tariff pricing — 
+          <span style="color: #dc2626; font-weight: 700;">Red (Peak Load: ₹12/kWh)</span>, 
+          <span style="color: #d97706; font-weight: 700;">Amber (Medium Load: ₹7.5/kWh)</span>, and 
+          <span style="color: #16a34a; font-weight: 700;">Green (Off-Peak: ₹4/kWh)</span>. 
+          Our Hybrid CP-SAT solver dynamically shifts power-heavy jobs to off-peak periods while upholding 100% on-time delivery.
+        </div>
+      </div>
+
+      <div class="chart-container" id="gantt-chart" style="height: 520px;">
+        <!-- Injected by Plotly -->
+      </div>
+
+      <details class="schedule-table-details">
+        <summary>View Complete Job Dispatch & Allocation Table</summary>
+        <div style="overflow-x: auto; padding-top: 1rem;">
+          <table id="schedule-table">
+            <!-- Injected by JS -->
+          </table>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand"><span style="color: #818cf8;">OptiSched</span> AI</div>
+      <p>Smart Machine Scheduling & Process Optimization Platform for Heavy Industry & Manufacturing</p>
+      <p class="copyright">&copy; 2024 Predict-then-Optimize Research Framework. Powered by Quantile XGBoost & Google OR-Tools CP-SAT.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

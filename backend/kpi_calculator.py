@@ -13,7 +13,10 @@ Fair accounting rules (critical for publication benchmarks):
 from typing import Dict, Any, Tuple
 import pandas as pd
 import numpy as np
-from backend.config import config
+try:
+    from backend.config import config
+except ImportError:
+    from config import config
 
 
 def _cyclic_series(forecast_df: pd.DataFrame, length: int) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:

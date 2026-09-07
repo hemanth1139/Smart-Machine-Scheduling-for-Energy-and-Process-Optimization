@@ -20,10 +20,14 @@ import numpy as np
 import pandas as pd
 from ortools.sat.python import cp_model
 
-from backend.config import config
-from backend.utils import get_logger
+try:
+    from backend.config import config
+    from backend.utils import get_logger
+except ImportError:
+    from config import config
+    from utils import get_logger
 
-logger = get_logger("backend.scheduler")
+logger = get_logger("scheduler")
 
 
 # =============================================================================

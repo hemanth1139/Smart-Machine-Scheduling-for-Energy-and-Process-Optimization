@@ -10,7 +10,10 @@ import numpy as np
 from sklearn.preprocessing import OrdinalEncoder
 import joblib
 
-from backend.config import config
+try:
+    from backend.config import config
+except ImportError:
+    from config import config
 
 
 class DataLoader:
