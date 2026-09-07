@@ -14,7 +14,7 @@ const ALGO_INFO = [
   {key:'Makespan_Greedy', tag:'Classical', tagColor:'#fffbeb', tagText:'#92400e', name:'Makespan-Only Greedy', desc:'Focuses purely on total completion throughput. Fast execution but leads to high peak power draw.'},
   {key:'Deterministic_Greedy', tag:'Energy-Aware', tagColor:'#eff6ff', tagText:'#1d4ed8', name:'Deterministic Energy Greedy', desc:'Routes jobs to cheaper time windows based on static tariff schedules. First energy-aware heuristic.'},
   {key:'Proposed_Robust_Greedy', tag:'Energy-Aware', tagColor:'#eff6ff', tagText:'#1d4ed8', name:'Robust Energy Greedy', desc:'Enhances deterministic greedy with XGBoost forecast quantile uncertainty for resilient schedules.'},
-  {key:'Hybrid_Solver', tag:'Proposed AI Model', tagColor:'#ede9fe', tagText:'#5b21b6', name:'Hybrid CP-SAT AI Solver', desc:'Google OR-Tools CP-SAT solver. Jointly optimizes energy tariff, peak load, carbon footprint, and deadlines.', ours:true},
+  {key:'Hybrid_Solver', tag:'Proposed Model', tagColor:'#ede9fe', tagText:'#5b21b6', name:'Hybrid CP-SAT AI Solver', desc:'Google OR-Tools CP-SAT solver. Jointly optimizes energy tariff, peak load, carbon footprint, and deadlines.', ours:true},
 ];
 
 // Global State
@@ -101,14 +101,12 @@ async function init() {
     const schedule = await scheduleResp.json();
     globalForecast = await forecastResp.json();
 
-    document.getElementById('api-status-text').innerText = 'Backend API Online';
-
     renderHero(globalKpi);
     renderAlgoCards();
     renderLeaderboard(globalKpi);
     renderImprovementHeatmap(globalKpi);
     renderCompositeBar(globalKpi);
-    renderBubbleChart(globalKpi);
+    renderPeakBar(globalKpi);
     renderWinBoxes(globalKpi);
     renderKPICards(globalKpi);
     renderScheduleStats(schedule);
@@ -137,7 +135,6 @@ async function init() {
 
   } catch(e) {
     console.warn('API error, falling back to client-side demonstration data:', e);
-    document.getElementById('api-status-text').innerText = 'Using Offline Demo Mode';
     renderMockAll();
   } finally {
     hideLoading();
@@ -213,7 +210,6 @@ const renderLeaderboard = (kpi) => {
     };
   });
 
-  // Sort by energy cost ascending
   rows.sort((a, b) => a.cost - b.cost);
 
   let html = `
@@ -260,7 +256,16 @@ const renderImprovementHeatmap = (kpi) => {
     return models.map(model => computeImprovement(kpi, metric, model));
   });
 
-  const textData = zData.map(row => row.map(v => `${v >= 0 ? '+' : ''}${v.toFixed(1)}%`));
+  const textData = zData.map(row => row.map(v => {
+    if (Math.abs(v) < 0.01) return "0.0%";
+    return `${v > 0 ? '+' : ''}${v.toFixed(1)}%`;
+  }));
+
+  // Calculate normalized zero position so 0.0% is neutral white/gray (#ffffff)
+  let flat = zData.flat();
+  let minZ = Math.min(...flat, -5);
+  let maxZ = Math.max(...flat, 45);
+  let zeroFrac = (0 - minZ) / (maxZ - minZ);
 
   const data = [{
     z: zData,
@@ -269,16 +274,18 @@ const renderImprovementHeatmap = (kpi) => {
     text: textData,
     texttemplate: "%{text}",
     type: 'heatmap',
+    zmin: minZ,
+    zmax: maxZ,
     colorscale: [
-      [0, '#ef4444'],
-      [0.5, '#f8fafc'],
-      [1.0, '#10b981']
+      [0.0, '#ef4444'],      // Negative values (red)
+      [zeroFrac, '#ffffff'], // 0.0% is neutral white (uncolored)
+      [1.0, '#10b981']       // Positive values (green)
     ],
     showscale: true,
   }];
 
   const layout = {
-    title: { text: '% Metric Improvement Relative to FCFS Baseline (Green = Better)', font: { size: 14, weight: 700 } },
+    title: { text: '% Metric Improvement Relative to FCFS Baseline (Green = Improvement, White = Neutral)', font: { size: 13, weight: 700 } },
     font: { family: 'Inter, sans-serif', size: 11, color: '#334155' },
     margin: { l: 180, r: 40, t: 50, b: 60 },
     paper_bgcolor: '#ffffff',
@@ -310,7 +317,7 @@ const renderCompositeBar = (kpi) => {
   }];
 
   const layout = {
-    title: { text: 'Overall Composite Efficiency Index (0-100)', font: { size: 14, weight: 700 } },
+    title: { text: 'Overall Composite Efficiency Index (0-100)', font: { size: 13, weight: 700 } },
     xaxis: { title: 'Composite Score', range: [0, 100] },
     font: { family: 'Inter, sans-serif', size: 11, color: '#334155' },
     margin: { l: 100, r: 30, t: 50, b: 40 },
@@ -321,47 +328,43 @@ const renderCompositeBar = (kpi) => {
   Plotly.newPlot('composite-bar', data, layout, { responsive: true, displayModeBar: false });
 };
 
-const renderBubbleChart = (kpi) => {
-  const el = document.getElementById('bubble-chart');
+const renderPeakBar = (kpi) => {
+  const el = document.getElementById('peak-bar');
   if (!el || typeof Plotly === 'undefined') return;
 
-  const getMetricVal = (mIdx, mName) => {
-    const idx = kpi.metrics.findIndex(m => m.toLowerCase().includes(mName.toLowerCase()));
-    return idx !== -1 ? kpi.values[mIdx][idx] : 0;
-  };
-
-  const data = kpi.models.map((m, idx) => {
-    const cost = getMetricVal(idx, 'cost');
-    const onTime = getMetricVal(idx, 'on-time');
-    const co2 = getMetricVal(idx, 'carbon');
-
+  const peaks = kpi.models.map((m, idx) => {
+    const peakIdx = kpi.metrics.findIndex(metric => metric.toLowerCase().includes('peak'));
+    const val = peakIdx !== -1 ? kpi.values[idx][peakIdx] : 0;
     return {
-      x: [cost],
-      y: [onTime],
-      text: [SHORT_LABELS[m] || m],
-      mode: 'markers+text',
-      textposition: 'top center',
-      name: SHORT_LABELS[m] || m,
-      marker: {
-        size: [Math.max(15, co2 / 100)],
-        color: MODEL_COLORS[m] || '#6366f1',
-        opacity: 0.85
-      }
+      model: m,
+      label: SHORT_LABELS[m] || m,
+      val,
+      color: MODEL_COLORS[m] || '#6366f1'
     };
   });
 
+  peaks.sort((a, b) => b.val - a.val);
+
+  const data = [{
+    type: 'bar',
+    x: peaks.map(p => p.val),
+    y: peaks.map(p => p.label),
+    orientation: 'h',
+    marker: { color: peaks.map(p => p.color) },
+    text: peaks.map(p => `${p.val.toFixed(1)} kW`),
+    textposition: 'inside'
+  }];
+
   const layout = {
-    title: { text: 'Trade-off: Energy Cost vs On-Time Completion (Bubble = Carbon)', font: { size: 14, weight: 700 } },
-    xaxis: { title: 'Total Energy Cost (₹)' },
-    yaxis: { title: 'On-Time Completion (%)', range: [50, 105] },
+    title: { text: 'Peak Grid Power Demand (kW) — Lower is Better', font: { size: 13, weight: 700 } },
+    xaxis: { title: 'Peak Grid Demand (kW)' },
     font: { family: 'Inter, sans-serif', size: 11, color: '#334155' },
-    margin: { l: 60, r: 40, t: 50, b: 50 },
+    margin: { l: 100, r: 30, t: 50, b: 40 },
     paper_bgcolor: '#ffffff',
     plot_bgcolor: '#ffffff',
-    showlegend: false,
   };
 
-  Plotly.newPlot('bubble-chart', data, layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot('peak-bar', data, layout, { responsive: true, displayModeBar: false });
 };
 
 const renderWinBoxes = (kpi) => {
@@ -434,8 +437,11 @@ const renderScheduleStats = (schedule) => {
   if (!el || !Array.isArray(schedule)) return;
 
   const totalJobs = schedule.length;
-  const machines = new Set(schedule.map(j => j.Assigned_Machine || j.Machine)).size;
-  const totalCost = schedule.reduce((sum, j) => sum + (Number(j.Energy_Cost) || 0), 0);
+  const machines = new Set(schedule.map(j => j.Assigned_Machine || j.Machine_ID || j.Machine)).size;
+  const totalCost = schedule.reduce((sum, j) => {
+    const cost = Number(j['Energy_Cost_$'] ?? j.Energy_Cost ?? j.Energy_Cost_INR ?? 0);
+    return sum + (isNaN(cost) ? 0 : cost);
+  }, 0);
 
   el.innerHTML = `
     <div class="kpi-card">
@@ -467,22 +473,23 @@ const renderGantt = (schedule, forecast) => {
     const startMs = baseTime + (Number(job.Start_Slot) || 0) * 15 * 60 * 1000;
     const durMs = Math.max(1, (Number(job.End_Slot || job.Start_Slot + 1) - Number(job.Start_Slot)) * 15 * 60 * 1000);
     const priority = job.Priority || 'Medium';
+    const energyCost = Number(job['Energy_Cost_$'] ?? job.Energy_Cost ?? job.Energy_Cost_INR ?? 0);
 
     return {
       x: [durMs],
-      y: [job.Assigned_Machine || job.Machine || 'M1'],
+      y: [job.Assigned_Machine || job.Machine_ID || job.Machine || 'M01'],
       base: [startMs],
       type: 'bar',
       orientation: 'h',
       name: `Job ${job.Job_ID}`,
-      text: `${job.Job_ID} (${priority})`,
+      text: `${job.Job_ID}`,
       textposition: 'inside',
       marker: {
         color: priority === 'High' ? '#ef4444' : (priority === 'Medium' ? '#f59e0b' : '#10b981'),
         opacity: 0.85
       },
       hoverinfo: 'text',
-      hovertext: `<b>${job.Job_ID}</b><br>Machine: ${job.Assigned_Machine}<br>Priority: ${priority}<br>Slots: ${job.Start_Slot} → ${job.End_Slot}<br>Energy Cost: ₹${Number(job.Energy_Cost || 0).toFixed(1)}`
+      hovertext: `<b>${job.Job_ID}</b><br>Machine: ${job.Assigned_Machine || job.Machine_ID}<br>Priority: ${priority}<br>Start: ${job.Start_Time || job.Start_Slot}<br>End: ${job.End_Time || job.End_Slot}<br>Energy Cost: ₹${energyCost.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}`
     };
   });
 
@@ -508,7 +515,7 @@ const renderGantt = (schedule, forecast) => {
   }
 
   const layout = {
-    title: { text: 'Machine Job Allocation Timeline (Red Shading = Peak TOU Electricity Tariff)', font: { size: 14, weight: 700 } },
+    title: { text: 'Machine Job Allocation Timeline (Red Shading = Peak TOU Electricity Tariff)', font: { size: 13, weight: 700 } },
     xaxis: { type: 'date', title: 'Operational Timeline' },
     yaxis: { title: 'Assigned Machine Fleet', categoryorder: 'category ascending' },
     shapes,
@@ -533,10 +540,10 @@ const renderScheduleTable = (schedule) => {
         <th>Job ID</th>
         <th>Assigned Machine</th>
         <th>Priority</th>
-        <th>Start Slot</th>
-        <th>End Slot</th>
-        <th>Duration (Slots)</th>
-        <th>Delay</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Duration (min)</th>
+        <th>Delay (min)</th>
         <th>Energy Cost (₹)</th>
       </tr>
     </thead>
@@ -545,17 +552,19 @@ const renderScheduleTable = (schedule) => {
 
   schedule.slice(0, 50).forEach(j => {
     const priority = j.Priority || 'Medium';
-    const dur = (Number(j.End_Slot) || 0) - (Number(j.Start_Slot) || 0);
+    const durMin = j.Duration_min ?? ((Number(j.End_Slot || 0) - Number(j.Start_Slot || 0)) * 15);
+    const cost = Number(j['Energy_Cost_$'] ?? j.Energy_Cost ?? j.Energy_Cost_INR ?? 0);
+
     html += `
       <tr>
         <td><strong>${j.Job_ID}</strong></td>
-        <td>${j.Assigned_Machine || j.Machine}</td>
+        <td>${j.Assigned_Machine || j.Machine_ID || j.Machine}</td>
         <td><span class="badge-priority ${priority}">${priority}</span></td>
-        <td>${j.Start_Slot}</td>
-        <td>${j.End_Slot}</td>
-        <td>${dur} slots (${dur * 15}m)</td>
-        <td>${j.Delay_Slots || 0}</td>
-        <td>${fmt(j.Energy_Cost, '₹', '', 1)}</td>
+        <td>${j.Start_Time || j.Start_Slot}</td>
+        <td>${j.End_Time || j.End_Slot}</td>
+        <td>${durMin} min</td>
+        <td>${j.Delay_min ?? j.Delay_Slots ?? 0} min</td>
+        <td>${fmt(cost, '₹', '', 1)}</td>
       </tr>
     `;
   });
@@ -586,12 +595,15 @@ const renderMockAll = () => {
 
   const mockSchedule = Array.from({length: 30}, (_, i) => ({
     Job_ID: `J${100 + i}`,
-    Assigned_Machine: `Machine_${(i % 5) + 1}`,
+    Assigned_Machine: `M0${(i % 5) + 1}`,
     Priority: ['High', 'Medium', 'Low'][i % 3],
     Start_Slot: (i * 3) % 80,
     End_Slot: ((i * 3) % 80) + 4,
-    Delay_Slots: 0,
-    Energy_Cost: 450 + (i * 15)
+    Start_Time: '08:00',
+    End_Time: '09:00',
+    Duration_min: 60,
+    Delay_min: 0,
+    'Energy_Cost_$': 450 + (i * 15)
   }));
 
   renderHero(mockKpi);
@@ -599,7 +611,7 @@ const renderMockAll = () => {
   renderLeaderboard(mockKpi);
   renderImprovementHeatmap(mockKpi);
   renderCompositeBar(mockKpi);
-  renderBubbleChart(mockKpi);
+  renderPeakBar(mockKpi);
   renderWinBoxes(mockKpi);
   renderKPICards(mockKpi);
   renderScheduleStats(mockSchedule);
