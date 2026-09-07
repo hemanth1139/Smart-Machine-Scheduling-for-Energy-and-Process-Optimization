@@ -1,7 +1,5 @@
 // Configuration
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://localhost:8000'
-  : 'https://your-app.onrender.com';
+const API_BASE = 'https://smart-machine-scheduling-for-energy-and.onrender.com';
 
 // Constants
 const MODEL_ORDER = ['FCFS','EDF','Makespan_Greedy','Deterministic_Greedy','Proposed_Robust_Greedy','Hybrid_Solver'];
