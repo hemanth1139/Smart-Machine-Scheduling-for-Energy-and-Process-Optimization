@@ -1,3 +1,3 @@
 Target,Stage,Total_Rows,kWh_p10_gt_p50,kWh_p50_gt_p90,kWh_p10_gt_p90,kWh_total_crossing,kWh_crossing_pct
-Usage_kWh,Before non-crossing correction,7008,44,79,0,123,1.7551
+Usage_kWh,Before non-crossing correction,7008,879,722,274,1584,22.6027
 Usage_kWh,After non-crossing correction,7008,0,0,0,0,0.0

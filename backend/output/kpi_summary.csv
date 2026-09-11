@@ -1,3 +1,3 @@
 Schedule_Type,Total_Energy_Cost_$,Peak_Hour_Load_kWh,Machine_Utilization_%,Average_Waiting_Time_min,Number_of_Late_Jobs,On_Time_Completion_%
-CP_SAT_Optimized,125350.0,448.95,47.06,93.92,0,100.0
-Baseline_FCFS,186096.29,778.95,47.78,54.58,0,100.0
+CP_SAT_Optimized,120183.26,454.48,41.99,112.41,0,100.0
+Baseline_FCFS,181528.39,784.48,45.77,45.0,0,100.0

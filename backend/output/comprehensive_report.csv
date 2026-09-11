@@ -1,12 +1,12 @@
-Metric,FCFS,EDF,Makespan_Greedy,Proposed_Robust_Greedy,Deterministic_Greedy,Hybrid_Solver
-Total Energy Cost (INR),INR 186096.29,INR 185686.40,INR 186096.29,INR 167723.41,INR 167723.41,INR 125350.00
-Peak Grid Load (kW),778.95 kW,778.95 kW,778.95 kW,778.95 kW,778.95 kW,448.95 kW
-Makespan (hours),49.25 hrs,49.00 hrs,49.25 hrs,49.25 hrs,49.25 hrs,50.00 hrs
-Machine Utilization (%),47.78%,48.02%,47.78%,47.78%,47.78%,47.06%
-Average Waiting Time (min),54.6 min,61.2 min,54.6 min,89.3 min,89.3 min,93.9 min
-Total Idle Time (min),12345.0 min,12225.0 min,12345.0 min,12345.0 min,12345.0 min,12705.0 min
-Total Delay (min),0.0 min,0.0 min,0.0 min,0.0 min,0.0 min,0.0 min
-Late Jobs (count),0 jobs,0 jobs,0 jobs,0 jobs,0 jobs,0 jobs
-On-Time Completion (%),100.00%,100.00%,100.00%,100.00%,100.00%,100.00%
-Carbon Emissions (tCO2),2950.9463 t,3031.2533 t,2950.9463 t,2757.8365 t,2757.8365 t,2191.9967 t
-Power Factor Penalty (INR),INR 0.00,INR 0.00,INR 0.00,INR 0.00,INR 0.00,INR 0.00
+Metric,FCFS,EDD,SPT,LPT,Energy_Unaware,Makespan_Greedy,FD_PDTS_Det,FD_PDTS_Robust,CP_SAT_Warm,CP_SAT_Cold
+Total Energy Cost (INR),181528.39,174318.0,164128.32,179591.66,181284.24,177671.44,162874.77,160398.34,120183.26,78301.88
+Peak Grid Load (kW),784.48,784.48,784.48,784.48,784.48,784.48,784.48,784.48,454.48,161.48
+Makespan (hours),47.25,47.25,48.0,47.25,47.25,47.25,47.5,50.5,51.5,55.5
+Machine Utilization (%),45.77,45.77,45.05,45.77,45.77,45.77,45.53,42.82,41.99,38.96
+Average Waiting Time (min),45.0,65.16,78.56,58.22,46.69,54.09,88.69,100.22,112.41,419.53
+Total Idle Time (min),12300.0,12300.0,12660.0,12300.0,12300.0,12300.0,12420.0,13860.0,14340.0,16260.0
+Total Delay (min),0.0,0.0,675.0,0.0,0.0,0.0,0.0,0.0,0.0,465.0
+Late Jobs (count),0.0,0.0,4.0,0.0,0.0,0.0,0.0,0.0,0.0,9.0
+On-Time Completion (%),100.0,100.0,97.5,100.0,100.0,100.0,100.0,100.0,100.0,94.38
+Carbon Emissions (tCO2),671.863007,705.152954,723.103606,666.583538,668.59307,659.667833,624.773448,619.542551,483.8789,573.280152
+Power Factor Penalty (INR),30660.46,29451.58,27934.6,30458.27,30723.95,30031.08,27657.56,27323.97,20431.24,13527.94

@@ -1,0 +1,23 @@
+{
+  "CP_SAT_Warm": {
+    "status": "FEASIBLE",
+    "runtime_s": 120.02,
+    "objective_value": 217611990.0,
+    "best_bound": 130209850.0,
+    "optimality_proven": false,
+    "warm_start_used": true,
+    "time_limit_s": 120.0,
+    "num_workers": 4,
+    "initial_objective_fdpdts": null
+  },
+  "CP_SAT_Cold": {
+    "status": "FEASIBLE",
+    "runtime_s": 120.04,
+    "objective_value": 125693130.0,
+    "best_bound": 4238120.0,
+    "optimality_proven": false,
+    "warm_start_used": false,
+    "time_limit_s": 120.0,
+    "num_workers": 4
+  }
+}
