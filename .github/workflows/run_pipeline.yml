@@ -1,0 +1,71 @@
+name: Run Full Pipeline (20 Seeds)
+
+on:
+  # Click "Run workflow" button on GitHub Actions tab
+  workflow_dispatch:
+
+  # Optional: also run automatically on every push to main
+  # push:
+  #   branches: [main]
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest       # 2 vCPU, 7 GB RAM — free
+    timeout-minutes: 360         # 6 hour max (pipeline needs ~90 min)
+
+    permissions:
+      contents: write            # needed to push results back to repo
+
+    steps:
+      # ── 1. Checkout repo ──────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Set up Python ──────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"           # caches packages — faster on re-runs
+
+      # ── 3. Install dependencies ───────────────────────────
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install \
+            xgboost==3.0.2 \
+            ortools \
+            scikit-learn \
+            scipy \
+            joblib \
+            pandas \
+            numpy
+
+      # ── 4. Run the pipeline ───────────────────────────────
+      - name: Run pipeline (20 seeds + weight sensitivity)
+        run: |
+          python -m backend.run_pipeline
+        env:
+          PYTHONUNBUFFERED: "1"  # shows logs live in GitHub Actions
+
+      # ── 5. Commit and push results back to repo ───────────
+      - name: Commit and push results
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add backend/output/
+          git add backend/models/
+          git add backend/data/
+
+          # Only commit if there are actual changes
+          git diff --cached --quiet || git commit -m \
+            "Results: 20-seed pipeline run [skip ci]
+
+            - multi_seed_results.csv: 20 seeds x 10 algorithms
+            - aggregate_stats.csv: mean±SD + 95% CI
+            - weight_sensitivity.csv: 7 weight configurations
+            - predictions.csv: fixed forecasting metrics
+            - solver_info.json: CP-SAT status + runtime"
+
+          git push
