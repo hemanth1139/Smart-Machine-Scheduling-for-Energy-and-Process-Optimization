@@ -1,5 +1,12 @@
 """
 Data Loading, Cleaning, and Feature Engineering preprocessing module.
+
+Fix (v2): Lagging_Current_Power_Factor is recorded in the raw SCADA dataset on a
+0-100 percentage scale. Training directly on this scale causes its large gradient
+magnitude to dominate the shared custom quantile objective and collapse energy
+predictions. We therefore scale PF to decimal [0.0, 1.0] before constructing
+the target matrix, and record the scale factor so predictions can be
+inverse-transformed.
 """
 
 from pathlib import Path
@@ -14,6 +21,9 @@ try:
     from backend.config import config
 except ImportError:
     from config import config
+
+# Scale factor: raw PF is in percent (0-100); we train on decimal (0-1)
+PF_SCALE = 100.0
 
 
 class DataLoader:
@@ -43,20 +53,22 @@ class DataCleaner:
     @staticmethod
     def clean_energy_data(df: pd.DataFrame) -> pd.DataFrame:
         df_clean = df.drop_duplicates().copy()
-        
+
         # DateTime conversion
-        df_clean[config.ENERGY_TIME_COL] = pd.to_datetime(df_clean[config.ENERGY_TIME_COL], errors="coerce", dayfirst=True)
-        
+        df_clean[config.ENERGY_TIME_COL] = pd.to_datetime(
+            df_clean[config.ENERGY_TIME_COL], errors="coerce", dayfirst=True
+        )
+
         # Numeric conversions
         for col in config.ENERGY_NUMERIC_COLS:
             if col in df_clean.columns:
                 df_clean[col] = pd.to_numeric(df_clean[col], errors="coerce")
-                
+
         # Categorical conversions
         for col in config.ENERGY_CATEGORICAL_COLS:
             if col in df_clean.columns:
                 df_clean[col] = df_clean[col].astype("category")
-                
+
         # Fill missing values
         df_clean = df_clean.ffill().bfill()
         return df_clean.sort_values(by=config.ENERGY_TIME_COL).reset_index(drop=True)
@@ -103,46 +115,66 @@ class FeatureEngineer:
         df_feat["month_sin"] = np.sin(2 * np.pi * (df_feat["month"] - 1) / 12.0)
         df_feat["month_cos"] = np.cos(2 * np.pi * (df_feat["month"] - 1) / 12.0)
 
-        # Lag Features for active power
+        # Lag Features for active power (all shifted — no leakage)
         for lag in self.lag_steps:
             df_feat[f"{self.target_col}_lag_{lag}"] = df_feat[self.target_col].shift(lag)
         df_feat[f"{self.target_col}_diff_1"] = df_feat[self.target_col].diff(1)
 
-        # Rolling Window Features
+        # Rolling Window Features (all shifted by 1 to prevent data leakage)
         for w in self.rolling_windows:
             shifted_s = df_feat[self.target_col].shift(1)
             df_feat[f"{self.target_col}_rolling_mean_{w}"] = shifted_s.rolling(window=w, min_periods=1).mean()
-            df_feat[f"{self.target_col}_rolling_std_{w}"] = shifted_s.rolling(window=w, min_periods=1).std().fillna(0)
+            df_feat[f"{self.target_col}_rolling_std_{w}"] = (
+                shifted_s.rolling(window=w, min_periods=1).std().fillna(0)
+            )
             df_feat[f"{self.target_col}_rolling_min_{w}"] = shifted_s.rolling(window=w, min_periods=1).min()
             df_feat[f"{self.target_col}_rolling_max_{w}"] = shifted_s.rolling(window=w, min_periods=1).max()
 
-        df_feat[f"{self.target_col}_ewma_4"] = df_feat[self.target_col].shift(1).ewm(span=4, adjust=False).mean()
+        df_feat[f"{self.target_col}_ewma_4"] = (
+            df_feat[self.target_col].shift(1).ewm(span=4, adjust=False).mean()
+        )
 
-        # Fill any NaNs
+        # Fill any NaNs created by shifts
         df_feat = df_feat.bfill().ffill()
         return df_feat
 
 
 class DataPreparer:
+    """
+    Prepares train/test splits.
+
+    Power factor fix: raw Lagging_Current_Power_Factor is in percent [0, 100].
+    We divide by PF_SCALE=100 before training so all three target columns
+    (Usage_kWh, CO2, PF_decimal) have roughly similar magnitudes, preventing
+    the PF gradient from collapsing energy predictions.
+    The inverse transform (x PF_SCALE) is applied in ForecastingPredictor.
+    """
+
+    PF_SCALE: float = PF_SCALE  # 100.0
+    PF_COL: str = "Lagging_Current_Power_Factor"
+
     def __init__(self):
         self.encoder = None
 
-    def prepare_data(self, df: pd.DataFrame, train_ratio: float = 0.8) -> Tuple[
-        pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.Series, pd.Series
-    ]:
+    def prepare_data(
+        self, df: pd.DataFrame, train_ratio: float = 0.8
+    ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
         df_proc = df.copy()
-        
-        # Ensure chronological
+
+        # Ensure chronological order — critical for time-series split
         df_proc[config.ENERGY_TIME_COL] = pd.to_datetime(df_proc[config.ENERGY_TIME_COL])
         df_proc = df_proc.sort_values(by=config.ENERGY_TIME_COL).reset_index(drop=True)
 
         dates = df_proc[config.ENERGY_TIME_COL]
-        
-        # Targets: Usage_kWh, CO2(tCO2), Lagging_Current_Power_Factor
-        y_cols = ["Usage_kWh", "CO2(tCO2)", "Lagging_Current_Power_Factor"]
+
+        # Targets
+        y_cols = ["Usage_kWh", "CO2(tCO2)", self.PF_COL]
         y = df_proc[y_cols].copy()
 
-        # Feature matrix
+        # KEY FIX: scale PF from percentage to decimal [0,1] before training
+        y[self.PF_COL] = y[self.PF_COL] / self.PF_SCALE
+
+        # Feature matrix (exclude time and raw targets)
         exclude_cols = [config.ENERGY_TIME_COL] + y_cols
         feature_cols = [c for c in df_proc.columns if c not in exclude_cols]
         X = df_proc[feature_cols].copy()
@@ -156,7 +188,7 @@ class DataPreparer:
         self.encoder = OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)
         X[cat_cols] = self.encoder.fit_transform(X[cat_cols])
 
-        # Train/Test chronological split
+        # Train/Test chronological split — no shuffling
         split_idx = int(len(X) * train_ratio)
 
         X_train = X.iloc[:split_idx].copy()
@@ -171,7 +203,7 @@ class DataPreparer:
 
     def save_preprocessor(self, path: Path) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
-        joblib.dump({"encoder": self.encoder}, path)
+        joblib.dump({"encoder": self.encoder, "pf_scale": self.PF_SCALE}, path)
 
     @classmethod
     def load_preprocessor(cls, path: Path) -> "DataPreparer":

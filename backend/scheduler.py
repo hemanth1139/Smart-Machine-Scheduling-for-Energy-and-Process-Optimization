@@ -1,21 +1,32 @@
 """
-Scheduling Module — Predict-then-Optimize Framework
-=====================================================
-Implements six scheduling models for benchmarking:
+Scheduling Module v2 — Predict-then-Optimize Framework
+=======================================================
+Implements eight scheduling algorithms:
 
-  1. solve_fcfs_scheduler          — First-Come-First-Served (weakest baseline)
-  2. solve_edf_scheduler           — Earliest-Deadline-First (stronger baseline)
-  3. solve_proposed_scheduler      — FD-PDTS: Forecast-Driven Priority Dispatching
-                                     with Tariff Shifting (our novel algorithm)
-  4. solve_deterministic_scheduler — FD-PDTS using p50 forecast (no robustness)
-  5. solve_makespan_scheduler      — Makespan-only greedy
-  6. solve_hybrid_scheduler        — FD-PDTS warm-start + CP-SAT refinement
+  1.  solve_fcfs_scheduler          — First-Come-First-Served
+  2.  solve_spt_scheduler           — Shortest Processing Time first
+  3.  solve_lpt_scheduler           — Longest Processing Time first
+  4.  solve_edd_scheduler           — Earliest Due Date (= old EDF)
+  5.  solve_energy_unaware_greedy   — Arrival-order but always picks highest-power machine
+  6.  solve_makespan_scheduler      — Load-balancing greedy (minimises per-machine finish time)
+  7.  solve_proposed_scheduler      — FD-PDTS: Forecast-Driven Priority Dispatching with Tariff Shifting
+  8.  solve_deterministic_scheduler — FD-PDTS using p50 (no robustness)
+  9.  solve_robust_scheduler        — FD-PDTS with genuinely stronger robustness
+                                      (p90 tariff bias x1.25, overload penalty x0.50)
+  10. solve_hybrid_scheduler        — FD-PDTS warm-start + CP-SAT refinement (warm start)
+  11. solve_cpsat_cold_scheduler    — CP-SAT WITHOUT warm start (cold start comparison)
 
-Machine availability is tracked as busy intervals (not a single free-pointer),
-so off-peak shifts leave daytime holes that later jobs can still use.
+Fix notes:
+  - solve_makespan_scheduler now uses earliest-completion load-balancing, NOT FCFS.
+  - solve_robust_scheduler uses 1.25x multiplier (was 1.08x) so it genuinely
+    produces different slot-selection from the deterministic version.
+  - solve_energy_unaware_greedy always routes to the highest Active_Power_kW
+    compatible machine (worst-case energy baseline).
+  - solve_cpsat_cold_scheduler runs CP-SAT with NO hint injection.
 """
 
 from typing import Dict, List, Optional, Tuple
+import time
 import numpy as np
 import pandas as pd
 from ortools.sat.python import cp_model
@@ -46,9 +57,9 @@ def _build_tariff_array(forecast_df: pd.DataFrame, horizon_slots: int) -> np.nda
     return tariffs
 
 
-def _job_energy_cost(start_slot: int, dur_slots: int,
-                     active_kw: float, setup_kw: float,
-                     tariffs: np.ndarray) -> float:
+def _job_energy_cost(
+    start_slot: int, dur_slots: int, active_kw: float, setup_kw: float, tariffs: np.ndarray
+) -> float:
     h = config.SLOT_DURATION_MIN / 60.0
     n = len(tariffs)
     cost = 0.0
@@ -68,7 +79,6 @@ class MachineCalendar:
     """Interval calendar: busy segments + setup type at each segment end."""
 
     def __init__(self):
-        # list of (start, end, setup_type_at_end)
         self.busy: List[Tuple[int, int, Optional[str]]] = []
 
     def _stype_before(self, start: int):
@@ -80,9 +90,7 @@ class MachineCalendar:
                 break
         return prev
 
-    def earliest_fit(self, arrival: int, dur: int, stype: str,
-                     search_limit: int = 10_000) -> int:
-        """Earliest start >= arrival that fits a contiguous free gap."""
+    def earliest_fit(self, arrival: int, dur: int, stype: str, search_limit: int = 10_000) -> int:
         t = arrival
         while t <= search_limit:
             co = _changeover_slots(self._stype_before(t), stype)
@@ -91,7 +99,6 @@ class MachineCalendar:
             conflict = False
             for s, e, _ in self.busy:
                 if not (end <= s or start >= e):
-                    # jump to end of this busy block
                     t = e
                     conflict = True
                     break
@@ -101,10 +108,7 @@ class MachineCalendar:
 
     def can_place(self, start: int, dur: int, stype: str) -> bool:
         co = _changeover_slots(self._stype_before(start), stype)
-        # changeover must also be free; require start already includes co,
-        # i.e. caller passes absolute start after changeover.
         end = start + dur
-        # verify changeover region [start-co, start) is free if co>0
         co_start = start - co
         for s, e, _ in self.busy:
             if not (end <= s or co_start >= e):
@@ -115,14 +119,17 @@ class MachineCalendar:
         self.busy.append((start, end, stype))
         self.busy.sort(key=lambda x: x[0])
 
+    @property
+    def last_end(self) -> int:
+        return self.busy[-1][1] if self.busy else 0
+
 
 def _parse_compat(job, mach_map) -> List[str]:
-    return [m.strip() for m in str(job["Compatible_Machines"]).split(",")
-            if m.strip() in mach_map]
+    return [m.strip() for m in str(job["Compatible_Machines"]).split(",") if m.strip() in mach_map]
 
 
 def _asap_place(calendars, mach_map, compat, arr, dur, stype):
-    best = None  # (end, start, mid)
+    best = None
     for mid in compat:
         start = calendars[mid].earliest_fit(arr, dur, stype)
         end = start + dur
@@ -132,7 +139,7 @@ def _asap_place(calendars, mach_map, compat, arr, dur, stype):
 
 
 # =============================================================================
-# 1. FCFS
+# 1. FCFS — First Come First Served
 # =============================================================================
 
 def solve_fcfs_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
@@ -157,10 +164,64 @@ def solve_fcfs_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
 
 
 # =============================================================================
-# 2. EDF
+# 2. SPT — Shortest Processing Time first
 # =============================================================================
 
-def solve_edf_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
+def solve_spt_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
+    machines = machines_df.to_dict(orient="records")
+    mach_map = {m["Machine_ID"]: m for m in machines}
+    calendars = {m: MachineCalendar() for m in mach_map}
+
+    rows = []
+    # SPT: sort by Duration_min ascending (ties broken by arrival)
+    order = jobs_df.sort_values(["Duration_min", "Arrival_Time"])
+    for j in order.to_dict(orient="records"):
+        arr = int(j["Arrival_Time"])
+        dur = max(1, int(np.ceil(j["Duration_min"] / 15.0)))
+        stype = j["Setup_Type"]
+        compat = _parse_compat(j, mach_map)
+        placed = _asap_place(calendars, mach_map, compat, arr, dur, stype)
+        if placed is None:
+            continue
+        end, start, mid = placed
+        calendars[mid].place(start, end, stype)
+        rows.append({"Job_ID": j["Job_ID"], "Machine_ID": mid,
+                     "Start_Slot": start, "End_Slot": end, "Duration_Slots": dur})
+    return pd.DataFrame(rows).sort_values(["Machine_ID", "Start_Slot"]).reset_index(drop=True)
+
+
+# =============================================================================
+# 3. LPT — Longest Processing Time first
+# =============================================================================
+
+def solve_lpt_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
+    machines = machines_df.to_dict(orient="records")
+    mach_map = {m["Machine_ID"]: m for m in machines}
+    calendars = {m: MachineCalendar() for m in mach_map}
+
+    rows = []
+    # LPT: sort by Duration_min descending (ties broken by arrival)
+    order = jobs_df.sort_values(["Duration_min", "Arrival_Time"], ascending=[False, True])
+    for j in order.to_dict(orient="records"):
+        arr = int(j["Arrival_Time"])
+        dur = max(1, int(np.ceil(j["Duration_min"] / 15.0)))
+        stype = j["Setup_Type"]
+        compat = _parse_compat(j, mach_map)
+        placed = _asap_place(calendars, mach_map, compat, arr, dur, stype)
+        if placed is None:
+            continue
+        end, start, mid = placed
+        calendars[mid].place(start, end, stype)
+        rows.append({"Job_ID": j["Job_ID"], "Machine_ID": mid,
+                     "Start_Slot": start, "End_Slot": end, "Duration_Slots": dur})
+    return pd.DataFrame(rows).sort_values(["Machine_ID", "Start_Slot"]).reset_index(drop=True)
+
+
+# =============================================================================
+# 4. EDD — Earliest Due Date (same sort key as old EDF)
+# =============================================================================
+
+def solve_edd_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
     machines = machines_df.to_dict(orient="records")
     mach_map = {m["Machine_ID"]: m for m in machines}
     calendars = {m: MachineCalendar() for m in mach_map}
@@ -182,20 +243,79 @@ def solve_edf_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values(["Machine_ID", "Start_Slot"]).reset_index(drop=True)
 
 
+# Alias for backward compatibility
+def solve_edf_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
+    return solve_edd_scheduler(jobs_df, machines_df, forecast_df)
+
+
 # =============================================================================
-# 3. Makespan-only
+# 5. Energy-Unaware Greedy
+#    FCFS arrival order, but ALWAYS picks the highest Active_Power_kW machine.
+#    This is a deliberately bad energy baseline.
+# =============================================================================
+
+def solve_energy_unaware_greedy(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
+    machines = machines_df.to_dict(orient="records")
+    mach_map = {m["Machine_ID"]: m for m in machines}
+    calendars = {m: MachineCalendar() for m in mach_map}
+
+    rows = []
+    for j in jobs_df.sort_values("Arrival_Time").to_dict(orient="records"):
+        arr = int(j["Arrival_Time"])
+        dur = max(1, int(np.ceil(j["Duration_min"] / 15.0)))
+        stype = j["Setup_Type"]
+        compat = _parse_compat(j, mach_map)
+        if not compat:
+            continue
+        # Sort compatible machines by Active_Power_kW descending (worst energy choice)
+        compat_sorted = sorted(
+            compat, key=lambda m: float(mach_map[m]["Active_Power_kW"]), reverse=True
+        )
+        placed = _asap_place(calendars, mach_map, compat_sorted, arr, dur, stype)
+        if placed is None:
+            continue
+        end, start, mid = placed
+        calendars[mid].place(start, end, stype)
+        rows.append({"Job_ID": j["Job_ID"], "Machine_ID": mid,
+                     "Start_Slot": start, "End_Slot": end, "Duration_Slots": dur})
+    return pd.DataFrame(rows).sort_values(["Machine_ID", "Start_Slot"]).reset_index(drop=True)
+
+
+# =============================================================================
+# 6. Makespan Greedy — load-balancing (NOT FCFS)
+#    Each job goes to the compatible machine whose current last_end is earliest.
 # =============================================================================
 
 def solve_makespan_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
-    return solve_fcfs_scheduler(jobs_df, machines_df, forecast_df)
+    machines = machines_df.to_dict(orient="records")
+    mach_map = {m["Machine_ID"]: m for m in machines}
+    calendars = {m: MachineCalendar() for m in mach_map}
+
+    rows = []
+    for j in jobs_df.sort_values("Arrival_Time").to_dict(orient="records"):
+        arr = int(j["Arrival_Time"])
+        dur = max(1, int(np.ceil(j["Duration_min"] / 15.0)))
+        stype = j["Setup_Type"]
+        compat = _parse_compat(j, mach_map)
+        if not compat:
+            continue
+        # Load-balancing: prefer the machine with the smallest last_end
+        compat_sorted = sorted(compat, key=lambda m: calendars[m].last_end)
+        placed = _asap_place(calendars, mach_map, compat_sorted, arr, dur, stype)
+        if placed is None:
+            continue
+        end, start, mid = placed
+        calendars[mid].place(start, end, stype)
+        rows.append({"Job_ID": j["Job_ID"], "Machine_ID": mid,
+                     "Start_Slot": start, "End_Slot": end, "Duration_Slots": dur})
+    return pd.DataFrame(rows).sort_values(["Machine_ID", "Start_Slot"]).reset_index(drop=True)
 
 
 # =============================================================================
-# 4. FD-PDTS (proposed)
+# 7. FD-PDTS — Proposed algorithm
 # =============================================================================
 
 def _tariff_candidates(base: int, latest: int, tariffs: np.ndarray) -> List[int]:
-    """ASAP + first cheaper TOU windows + tariff-drop points (sparse, fast)."""
     if latest < base:
         return [base]
     cands = {base, latest}
@@ -214,25 +334,28 @@ def _tariff_candidates(base: int, latest: int, tariffs: np.ndarray) -> List[int]
     return sorted(c for c in cands if base <= c <= latest)
 
 
-def solve_proposed_scheduler(jobs_df, machines_df, forecast_df,
-                              use_robust: bool = True) -> pd.DataFrame:
+def solve_proposed_scheduler(
+    jobs_df, machines_df, forecast_df, use_robust: bool = True, robust_multiplier: float = 1.25
+) -> pd.DataFrame:
     """
-    FD-PDTS with interval calendars:
-      1) Protect on-time: only evaluate starts that finish by deadline when possible
-      2) Short-horizon tariff shifting (max a few hours) — not overnight parking
-      3) Prefer lower-power eligible machines (often better than long waits)
-      4) Soft peak-load guard during Maximum_Load hours
-      5) Explicit wait / finish-time penalties so energy savings must be worth the delay
+    FD-PDTS with interval calendars.
+
+    use_robust=False  -> deterministic (p50 tariff, multiplier=1.0)
+    use_robust=True   -> robust (peak tariffs multiplied by robust_multiplier,
+                         overload penalty coefficient raised to 0.50)
     """
     horizon = config.SCHEDULING_HORIZON_SLOTS + 64
     tariffs = _build_tariff_array(forecast_df, horizon)
+
     if use_robust:
-        logger.info("FD-PDTS: robust tariff bias enabled.")
+        logger.info(f"FD-PDTS: robust tariff bias (x{robust_multiplier}) enabled.")
         plan = tariffs.copy()
-        plan[tariffs >= config.TARIFF_MAX_LOAD - 1e-6] *= 1.08
+        plan[tariffs >= config.TARIFF_MAX_LOAD - 1e-6] *= robust_multiplier
+        overload_coeff = 0.50   # stronger peak-overload deterrent
     else:
-        logger.info("FD-PDTS: deterministic tariffs.")
+        logger.info("FD-PDTS: deterministic tariffs (p50 only).")
         plan = tariffs
+        overload_coeff = 0.20
 
     machines = machines_df.to_dict(orient="records")
     mach_map = {m["Machine_ID"]: m for m in machines}
@@ -240,21 +363,16 @@ def solve_proposed_scheduler(jobs_df, machines_df, forecast_df,
     load_profile = np.zeros(horizon)
     peak_cap = float(config.PEAK_GRID_CAPACITY_KW)
 
-    # Max deferral from ASAP finish across the fleet (slots). Keeps wait/makespan
-    # near FCFS while still allowing efficient-machine choice and tiny TOU nudges.
-    FINISH_SLACK = {1: 0, 2: 4, 3: 6}   # 0 / 1h / 1.5h behind best ASAP finish
-    MAX_SHIFT = {1: 0, 2: 6, 3: 8}       # max start delay from that machine's ASAP
+    FINISH_SLACK = {1: 0, 2: 4, 3: 6}
+    MAX_SHIFT = {1: 0, 2: 6, 3: 8}
     WAIT_PENALTY = 20.0
     FINISH_PENALTY = 15.0
 
     scored = []
     for j in jobs_df.to_dict(orient="records"):
-        # Arrival-first list scheduling (same spine as FCFS) so waiting/makespan
-        # stay comparable; energy gains come from machine choice + short shifts.
         arr = int(j["Arrival_Time"])
         deadline = int(j["Deadline"])
         prio = int(j.get("Priority", 2))
-        # Stable tie-breakers only — do NOT reorder away from arrival time
         scored.append((arr, prio, deadline, j["Job_ID"], j))
     scored.sort(key=lambda x: (x[0], x[1], x[2], x[3]))
 
@@ -308,8 +426,6 @@ def solve_proposed_scheduler(jobs_df, machines_df, forecast_df,
                 if s > asap + max_shift:
                     continue
                 e = s + dur
-                # Reject placements that lag the fleet-ASAP finish too much
-                # (prevents queueing forever on the cheapest machine).
                 if asap_ref_end is not None and e > asap_ref_end + finish_slack:
                     continue
                 energy = _job_energy_cost(s, dur, active_kw, setup_kw, plan)
@@ -317,7 +433,7 @@ def solve_proposed_scheduler(jobs_df, machines_df, forecast_df,
                     overload = 0.0
                     for t in range(s, min(e, horizon)):
                         overload += max(0.0, load_profile[t] + active_kw - peak_cap)
-                    energy += 0.20 * overload
+                    energy += overload_coeff * overload
 
                 late = max(0, e - deadline)
                 wait = max(0, s - arr)
@@ -331,7 +447,6 @@ def solve_proposed_scheduler(jobs_df, machines_df, forecast_df,
                 if best_any is None or score < best_any[0]:
                     best_any = cand
 
-        # If near-ASAP filter wiped all options, fall back to pure ASAP energy pick
         if best_on_time is None and best_any is None:
             for mid in compat:
                 cal = calendars[mid]
@@ -373,27 +488,26 @@ def solve_deterministic_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataF
     return solve_proposed_scheduler(jobs_df, machines_df, forecast_df, use_robust=False)
 
 
+def solve_robust_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
+    """Stronger robustness: 1.25x peak tariff multiplier + 0.50 overload coefficient."""
+    return solve_proposed_scheduler(
+        jobs_df, machines_df, forecast_df, use_robust=True, robust_multiplier=1.25
+    )
+
+
 # =============================================================================
-# 5. Hybrid FD-PDTS + CP-SAT
+# CP-SAT shared builder
 # =============================================================================
 
-def solve_hybrid_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
+def _run_cpsat(
+    jobs_df, machines_df, forecast_df, hint_map: Optional[Dict] = None
+) -> Tuple[pd.DataFrame, Dict]:
+    """
+    Shared CP-SAT formulation. Returns (schedule_df, solver_info_dict).
+    If hint_map is None, runs cold (no warm start).
+    """
     horizon_slots = config.SCHEDULING_HORIZON_SLOTS + 48
     tariffs = _build_tariff_array(forecast_df, horizon_slots)
-
-    logger.info("Hybrid Stage 1: Running FD-PDTS for warm-start...")
-    fdpdts_df = solve_proposed_scheduler(jobs_df, machines_df, forecast_df, use_robust=True)
-    if fdpdts_df.empty:
-        return fdpdts_df
-
-    hint_map = {row["Job_ID"]: (int(row["Start_Slot"]), row["Machine_ID"])
-                for _, row in fdpdts_df.iterrows()}
-    logger.info(f"Hybrid Stage 1 complete: {len(fdpdts_df)} jobs.")
-
-    model = cp_model.CpModel()
-    solver = cp_model.CpSolver()
-    solver.parameters.max_time_in_seconds = config.ORTOOLS_TIME_LIMIT_SEC
-    solver.parameters.num_search_workers = 4
 
     job_list = jobs_df.to_dict(orient="records")
     mach_list = machines_df.to_dict(orient="records")
@@ -401,19 +515,30 @@ def solve_hybrid_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
     all_mids = [m["Machine_ID"] for m in mach_list]
     job_compat = {j["Job_ID"]: _parse_compat(j, mach_map) for j in job_list}
     max_ub = horizon_slots
+    hours = config.SLOT_DURATION_MIN / 60.0
+
+    model = cp_model.CpModel()
+    solver = cp_model.CpSolver()
+    solver.parameters.max_time_in_seconds = config.ORTOOLS_TIME_LIMIT_SEC
+    solver.parameters.num_search_workers = 4
 
     start_vars, end_vars, presence_vars, interval_vars = {}, {}, {}, {}
-    var_bounds, energy_cost_vars = {}, {}
-    hours = config.SLOT_DURATION_MIN / 60.0
+    var_bounds = {}
+    energy_cost_vars = {}
 
     for j in job_list:
         jid = j["Job_ID"]
         arr = int(j["Arrival_Time"])
         dur = max(1, int(np.ceil(j["Duration_min"] / 15.0)))
         deadline = int(j["Deadline"])
-        hint_start, _ = hint_map.get(jid, (arr, None))
-        # Very tight — mostly machine reassignment, not time shifting
-        window = 4
+
+        if hint_map is not None:
+            hint_start, _ = hint_map.get(jid, (arr, None))
+            window = 4
+        else:
+            hint_start = arr
+            window = max_ub  # wide window for cold start
+
         lb = int(max(arr, hint_start - window))
         ub = int(max(lb, min(max_ub - dur, hint_start + window, deadline)))
         var_bounds[jid] = (lb, ub, dur, deadline, arr)
@@ -447,9 +572,10 @@ def solve_hybrid_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
                     c += active * hours * tariffs[min(u, len(tariffs) - 1)]
                 c += setup * hours * tariffs[min(t, len(tariffs) - 1)]
                 cost_table.append(int(round(c * 100)))
-            cost_var = model.NewIntVar(0, max(cost_table) if cost_table else 0, f"ec_{jid}_{mid}")
+            max_cost = max(cost_table) if cost_table else 0
+            cost_var = model.NewIntVar(0, max_cost, f"ec_{jid}_{mid}")
             model.AddElement(sv, cost_table, cost_var)
-            gated = model.NewIntVar(0, max(cost_table) if cost_table else 0, f"gec_{jid}_{mid}")
+            gated = model.NewIntVar(0, max_cost, f"gec_{jid}_{mid}")
             model.Add(gated == cost_var).OnlyEnforceIf(presence_vars[jid][mid])
             model.Add(gated == 0).OnlyEnforceIf(presence_vars[jid][mid].Not())
             energy_terms.append(gated)
@@ -464,10 +590,6 @@ def solve_hybrid_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
     for j in job_list:
         jid = j["Job_ID"]
         _, _, _, deadline, arr = var_bounds[jid]
-        hint_s, _ = hint_map.get(jid, (arr, None))
-        hint_dur = max(1, int(np.ceil(j["Duration_min"] / 15.0)))
-        if hint_s + hint_dur <= deadline:
-            model.Add(end_vars[jid] <= deadline)
         tard = model.NewIntVar(0, max_ub * 10, f"tard_{jid}")
         model.Add(tard >= end_vars[jid] - deadline)
         wait = model.NewIntVar(0, max_ub, f"wait_{jid}")
@@ -477,40 +599,101 @@ def solve_hybrid_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
         obj.append(wait * 350)
     model.Minimize(sum(obj))
 
-    for jid, (hint_s, hint_mid) in hint_map.items():
-        if jid not in start_vars:
-            continue
-        lb, ub, _, _, _ = var_bounds[jid]
-        model.add_hint(start_vars[jid], max(lb, min(ub, hint_s)))
-        for mid, pvar in presence_vars[jid].items():
-            model.add_hint(pvar, 1 if mid == hint_mid else 0)
+    # Warm-start hints (only if hint_map provided)
+    if hint_map is not None:
+        for jid, (hint_s, hint_mid) in hint_map.items():
+            if jid not in start_vars:
+                continue
+            lb, ub, _, _, _ = var_bounds[jid]
+            model.add_hint(start_vars[jid], max(lb, min(ub, hint_s)))
+            for mid, pvar in presence_vars[jid].items():
+                model.add_hint(pvar, 1 if mid == hint_mid else 0)
 
     err = model.Validate()
     if err:
         logger.error(f"CP-SAT validation error: {err}")
-        return fdpdts_df
+        return pd.DataFrame(), {"status": "VALIDATION_ERROR", "runtime": 0.0}
 
+    t0 = time.time()
     status = solver.Solve(model)
-    logger.info(f"Hybrid CP-SAT status={solver.StatusName(status)} time={solver.WallTime():.1f}s")
+    runtime = time.time() - t0
+
+    status_name = solver.StatusName(status)
+    logger.info(f"CP-SAT status={status_name} time={runtime:.2f}s objective={solver.ObjectiveValue():.1f}")
+
+    solver_info = {
+        "status": status_name,
+        "runtime_s": round(runtime, 2),
+        "objective_value": solver.ObjectiveValue() if status in (cp_model.OPTIMAL, cp_model.FEASIBLE) else None,
+        "best_bound": solver.BestObjectiveBound() if status in (cp_model.OPTIMAL, cp_model.FEASIBLE) else None,
+        "optimality_proven": status == cp_model.OPTIMAL,
+        "warm_start_used": hint_map is not None,
+        "time_limit_s": config.ORTOOLS_TIME_LIMIT_SEC,
+        "num_workers": 4,
+    }
+
     if status not in (cp_model.OPTIMAL, cp_model.FEASIBLE):
-        return fdpdts_df
+        return pd.DataFrame(), solver_info
 
     rows = []
     for j in job_list:
         jid = j["Job_ID"]
-        mid = next((m for m in job_compat[jid] if solver.Value(presence_vars[jid][m]) == 1), None)
+        mid = next(
+            (m for m in job_compat[jid] if solver.Value(presence_vars[jid][m]) == 1), None
+        )
         if mid is None:
-            _, mid = hint_map.get(jid, (None, job_compat[jid][0]))
+            if hint_map is not None:
+                _, mid = hint_map.get(jid, (None, job_compat[jid][0] if job_compat[jid] else None))
+            else:
+                mid = job_compat[jid][0] if job_compat[jid] else None
+        if mid is None:
+            continue
         s = solver.Value(start_vars[jid])
         dur = max(1, int(np.ceil(j["Duration_min"] / 15.0)))
         rows.append({"Job_ID": jid, "Machine_ID": mid,
                      "Start_Slot": s, "End_Slot": s + dur, "Duration_Slots": dur})
-    return pd.DataFrame(rows).sort_values(["Machine_ID", "Start_Slot"]).reset_index(drop=True)
+
+    sched_df = pd.DataFrame(rows).sort_values(["Machine_ID", "Start_Slot"]).reset_index(drop=True)
+    return sched_df, solver_info
 
 
-def solve_cpsat_scheduler(jobs_df, machines_df, forecast_df,
-                           robust: bool = True,
-                           optimize_only_makespan: bool = False) -> pd.DataFrame:
-    if optimize_only_makespan:
-        return solve_makespan_scheduler(jobs_df, machines_df, forecast_df)
-    return solve_proposed_scheduler(jobs_df, machines_df, forecast_df, use_robust=robust)
+# =============================================================================
+# 8. Hybrid FD-PDTS + CP-SAT (warm start)
+# =============================================================================
+
+def solve_hybrid_scheduler(
+    jobs_df, machines_df, forecast_df
+) -> Tuple[pd.DataFrame, Dict]:
+    logger.info("Hybrid Stage 1: Running Robust FD-PDTS for warm-start...")
+    fdpdts_df = solve_robust_scheduler(jobs_df, machines_df, forecast_df)
+    if fdpdts_df.empty:
+        return fdpdts_df, {}
+
+    hint_map = {
+        row["Job_ID"]: (int(row["Start_Slot"]), row["Machine_ID"])
+        for _, row in fdpdts_df.iterrows()
+    }
+    logger.info(f"Hybrid Stage 1 complete: {len(fdpdts_df)} jobs. Running CP-SAT Stage 2 (warm)...")
+    sched_df, solver_info = _run_cpsat(jobs_df, machines_df, forecast_df, hint_map=hint_map)
+    solver_info["initial_objective_fdpdts"] = None  # populated by caller if needed
+    if sched_df.empty:
+        logger.warning("CP-SAT returned no solution; falling back to FD-PDTS result.")
+        return fdpdts_df, solver_info
+    return sched_df, solver_info
+
+
+# =============================================================================
+# 9. Cold CP-SAT (NO warm start — comparison baseline)
+# =============================================================================
+
+def solve_cpsat_cold_scheduler(
+    jobs_df, machines_df, forecast_df
+) -> Tuple[pd.DataFrame, Dict]:
+    logger.info("Cold CP-SAT: Running WITHOUT warm-start hints...")
+    sched_df, solver_info = _run_cpsat(jobs_df, machines_df, forecast_df, hint_map=None)
+    return sched_df, solver_info
+
+
+# Backward compatibility aliases
+def solve_edf_scheduler(jobs_df, machines_df, forecast_df) -> pd.DataFrame:
+    return solve_edd_scheduler(jobs_df, machines_df, forecast_df)

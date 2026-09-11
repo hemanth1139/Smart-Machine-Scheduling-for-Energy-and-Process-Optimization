@@ -1,9 +1,9 @@
 Machine_ID,Machine_Type,Idle_Power_kW,Active_Power_kW,Setup_Energy_kW,Changeover_Time_min
 M01,CNC_Machining,3.85,88.0,15.63,15
-M02,Laser_Cutting,9.85,95.0,15.07,15
-M03,Welding_Robot,4.15,75.0,9.38,15
-M04,Heat_Treatment,6.34,175.0,30.22,15
-M05,Stamping_Press,8.79,155.0,25.15,15
-M06,Assembly_Line,6.99,42.0,4.31,15
-M07,Injection_Moulding,7.99,110.0,9.5,15
-M08,Surface_Grinding,10.45,35.0,5.01,15
+M02,Laser_Cutting,9.85,35.0,5.55,15
+M03,Welding_Robot,4.15,175.0,21.88,15
+M04,Heat_Treatment,6.34,75.0,12.95,15
+M05,Stamping_Press,8.79,95.0,15.42,15
+M06,Assembly_Line,6.99,155.0,15.92,15
+M07,Injection_Moulding,7.99,42.0,3.63,15
+M08,Surface_Grinding,10.45,110.0,15.75,15
