@@ -92,8 +92,17 @@ const fmt = (n, prefix = '', suffix = '', decimals = 0) => {
 
 const normalizeKpi = (raw) => {
   const models = raw.models || MODEL_ORDER;
+  if (Array.isArray(raw.values)) {
+    const values = raw.values.map(row =>
+      Array.isArray(row) ? row.map(v => parseFloat(v) || 0) : []
+    );
+    return { ...raw, models, values };
+  }
   const values = models.map(model =>
-    raw.metrics.map(metric => (raw.values[model] ? (raw.values[model][metric] ?? 0) : 0))
+    raw.metrics.map(metric => {
+      const rawVal = raw.values[model] ? raw.values[model][metric] : 0;
+      return parseFloat(rawVal) || 0;
+    })
   );
   return { ...raw, models, values };
 };
@@ -785,26 +794,36 @@ function renderCompositeBar(kpi) {
 
   const scores = kpi.models.map(m => ({
     model: m, label: SHORT_LABELS[m] || m,
-    score: computeCompositeScore(kpi, m),
+    score: parseFloat(computeCompositeScore(kpi, m)) || 0,
     color: MODEL_COLORS[m] || '#4f46e5'
   }));
   scores.sort((a, b) => a.score - b.score);
 
   const data = [{
-    type: 'bar', x: scores.map(s => s.score), y: scores.map(s => s.label),
-    orientation: 'h', marker: { color: scores.map(s => s.color) },
-    text: scores.map(s => `${s.score.toFixed(1)} / 100`), textposition: 'inside',
+    type: 'bar',
+    x: scores.map(s => s.score),
+    y: scores.map(s => s.label),
+    orientation: 'h',
+    marker: { color: scores.map(s => s.color) },
+    text: scores.map(s => `${s.score.toFixed(1)} / 100`),
+    textposition: 'inside',
     textfont: { color: '#ffffff', size: 11, weight: 700 }
   }];
 
   const layout = {
     ...PLOTLY_DARK,
-    height: 460,
-    bargap: 0.2,
+    height: 480,
+    bargap: 0.25,
     title: { text: 'Overall Composite Efficiency Index (0–100)', font: { size: 13, color: '#0f172a', weight: 800 } },
-    xaxis: { ...PLOTLY_DARK.xaxis, title: { text: 'Composite Score (0-100)', font: { color: '#334155', weight: 700 } }, range: [0, 100] },
-    yaxis: { ...PLOTLY_DARK.yaxis, automargin: true },
-    margin: { l: 150, r: 40, t: 50, b: 40 },
+    xaxis: {
+      type: 'linear',
+      title: { text: 'Composite Score (0-100)', font: { color: '#334155', weight: 700 } },
+      range: [0, 100],
+      gridcolor: '#e2e8f0',
+      zerolinecolor: '#cbd5e1'
+    },
+    yaxis: { type: 'category', automargin: true },
+    margin: { l: 160, r: 40, t: 50, b: 50 },
   };
 
   Plotly.newPlot('composite-bar', data, layout, { responsive: true, displayModeBar: false });
@@ -817,16 +836,18 @@ function renderPeakBar(kpi) {
   const peakIdx = kpi.metrics.findIndex(m => m.toLowerCase().includes('peak'));
 
   const peaks = kpi.models.map((m, idx) => {
-    let val = 0;
-    if (Array.isArray(kpi.values[idx])) {
-      val = peakIdx !== -1 ? (kpi.values[idx][peakIdx] ?? 0) : 0;
-    } else if (kpi.values[m] && typeof kpi.values[m] === 'object') {
-      val = kpi.values[m]['Peak Grid Load (kW)'] ?? kpi.values[m]['Peak Grid Load (kW)'] ?? 0;
+    let rawVal = 0;
+    if (Array.isArray(kpi.values) && Array.isArray(kpi.values[idx])) {
+      rawVal = peakIdx !== -1 ? kpi.values[idx][peakIdx] : 0;
+    } else if (kpi.values && kpi.values[m]) {
+      const k = Object.keys(kpi.values[m]).find(key => key.toLowerCase().includes('peak'));
+      rawVal = k ? kpi.values[m][k] : 0;
     }
-    return { model: m, label: SHORT_LABELS[m] || m, val: Number(val), color: MODEL_COLORS[m] || '#4f46e5' };
+    const val = parseFloat(rawVal) || 0;
+    return { model: m, label: SHORT_LABELS[m] || m, val, color: MODEL_COLORS[m] || '#4f46e5' };
   });
 
-  // Keep predictable order (reverse so FCFS is top, CP-SAT Cold bottom)
+  // Reverse so FCFS is top, CP-SAT Cold bottom
   const plotPeaks = [...peaks].reverse();
 
   const data = [{
@@ -845,12 +866,18 @@ function renderPeakBar(kpi) {
 
   const layout = {
     ...PLOTLY_DARK,
-    height: 460,
-    bargap: 0.2,
+    height: 480,
+    bargap: 0.25,
     title: { text: 'Peak Grid Power Demand (kW) across 10 Algorithms — Lower is Better', font: { size: 13, color: '#0f172a', weight: 800 } },
-    xaxis: { ...PLOTLY_DARK.xaxis, title: { text: 'Peak Demand (kW)', font: { color: '#334155', weight: 700 } }, range: [0, 850] },
-    yaxis: { ...PLOTLY_DARK.yaxis, automargin: true },
-    margin: { l: 150, r: 40, t: 50, b: 40 },
+    xaxis: {
+      type: 'linear',
+      title: { text: 'Peak Grid Demand (kW)', font: { color: '#334155', weight: 700 } },
+      range: [0, 900],
+      gridcolor: '#e2e8f0',
+      zerolinecolor: '#cbd5e1'
+    },
+    yaxis: { type: 'category', automargin: true },
+    margin: { l: 160, r: 40, t: 50, b: 50 },
   };
 
   Plotly.newPlot('peak-bar', data, layout, { responsive: true, displayModeBar: false });
