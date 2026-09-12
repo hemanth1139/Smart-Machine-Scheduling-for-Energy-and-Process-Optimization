@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Smart Machine Scheduling Dashboard — Predict-then-Optimize AI Benchmark">
-  <title>Smart Schedule — Machine Scheduling & Energy Optimization</title>
+  <meta name="description" content="Forecast-Driven Energy-Aware Scheduling Dashboard — Predict-then-Optimize AI Benchmark for Smart Manufacturing">
+  <title>Smart Schedule — Forecast-Driven Energy-Aware Scheduling</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <script src="app.js" defer></script>
@@ -14,199 +14,375 @@
   <!-- Loading Overlay -->
   <div id="loading-overlay">
     <div class="spinner"></div>
-    <p style="font-weight: 600; color: #0f172a;">Loading Schedule Data...</p>
+    <p class="loading-text">Initializing Dashboard...</p>
   </div>
 
-  <!-- Navigation Bar -->
-  <nav>
-    <a href="#" class="nav-brand">
-      <span style="color: #6366f1;">Smart</span> Schedule
-    </a>
-    <div class="nav-links">
-      <a href="#overview">Overview</a>
-      <a href="#algorithms">Algorithms</a>
-      <a href="#comparison">Analytics</a>
-      <a href="#impact">Business Impact</a>
-      <a href="#schedule">Live Schedule</a>
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">⚡</span>
+      <span class="brand-text"><span class="brand-highlight">Smart</span> Schedule</span>
     </div>
-  </nav>
 
-  <!-- Hero Executive Banner -->
-  <header class="hero" id="overview">
-    <h1>Smart Machine Scheduling</h1>
-    <p class="hero-subtitle">
-      Optimizing electricity tariffs, peak demand penalties, carbon emissions, and production deadlines using AI-driven optimization.
-    </p>
+    <nav class="sidebar-nav">
+      <a href="#dashboard" class="nav-item active" data-page="dashboard">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a href="#datasets" class="nav-item" data-page="datasets">
+        <span class="nav-icon">🗄️</span>
+        <span class="nav-label">Datasets</span>
+      </a>
+      <a href="#algorithms" class="nav-item" data-page="algorithms">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Algorithms</span>
+      </a>
+      <a href="#gantt" class="nav-item" data-page="gantt">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Gantt Charts</span>
+      </a>
+      <a href="#results" class="nav-item" data-page="results">
+        <span class="nav-icon">🏆</span>
+        <span class="nav-label">Results</span>
+      </a>
+    </nav>
 
-    <!-- Key Performance Summary Cards -->
-    <div class="hero-stats fade-in">
-      <div class="stat-item">
-        <div class="stat-value" id="stat-savings">-</div>
-        <div class="stat-label">Energy Cost Saved</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value" id="stat-savings-pct">-</div>
-        <div class="stat-label">Electricity Cost Cut</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value" id="stat-peak-cut">-</div>
-        <div class="stat-label">Peak Grid Load Shaved</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value" id="stat-co2-cut">-</div>
-        <div class="stat-label">CO₂ Emissions Cut</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value" id="stat-late-jobs">-</div>
-        <div class="stat-label">On-Time Delivery Rate</div>
-      </div>
+    <div class="sidebar-footer">
+      <p class="sidebar-paper-title">Forecast-Driven Energy-Aware Scheduling for Smart Manufacturing</p>
+      <p class="sidebar-authors">Suresh Kumar S, Savitri R, Hemanth Kumar D, Balaji R, Bijlesh S</p>
+      <p class="sidebar-institution">Dept. of AI & DS, Rajalakshmi Engineering College</p>
+      <p class="copyright">&copy; 2026 — Submitted to Elsevier</p>
     </div>
+  </aside>
+
+  <!-- Mobile Top Bar -->
+  <header class="mobile-header" id="mobile-header">
+    <button class="hamburger" id="hamburger-btn">☰</button>
+    <span class="mobile-brand"><span class="brand-highlight">Smart</span> Schedule</span>
   </header>
 
-  <main>
-    <!-- Section 1: Algorithms & Benchmark Models -->
-    <section id="algorithms" class="container fade-in">
-      <div class="section-header">
-        <div class="section-label">ALGORITHM BENCHMARK</div>
-        <h2>Explored Scheduling Models</h2>
-        <p class="section-desc">Comparing baseline heuristics, energy-aware algorithms, and our proposed hybrid optimization model.</p>
-      </div>
+  <!-- Main Content Area -->
+  <main class="main-content" id="main-content">
 
-      <div id="algo-cards">
-        <!-- Injected by JS -->
-      </div>
+    <!-- ============================================================= -->
+    <!-- PAGE 1: DASHBOARD -->
+    <!-- ============================================================= -->
+    <div class="page active" id="page-dashboard">
 
-      <div class="leaderboard-wrapper">
-        <div class="table-header-title">
-          <h3>Algorithm Performance Leaderboard</h3>
-          <span class="badge-subtitle">Ranked by Total Energy Cost & Grid Efficiency</span>
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-badge">PREDICT-THEN-OPTIMIZE FRAMEWORK</div>
+        <h1>Smart Machine Scheduling<br><span class="hero-accent">&amp; Energy Optimization</span></h1>
+        <p class="hero-subtitle">
+          Reducing electricity costs, peak demand charges, and carbon emissions through AI-driven forecast-aware scheduling — validated across 20 independent benchmark instances.
+        </p>
+
+        <div class="hero-stats" id="hero-stats">
+          <div class="stat-card">
+            <div class="stat-value" id="stat-savings">—</div>
+            <div class="stat-label">Energy Cost Saved</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-savings-pct">—</div>
+            <div class="stat-label">Electricity Cost Cut</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-peak-cut">—</div>
+            <div class="stat-label">Peak Grid Load Shaved</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-co2-cut">—</div>
+            <div class="stat-label">CO₂ Emissions Cut</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-ontime">—</div>
+            <div class="stat-label">On-Time Delivery Rate</div>
+          </div>
         </div>
-        <div style="overflow-x: auto;">
-          <table id="leaderboard-table">
-            <!-- Injected by JS -->
-          </table>
+      </section>
+
+      <!-- Pipeline Architecture Overview -->
+      <section class="container">
+        <div class="section-header">
+          <div class="section-label">SYSTEM ARCHITECTURE</div>
+          <h2>End-to-End Pipeline</h2>
+          <p class="section-desc">Four-stage predict-then-optimize framework connecting SCADA energy data to scheduling decisions.</p>
         </div>
-      </div>
-    </section>
 
-    <hr class="section-divider">
-
-    <!-- Section 2: Performance Analytics & Head-to-Head Comparison -->
-    <section id="comparison" class="container fade-in">
-      <div class="section-header">
-        <div class="section-label">PERFORMANCE ANALYTICS</div>
-        <h2>Benchmark Comparison</h2>
-        <p class="section-desc">Multi-objective evaluation across energy cost, peak demand, emissions, and throughput.</p>
-      </div>
-
-      <div class="insight-box">
-        <div class="insight-icon">💡</div>
-        <div>
-          <strong>Key Benchmark Insight:</strong> Percentage metric improvements are relative to the standard <strong>First-Come First-Served (FCFS)</strong> baseline. Green indicates cost/load savings, while neutral metrics remain uncolored.
+        <div class="pipeline-flow">
+          <div class="pipeline-step">
+            <div class="pipeline-icon">🏭</div>
+            <div class="pipeline-title">SCADA Data</div>
+            <div class="pipeline-desc">35,040 records · 15-min intervals · 1 year</div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="pipeline-icon">🔧</div>
+            <div class="pipeline-title">Feature Engineering</div>
+            <div class="pipeline-desc">Lags, Rolling Stats, Cyclical Encoding</div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="pipeline-icon">🤖</div>
+            <div class="pipeline-title">Quantile XGBoost</div>
+            <div class="pipeline-desc">p10/p50/p90 Energy, CO₂, Power Factor</div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="pipeline-icon">📐</div>
+            <div class="pipeline-title">10 Schedulers</div>
+            <div class="pipeline-desc">FD-PDTS + OR-Tools CP-SAT</div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="pipeline-icon">📊</div>
+            <div class="pipeline-title">KPI Engine</div>
+            <div class="pipeline-desc">12 Metrics · 20-Seed Validation</div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="chart-container" id="improvement-heatmap" style="height: 420px;">
-        <!-- Injected by Plotly -->
-      </div>
-
-      <div class="chart-grid-2">
-        <div class="chart-container" id="composite-bar" style="height: 400px;">
-          <!-- Injected by Plotly -->
+      <!-- Quick KPI Summary Cards -->
+      <section class="container">
+        <div class="section-header">
+          <div class="section-label">KEY PERFORMANCE INDICATORS</div>
+          <h2>Hybrid CP-SAT vs FCFS Baseline</h2>
+          <p class="section-desc">Head-to-head comparison of our proposed warm-started CP-SAT solver against the First-Come-First-Served baseline.</p>
         </div>
-        <div class="chart-container" id="peak-bar" style="height: 400px;">
-          <!-- Injected by Plotly -->
+
+        <div id="dashboard-kpi-cards" class="kpi-grid">
+          <!-- Injected by JS -->
         </div>
-      </div>
-    </section>
-
-    <hr class="section-divider">
-
-    <!-- Section 3: Business Impact & Metric Breakdown -->
-    <section id="impact" class="container fade-in">
-      <div class="section-header">
-        <div class="section-label">BUSINESS IMPACT</div>
-        <h2>Why Proposed Hybrid Model Wins</h2>
-        <p class="section-desc">Enterprise cost savings, peak grid stabilization, and environmental compliance.</p>
-      </div>
-
-      <div id="win-boxes">
-        <!-- Injected by JS -->
-      </div>
-
-      <div class="kpi-grid-header">
-        <h3>Detailed KPI Metric Breakdown</h3>
-        <p>Comparison between FCFS Baseline and Proposed Hybrid Model:</p>
-      </div>
-
-      <div id="kpi-cards">
-        <!-- Injected by JS -->
-      </div>
-    </section>
-
-    <hr class="section-divider">
-
-    <!-- Section 4: Live Production Schedule Gantt Chart -->
-    <section id="schedule" class="container fade-in">
-      <div class="section-header">
-        <div class="section-label">PRODUCTION TIMELINE</div>
-        <h2>Machine Schedule Gantt Timeline</h2>
-        <p class="section-desc">Inspect job allocation, time-of-use tariff zones, machine routing, and priority sequence in real time.</p>
-      </div>
-
-      <!-- Interactive Model Switcher Bar -->
-      <div class="schedule-controls">
-        <div class="control-group">
-          <label for="model-selector"><strong>Select Schedule Model:</strong></label>
-          <select id="model-selector" class="custom-select">
-            <option value="Hybrid_Solver" selected>Hybrid CP-SAT Solver (Our Model)</option>
-            <option value="Proposed_Robust_Greedy">Robust Energy Greedy</option>
-            <option value="Deterministic_Greedy">Deterministic Energy Greedy</option>
-            <option value="Makespan_Greedy">Makespan-Only Greedy</option>
-            <option value="EDF">Earliest Deadline First (EDF)</option>
-            <option value="FCFS">First-Come First-Served (Baseline)</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="schedule-stats">
-        <!-- Injected by JS -->
-      </div>
-
-      <div class="insight-box">
-        <div class="insight-icon">⚡</div>
-        <div>
-          <strong>Time-of-Use (TOU) Tariff Awareness:</strong> Shaded background zones indicate tariff pricing — 
-          <span style="color: #dc2626; font-weight: 700;">Red (Peak Load: ₹12/kWh)</span>, 
-          <span style="color: #d97706; font-weight: 700;">Amber (Medium Load: ₹7.5/kWh)</span>, and 
-          <span style="color: #16a34a; font-weight: 700;">Green (Off-Peak: ₹4/kWh)</span>. 
-          Our proposed solver shifts heavy jobs to off-peak periods while upholding 100% on-time delivery.
-        </div>
-      </div>
-
-      <div class="chart-container" id="gantt-chart" style="height: 520px;">
-        <!-- Injected by Plotly -->
-      </div>
-
-      <details class="schedule-table-details">
-        <summary>View Complete Job Dispatch & Allocation Table</summary>
-        <div style="overflow-x: auto; padding-top: 1rem;">
-          <table id="schedule-table">
-            <!-- Injected by JS -->
-          </table>
-        </div>
-      </details>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-brand"><span style="color: #818cf8;">Smart</span> Schedule</div>
-      <p>Machine Scheduling & Energy Process Optimization Platform</p>
-      <p class="copyright">&copy; 2024 Smart Machine Scheduling Research Project.</p>
+      </section>
     </div>
-  </footer>
+
+    <!-- ============================================================= -->
+    <!-- PAGE 2: DATASETS -->
+    <!-- ============================================================= -->
+    <div class="page" id="page-datasets">
+
+      <section class="container">
+        <div class="section-header">
+          <div class="section-label">BENCHMARK DATASETS</div>
+          <h2>Machine Fleet & Job Specification</h2>
+          <p class="section-desc">Synthetic manufacturing benchmark: 8-machine fleet with 160–200 jobs per instance. Data generated with per-seed variation across 20 independent trials.</p>
+        </div>
+
+        <!-- Dataset Statistics Row -->
+        <div id="dataset-stats" class="dataset-stats-grid">
+          <!-- Injected by JS -->
+        </div>
+
+        <!-- Machine Table -->
+        <div class="table-section">
+          <div class="table-header-title">
+            <h3>🏭 Machine Fleet Specifications</h3>
+            <span class="badge-subtitle">8 Machines · Active/Idle Power · Setup Energy</span>
+          </div>
+          <div class="table-wrapper">
+            <table id="machine-table">
+              <!-- Injected by JS -->
+            </table>
+          </div>
+        </div>
+
+        <!-- Job Table -->
+        <div class="table-section">
+          <div class="table-header-title">
+            <h3>📋 Job Scheduling Input Data</h3>
+            <span class="badge-subtitle" id="job-count-badge">Loading...</span>
+          </div>
+
+          <div class="job-filters">
+            <div class="filter-group">
+              <label for="job-priority-filter">Filter by Priority:</label>
+              <select id="job-priority-filter" class="custom-select">
+                <option value="all">All Priorities</option>
+                <option value="1">High (1)</option>
+                <option value="2">Medium (2)</option>
+                <option value="3">Low (3)</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="job-search">Search Job ID:</label>
+              <input type="text" id="job-search" class="custom-input" placeholder="e.g. J045">
+            </div>
+          </div>
+
+          <div class="table-wrapper" style="max-height: 500px; overflow-y: auto;">
+            <table id="job-table">
+              <!-- Injected by JS -->
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- PAGE 3: ALGORITHMS -->
+    <!-- ============================================================= -->
+    <div class="page" id="page-algorithms">
+
+      <section class="container">
+        <div class="section-header">
+          <div class="section-label">ALGORITHM BENCHMARK</div>
+          <h2>10 Scheduling Strategies</h2>
+          <p class="section-desc">Comparing 6 rule-based baselines, 2 forecast-driven heuristics, and 2 constraint-programming solvers.</p>
+        </div>
+
+        <div id="algo-cards" class="algo-grid">
+          <!-- Injected by JS -->
+        </div>
+
+        <!-- Algorithm Comparison Leaderboard -->
+        <div class="table-section">
+          <div class="table-header-title">
+            <h3>🏅 Algorithm Performance Leaderboard</h3>
+            <span class="badge-subtitle">Ranked by Total Energy Cost & Grid Efficiency</span>
+          </div>
+          <div class="table-wrapper">
+            <table id="leaderboard-table">
+              <!-- Injected by JS -->
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- PAGE 4: GANTT CHARTS -->
+    <!-- ============================================================= -->
+    <div class="page" id="page-gantt">
+
+      <section class="container">
+        <div class="section-header">
+          <div class="section-label">PRODUCTION TIMELINE</div>
+          <h2>Machine Schedule Gantt Charts</h2>
+          <p class="section-desc">Interactive visualization of job-machine allocation across all 10 scheduling algorithms with TOU tariff zone overlays.</p>
+        </div>
+
+        <!-- Model Selector -->
+        <div class="schedule-controls">
+          <div class="control-group">
+            <label for="model-selector"><strong>Select Algorithm:</strong></label>
+            <select id="model-selector" class="custom-select">
+              <option value="CP_SAT_Warm" selected>⭐ Hybrid CP-SAT Warm-Start (Proposed)</option>
+              <option value="FD_PDTS_Robust">FD-PDTS Robust</option>
+              <option value="FD_PDTS_Det">FD-PDTS Deterministic</option>
+              <option value="Makespan_Greedy">Makespan Greedy</option>
+              <option value="EDD">Earliest Due Date (EDD)</option>
+              <option value="FCFS">First-Come First-Served (FCFS)</option>
+              <option value="SPT">Shortest Processing Time (SPT)</option>
+              <option value="LPT">Longest Processing Time (LPT)</option>
+              <option value="Energy_Unaware">Energy-Unaware Greedy</option>
+              <option value="CP_SAT_Cold">CP-SAT Cold-Start (Ablation)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Schedule Quick Stats -->
+        <div id="schedule-stats" class="schedule-stats-grid">
+          <!-- Injected by JS -->
+        </div>
+
+        <!-- Tariff Info Box -->
+        <div class="insight-box">
+          <div class="insight-icon">⚡</div>
+          <div>
+            <strong>Time-of-Use (TOU) Tariff Zones:</strong>
+            <span style="color: #f87171; font-weight: 700;">Red = Peak ₹12/kWh</span>,
+            <span style="color: #fbbf24; font-weight: 700;">Amber = Medium ₹7.5/kWh</span>,
+            <span style="color: #34d399; font-weight: 700;">Green = Off-Peak ₹4/kWh</span>.
+            Our proposed solver shifts heavy jobs to off-peak periods while maintaining 100% on-time delivery.
+          </div>
+        </div>
+
+        <!-- Gantt Chart -->
+        <div class="chart-container" id="gantt-chart" style="height: 520px;">
+          <!-- Injected by Plotly -->
+        </div>
+
+        <!-- Schedule Table -->
+        <details class="schedule-table-details">
+          <summary>View Complete Job Dispatch & Allocation Table</summary>
+          <div class="table-wrapper" style="padding-top: 1rem; max-height: 500px; overflow-y: auto;">
+            <table id="schedule-table">
+              <!-- Injected by JS -->
+            </table>
+          </div>
+        </details>
+      </section>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- PAGE 5: RESULTS -->
+    <!-- ============================================================= -->
+    <div class="page" id="page-results">
+
+      <section class="container">
+        <div class="section-header">
+          <div class="section-label">COMPREHENSIVE RESULTS</div>
+          <h2>Multi-Objective Evaluation & Analysis</h2>
+          <p class="section-desc">Full benchmark results across energy cost, peak demand, emissions, utilization, and compliance — validated with 20-seed statistical rigor.</p>
+        </div>
+
+        <!-- Business Impact Win Boxes -->
+        <div id="win-boxes" class="win-grid">
+          <!-- Injected by JS -->
+        </div>
+
+        <!-- Insight Box -->
+        <div class="insight-box">
+          <div class="insight-icon">💡</div>
+          <div>
+            <strong>Benchmark Methodology:</strong> All percentage improvements are computed relative to the
+            <strong>FCFS baseline</strong>. Green values indicate cost/load savings. Results are from the
+            default seed (42) single-instance evaluation; see 20-seed aggregate table below for statistical validation.
+          </div>
+        </div>
+
+        <!-- Improvement Heatmap -->
+        <div class="chart-container" id="improvement-heatmap" style="height: 440px;">
+          <!-- Injected by Plotly -->
+        </div>
+
+        <!-- Two-column charts -->
+        <div class="chart-grid-2">
+          <div class="chart-container" id="composite-bar" style="height: 420px;">
+            <!-- Injected by Plotly -->
+          </div>
+          <div class="chart-container" id="peak-bar" style="height: 420px;">
+            <!-- Injected by Plotly -->
+          </div>
+        </div>
+
+        <!-- Detailed KPI Breakdown -->
+        <div class="section-header" style="margin-top: 2rem;">
+          <div class="section-label">KPI METRIC DETAIL</div>
+          <h2>Hybrid CP-SAT vs FCFS Breakdown</h2>
+          <p class="section-desc">Per-metric comparison of the proposed warm-started CP-SAT solver against the baseline.</p>
+        </div>
+
+        <div id="results-kpi-cards" class="kpi-grid">
+          <!-- Injected by JS -->
+        </div>
+
+        <!-- 20-Seed Aggregate Stats Table -->
+        <div class="table-section" style="margin-top: 2rem;">
+          <div class="table-header-title">
+            <h3>📈 20-Seed Aggregate Statistics (Mean ± 95% CI)</h3>
+            <span class="badge-subtitle">Seeds 42–61 · Statistical Validation</span>
+          </div>
+          <div class="table-wrapper" style="max-height: 600px; overflow-y: auto;">
+            <table id="aggregate-stats-table">
+              <!-- Injected by JS -->
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
 
 </body>
 </html>

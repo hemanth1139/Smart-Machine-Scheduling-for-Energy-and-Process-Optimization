@@ -1,0 +1,1081 @@
+[
+  {
+    "file": "backend\\data\\processed\\energy_engineered.csv",
+    "rows": 35040,
+    "cols": 34,
+    "columns": [
+      "date",
+      "Usage_kWh",
+      "Lagging_Current_Reactive.Power_kVarh",
+      "Leading_Current_Reactive_Power_kVarh",
+      "CO2(tCO2)",
+      "Lagging_Current_Power_Factor",
+      "Leading_Current_Power_Factor",
+      "NSM",
+      "WeekStatus",
+      "Day_of_week",
+      "Load_Type",
+      "hour",
+      "day",
+      "month",
+      "day_of_week",
+      "is_weekend",
+      "hour_sin",
+      "hour_cos",
+      "month_sin",
+      "month_cos",
+      "Usage_kWh_lag_1",
+      "Usage_kWh_lag_2",
+      "Usage_kWh_lag_4",
+      "Usage_kWh_lag_96",
+      "Usage_kWh_diff_1",
+      "Usage_kWh_rolling_mean_4",
+      "Usage_kWh_rolling_std_4",
+      "Usage_kWh_rolling_min_4",
+      "Usage_kWh_rolling_max_4",
+      "Usage_kWh_rolling_mean_96",
+      "Usage_kWh_rolling_std_96",
+      "Usage_kWh_rolling_min_96",
+      "Usage_kWh_rolling_max_96",
+      "Usage_kWh_ewma_4"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "date": "2018-01-01 00:00:00",
+        "Usage_kWh": 3.42,
+        "Lagging_Current_Reactive.Power_kVarh": 3.46,
+        "Leading_Current_Reactive_Power_kVarh": 0.0,
+        "CO2(tCO2)": 0.0,
+        "Lagging_Current_Power_Factor": 70.3,
+        "Leading_Current_Power_Factor": 100.0,
+        "NSM": 0,
+        "WeekStatus": "Weekday",
+        "Day_of_week": "Monday",
+        "Load_Type": "Light_Load",
+        "hour": 0,
+        "day": 1,
+        "month": 1,
+        "day_of_week": 0,
+        "is_weekend": 0,
+        "hour_sin": 0.0,
+        "hour_cos": 1.0,
+        "month_sin": 0.0,
+        "month_cos": 1.0,
+        "Usage_kWh_lag_1": 3.42,
+        "Usage_kWh_lag_2": 3.42,
+        "Usage_kWh_lag_4": 3.42,
+        "Usage_kWh_lag_96": 3.42,
+        "Usage_kWh_diff_1": -0.25,
+        "Usage_kWh_rolling_mean_4": 3.42,
+        "Usage_kWh_rolling_std_4": 0.0,
+        "Usage_kWh_rolling_min_4": 3.42,
+        "Usage_kWh_rolling_max_4": 3.42,
+        "Usage_kWh_rolling_mean_96": 3.42,
+        "Usage_kWh_rolling_std_96": 0.0,
+        "Usage_kWh_rolling_min_96": 3.42,
+        "Usage_kWh_rolling_max_96": 3.42,
+        "Usage_kWh_ewma_4": 3.42
+      },
+      {
+        "date": "2018-01-01 00:15:00",
+        "Usage_kWh": 3.17,
+        "Lagging_Current_Reactive.Power_kVarh": 2.95,
+        "Leading_Current_Reactive_Power_kVarh": 0.0,
+        "CO2(tCO2)": 0.0,
+        "Lagging_Current_Power_Factor": 73.21,
+        "Leading_Current_Power_Factor": 100.0,
+        "NSM": 900,
+        "WeekStatus": "Weekday",
+        "Day_of_week": "Monday",
+        "Load_Type": "Light_Load",
+        "hour": 0,
+        "day": 1,
+        "month": 1,
+        "day_of_week": 0,
+        "is_weekend": 0,
+        "hour_sin": 0.0,
+        "hour_cos": 1.0,
+        "month_sin": 0.0,
+        "month_cos": 1.0,
+        "Usage_kWh_lag_1": 3.42,
+        "Usage_kWh_lag_2": 3.42,
+        "Usage_kWh_lag_4": 3.42,
+        "Usage_kWh_lag_96": 3.42,
+        "Usage_kWh_diff_1": -0.25,
+        "Usage_kWh_rolling_mean_4": 3.42,
+        "Usage_kWh_rolling_std_4": 0.0,
+        "Usage_kWh_rolling_min_4": 3.42,
+        "Usage_kWh_rolling_max_4": 3.42,
+        "Usage_kWh_rolling_mean_96": 3.42,
+        "Usage_kWh_rolling_std_96": 0.0,
+        "Usage_kWh_rolling_min_96": 3.42,
+        "Usage_kWh_rolling_max_96": 3.42,
+        "Usage_kWh_ewma_4": 3.42
+      },
+      {
+        "date": "2018-01-01 00:30:00",
+        "Usage_kWh": 4.0,
+        "Lagging_Current_Reactive.Power_kVarh": 4.46,
+        "Leading_Current_Reactive_Power_kVarh": 0.0,
+        "CO2(tCO2)": 0.0,
+        "Lagging_Current_Power_Factor": 66.77,
+        "Leading_Current_Power_Factor": 100.0,
+        "NSM": 1800,
+        "WeekStatus": "Weekday",
+        "Day_of_week": "Monday",
+        "Load_Type": "Light_Load",
+        "hour": 0,
+        "day": 1,
+        "month": 1,
+        "day_of_week": 0,
+        "is_weekend": 0,
+        "hour_sin": 0.0,
+        "hour_cos": 1.0,
+        "month_sin": 0.0,
+        "month_cos": 1.0,
+        "Usage_kWh_lag_1": 3.17,
+        "Usage_kWh_lag_2": 3.42,
+        "Usage_kWh_lag_4": 3.42,
+        "Usage_kWh_lag_96": 3.42,
+        "Usage_kWh_diff_1": 0.8300000000000001,
+        "Usage_kWh_rolling_mean_4": 3.295,
+        "Usage_kWh_rolling_std_4": 0.1767766952966369,
+        "Usage_kWh_rolling_min_4": 3.17,
+        "Usage_kWh_rolling_max_4": 3.42,
+        "Usage_kWh_rolling_mean_96": 3.295,
+        "Usage_kWh_rolling_std_96": 0.1767766952966369,
+        "Usage_kWh_rolling_min_96": 3.17,
+        "Usage_kWh_rolling_max_96": 3.42,
+        "Usage_kWh_ewma_4": 3.3200000000000003
+      }
+    ]
+  },
+  {
+    "file": "backend\\data\\processed\\jobs_cleaned.csv",
+    "rows": 180,
+    "cols": 7,
+    "columns": [
+      "Job_ID",
+      "Duration_min",
+      "Deadline",
+      "Priority",
+      "Compatible_Machines",
+      "Arrival_Time",
+      "Setup_Type"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Job_ID": "J001",
+        "Duration_min": 105,
+        "Deadline": 134,
+        "Priority": 2,
+        "Compatible_Machines": "M01,M05,M08",
+        "Arrival_Time": 66,
+        "Setup_Type": "Type_A"
+      },
+      {
+        "Job_ID": "J002",
+        "Duration_min": 60,
+        "Deadline": 175,
+        "Priority": 2,
+        "Compatible_Machines": "M02,M03,M04,M06",
+        "Arrival_Time": 138,
+        "Setup_Type": "Type_A"
+      },
+      {
+        "Job_ID": "J003",
+        "Duration_min": 60,
+        "Deadline": 207,
+        "Priority": 2,
+        "Compatible_Machines": "M01,M05,M06,M07,M08",
+        "Arrival_Time": 143,
+        "Setup_Type": "Type_B"
+      }
+    ]
+  },
+  {
+    "file": "backend\\data\\processed\\machines_cleaned.csv",
+    "rows": 8,
+    "cols": 6,
+    "columns": [
+      "Machine_ID",
+      "Machine_Type",
+      "Idle_Power_kW",
+      "Active_Power_kW",
+      "Setup_Energy_kW",
+      "Changeover_Time_min"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Machine_ID": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Idle_Power_kW": 3.85,
+        "Active_Power_kW": 88.0,
+        "Setup_Energy_kW": 15.63,
+        "Changeover_Time_min": 15
+      },
+      {
+        "Machine_ID": "M02",
+        "Machine_Type": "Laser_Cutting",
+        "Idle_Power_kW": 9.85,
+        "Active_Power_kW": 95.0,
+        "Setup_Energy_kW": 15.07,
+        "Changeover_Time_min": 15
+      },
+      {
+        "Machine_ID": "M03",
+        "Machine_Type": "Welding_Robot",
+        "Idle_Power_kW": 4.15,
+        "Active_Power_kW": 75.0,
+        "Setup_Energy_kW": 9.38,
+        "Changeover_Time_min": 15
+      }
+    ]
+  },
+  {
+    "file": "backend\\data\\raw\\job_table.csv",
+    "rows": 180,
+    "cols": 7,
+    "columns": [
+      "Job_ID",
+      "Duration_min",
+      "Deadline",
+      "Priority",
+      "Compatible_Machines",
+      "Arrival_Time",
+      "Setup_Type"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Job_ID": "J001",
+        "Duration_min": 105,
+        "Deadline": 134,
+        "Priority": 2,
+        "Compatible_Machines": "M01,M05,M08",
+        "Arrival_Time": 66,
+        "Setup_Type": "Type_A"
+      },
+      {
+        "Job_ID": "J002",
+        "Duration_min": 60,
+        "Deadline": 175,
+        "Priority": 2,
+        "Compatible_Machines": "M02,M03,M04,M06",
+        "Arrival_Time": 138,
+        "Setup_Type": "Type_A"
+      },
+      {
+        "Job_ID": "J003",
+        "Duration_min": 60,
+        "Deadline": 207,
+        "Priority": 2,
+        "Compatible_Machines": "M01,M05,M06,M07,M08",
+        "Arrival_Time": 143,
+        "Setup_Type": "Type_B"
+      }
+    ]
+  },
+  {
+    "file": "backend\\data\\raw\\machine_table.csv",
+    "rows": 8,
+    "cols": 6,
+    "columns": [
+      "Machine_ID",
+      "Machine_Type",
+      "Idle_Power_kW",
+      "Active_Power_kW",
+      "Setup_Energy_kW",
+      "Changeover_Time_min"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Machine_ID": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Idle_Power_kW": 3.85,
+        "Active_Power_kW": 88.0,
+        "Setup_Energy_kW": 15.63,
+        "Changeover_Time_min": 15
+      },
+      {
+        "Machine_ID": "M02",
+        "Machine_Type": "Laser_Cutting",
+        "Idle_Power_kW": 9.85,
+        "Active_Power_kW": 95.0,
+        "Setup_Energy_kW": 15.07,
+        "Changeover_Time_min": 15
+      },
+      {
+        "Machine_ID": "M03",
+        "Machine_Type": "Welding_Robot",
+        "Idle_Power_kW": 4.15,
+        "Active_Power_kW": 75.0,
+        "Setup_Energy_kW": 9.38,
+        "Changeover_Time_min": 15
+      }
+    ]
+  },
+  {
+    "file": "backend\\data\\raw\\Steel_industry_data.csv",
+    "rows": 35040,
+    "cols": 11,
+    "columns": [
+      "date",
+      "Usage_kWh",
+      "Lagging_Current_Reactive.Power_kVarh",
+      "Leading_Current_Reactive_Power_kVarh",
+      "CO2(tCO2)",
+      "Lagging_Current_Power_Factor",
+      "Leading_Current_Power_Factor",
+      "NSM",
+      "WeekStatus",
+      "Day_of_week",
+      "Load_Type"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "date": "01/01/2018 00:15",
+        "Usage_kWh": 3.17,
+        "Lagging_Current_Reactive.Power_kVarh": 2.95,
+        "Leading_Current_Reactive_Power_kVarh": 0.0,
+        "CO2(tCO2)": 0.0,
+        "Lagging_Current_Power_Factor": 73.21,
+        "Leading_Current_Power_Factor": 100.0,
+        "NSM": 900,
+        "WeekStatus": "Weekday",
+        "Day_of_week": "Monday",
+        "Load_Type": "Light_Load"
+      },
+      {
+        "date": "01/01/2018 00:30",
+        "Usage_kWh": 4.0,
+        "Lagging_Current_Reactive.Power_kVarh": 4.46,
+        "Leading_Current_Reactive_Power_kVarh": 0.0,
+        "CO2(tCO2)": 0.0,
+        "Lagging_Current_Power_Factor": 66.77,
+        "Leading_Current_Power_Factor": 100.0,
+        "NSM": 1800,
+        "WeekStatus": "Weekday",
+        "Day_of_week": "Monday",
+        "Load_Type": "Light_Load"
+      },
+      {
+        "date": "01/01/2018 00:45",
+        "Usage_kWh": 3.24,
+        "Lagging_Current_Reactive.Power_kVarh": 3.28,
+        "Leading_Current_Reactive_Power_kVarh": 0.0,
+        "CO2(tCO2)": 0.0,
+        "Lagging_Current_Power_Factor": 70.28,
+        "Leading_Current_Power_Factor": 100.0,
+        "NSM": 2700,
+        "WeekStatus": "Weekday",
+        "Day_of_week": "Monday",
+        "Load_Type": "Light_Load"
+      }
+    ]
+  },
+  {
+    "file": "backend\\output\\comparison_report.csv",
+    "rows": 11,
+    "cols": 4,
+    "columns": [
+      "Metric",
+      "FCFS_Baseline",
+      "CP_SAT_Optimized",
+      "Improvement"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Metric": "Total Energy Cost (INR)",
+        "FCFS_Baseline": "\u20b9186096.29",
+        "CP_SAT_Optimized": "\u20b9125350.00",
+        "Improvement": "60746.29 reduction (32.6% savings)"
+      },
+      {
+        "Metric": "Peak Grid Load (kW)",
+        "FCFS_Baseline": "778.95 kW",
+        "CP_SAT_Optimized": "448.95 kW",
+        "Improvement": "330.00 reduction (42.4% savings)"
+      },
+      {
+        "Metric": "Makespan (hours)",
+        "FCFS_Baseline": "49.25 hrs",
+        "CP_SAT_Optimized": "50.00 hrs",
+        "Improvement": "+0.75 (1.5% increase)"
+      }
+    ]
+  },
+  {
+    "file": "backend\\output\\comprehensive_report.csv",
+    "rows": 11,
+    "cols": 7,
+    "columns": [
+      "Metric",
+      "FCFS",
+      "EDF",
+      "Makespan_Greedy",
+      "Proposed_Robust_Greedy",
+      "Deterministic_Greedy",
+      "Hybrid_Solver"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Metric": "Total Energy Cost (INR)",
+        "FCFS": "INR 186096.29",
+        "EDF": "INR 185686.40",
+        "Makespan_Greedy": "INR 186096.29",
+        "Proposed_Robust_Greedy": "INR 167723.41",
+        "Deterministic_Greedy": "INR 167723.41",
+        "Hybrid_Solver": "INR 125350.00"
+      },
+      {
+        "Metric": "Peak Grid Load (kW)",
+        "FCFS": "778.95 kW",
+        "EDF": "778.95 kW",
+        "Makespan_Greedy": "778.95 kW",
+        "Proposed_Robust_Greedy": "778.95 kW",
+        "Deterministic_Greedy": "778.95 kW",
+        "Hybrid_Solver": "448.95 kW"
+      },
+      {
+        "Metric": "Makespan (hours)",
+        "FCFS": "49.25 hrs",
+        "EDF": "49.00 hrs",
+        "Makespan_Greedy": "49.25 hrs",
+        "Proposed_Robust_Greedy": "49.25 hrs",
+        "Deterministic_Greedy": "49.25 hrs",
+        "Hybrid_Solver": "50.00 hrs"
+      }
+    ]
+  },
+  {
+    "file": "backend\\output\\deterministic_schedule.csv",
+    "rows": 180,
+    "cols": 13,
+    "columns": [
+      "Job_ID",
+      "Machine_ID",
+      "Assigned_Machine",
+      "Machine_Type",
+      "Start_Slot",
+      "End_Slot",
+      "Start_Time",
+      "End_Time",
+      "Duration_min",
+      "Priority",
+      "Delay_min",
+      "Energy_Cost_$",
+      "Is_Late"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Job_ID": "J123",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 28,
+        "End_Slot": 29,
+        "Start_Time": "07:00",
+        "End_Time": "07:15",
+        "Duration_min": 15,
+        "Priority": "High",
+        "Delay_min": 0,
+        "Energy_Cost_$": 194.31,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J106",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 44,
+        "End_Slot": 48,
+        "Start_Time": "11:00",
+        "End_Time": "12:00",
+        "Duration_min": 60,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 1102.89,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J160",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 49,
+        "End_Slot": 52,
+        "Start_Time": "12:15",
+        "End_Time": "13:00",
+        "Duration_min": 45,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 838.89,
+        "Is_Late": 0
+      }
+    ]
+  },
+  {
+    "file": "backend\\output\\edf_schedule.csv",
+    "rows": 180,
+    "cols": 13,
+    "columns": [
+      "Job_ID",
+      "Machine_ID",
+      "Assigned_Machine",
+      "Machine_Type",
+      "Start_Slot",
+      "End_Slot",
+      "Start_Time",
+      "End_Time",
+      "Duration_min",
+      "Priority",
+      "Delay_min",
+      "Energy_Cost_$",
+      "Is_Late"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Job_ID": "J140",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 6,
+        "End_Slot": 9,
+        "Start_Time": "01:30",
+        "End_Time": "02:15",
+        "Duration_min": 45,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 279.63,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J010",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 33,
+        "End_Slot": 37,
+        "Start_Time": "08:15",
+        "End_Time": "09:15",
+        "Duration_min": 60,
+        "Priority": "High",
+        "Delay_min": 0,
+        "Energy_Cost_$": 1102.89,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J036",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 38,
+        "End_Slot": 45,
+        "Start_Time": "09:30",
+        "End_Time": "11:15",
+        "Duration_min": 105,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 1894.89,
+        "Is_Late": 0
+      }
+    ]
+  },
+  {
+    "file": "backend\\output\\fcfs_schedule.csv",
+    "rows": 180,
+    "cols": 13,
+    "columns": [
+      "Job_ID",
+      "Machine_ID",
+      "Assigned_Machine",
+      "Machine_Type",
+      "Start_Slot",
+      "End_Slot",
+      "Start_Time",
+      "End_Time",
+      "Duration_min",
+      "Priority",
+      "Delay_min",
+      "Energy_Cost_$",
+      "Is_Late"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Job_ID": "J140",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 6,
+        "End_Slot": 9,
+        "Start_Time": "01:30",
+        "End_Time": "02:15",
+        "Duration_min": 45,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 279.63,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J014",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 32,
+        "End_Slot": 37,
+        "Start_Time": "08:00",
+        "End_Time": "09:15",
+        "Duration_min": 75,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 1366.89,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J036",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 38,
+        "End_Slot": 45,
+        "Start_Time": "09:30",
+        "End_Time": "11:15",
+        "Duration_min": 105,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 1894.89,
+        "Is_Late": 0
+      }
+    ]
+  },
+  {
+    "file": "backend\\output\\future_forecast.csv",
+    "rows": 192,
+    "cols": 11,
+    "columns": [
+      "timestamp",
+      "predicted_kWh_p10",
+      "predicted_kWh_p50",
+      "predicted_kWh_p90",
+      "predicted_CO2_p50",
+      "predicted_PF_p50",
+      "hour",
+      "day_of_week",
+      "is_weekend",
+      "Load_Type",
+      "predicted_kWh"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "timestamp": "2019-01-01 00:00:00",
+        "predicted_kWh_p10": 2.0,
+        "predicted_kWh_p50": 3.727,
+        "predicted_kWh_p90": 3.82,
+        "predicted_CO2_p50": 0.0,
+        "predicted_PF_p50": 8.0,
+        "hour": 0,
+        "day_of_week": "Tuesday",
+        "is_weekend": 0,
+        "Load_Type": "Light_Load",
+        "predicted_kWh": 3.727
+      },
+      {
+        "timestamp": "2019-01-01 00:15:00",
+        "predicted_kWh_p10": 2.0,
+        "predicted_kWh_p50": 3.675,
+        "predicted_kWh_p90": 3.742,
+        "predicted_CO2_p50": 0.0,
+        "predicted_PF_p50": 8.0,
+        "hour": 0,
+        "day_of_week": "Tuesday",
+        "is_weekend": 0,
+        "Load_Type": "Light_Load",
+        "predicted_kWh": 3.675
+      },
+      {
+        "timestamp": "2019-01-01 00:30:00",
+        "predicted_kWh_p10": 2.0,
+        "predicted_kWh_p50": 3.638,
+        "predicted_kWh_p90": 3.725,
+        "predicted_CO2_p50": 0.0,
+        "predicted_PF_p50": 8.0,
+        "hour": 0,
+        "day_of_week": "Tuesday",
+        "is_weekend": 0,
+        "Load_Type": "Light_Load",
+        "predicted_kWh": 3.638
+      }
+    ]
+  },
+  {
+    "file": "backend\\output\\hybrid_schedule.csv",
+    "rows": 180,
+    "cols": 13,
+    "columns": [
+      "Job_ID",
+      "Machine_ID",
+      "Assigned_Machine",
+      "Machine_Type",
+      "Start_Slot",
+      "End_Slot",
+      "Start_Time",
+      "End_Time",
+      "Duration_min",
+      "Priority",
+      "Delay_min",
+      "Energy_Cost_$",
+      "Is_Late"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Job_ID": "J036",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 36,
+        "End_Slot": 43,
+        "Start_Time": "09:00",
+        "End_Time": "10:45",
+        "Duration_min": 105,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 1894.89,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J106",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 43,
+        "End_Slot": 47,
+        "Start_Time": "10:45",
+        "End_Time": "11:45",
+        "Duration_min": 60,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 1102.89,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J160",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 47,
+        "End_Slot": 50,
+        "Start_Time": "11:45",
+        "End_Time": "12:30",
+        "Duration_min": 45,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 838.89,
+        "Is_Late": 0
+      }
+    ]
+  },
+  {
+    "file": "backend\\output\\kpi_summary.csv",
+    "rows": 2,
+    "cols": 7,
+    "columns": [
+      "Schedule_Type",
+      "Total_Energy_Cost_$",
+      "Peak_Hour_Load_kWh",
+      "Machine_Utilization_%",
+      "Average_Waiting_Time_min",
+      "Number_of_Late_Jobs",
+      "On_Time_Completion_%"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Schedule_Type": "CP_SAT_Optimized",
+        "Total_Energy_Cost_$": 125350.0,
+        "Peak_Hour_Load_kWh": 448.95,
+        "Machine_Utilization_%": 47.06,
+        "Average_Waiting_Time_min": 93.92,
+        "Number_of_Late_Jobs": 0,
+        "On_Time_Completion_%": 100.0
+      },
+      {
+        "Schedule_Type": "Baseline_FCFS",
+        "Total_Energy_Cost_$": 186096.29,
+        "Peak_Hour_Load_kWh": 778.95,
+        "Machine_Utilization_%": 47.78,
+        "Average_Waiting_Time_min": 54.58,
+        "Number_of_Late_Jobs": 0,
+        "On_Time_Completion_%": 100.0
+      }
+    ]
+  },
+  {
+    "file": "backend\\output\\makespan_schedule.csv",
+    "rows": 180,
+    "cols": 13,
+    "columns": [
+      "Job_ID",
+      "Machine_ID",
+      "Assigned_Machine",
+      "Machine_Type",
+      "Start_Slot",
+      "End_Slot",
+      "Start_Time",
+      "End_Time",
+      "Duration_min",
+      "Priority",
+      "Delay_min",
+      "Energy_Cost_$",
+      "Is_Late"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Job_ID": "J140",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 6,
+        "End_Slot": 9,
+        "Start_Time": "01:30",
+        "End_Time": "02:15",
+        "Duration_min": 45,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 279.63,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J014",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 32,
+        "End_Slot": 37,
+        "Start_Time": "08:00",
+        "End_Time": "09:15",
+        "Duration_min": 75,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 1366.89,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J036",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 38,
+        "End_Slot": 45,
+        "Start_Time": "09:30",
+        "End_Time": "11:15",
+        "Duration_min": 105,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 1894.89,
+        "Is_Late": 0
+      }
+    ]
+  },
+  {
+    "file": "backend\\output\\optimized_schedule.csv",
+    "rows": 180,
+    "cols": 13,
+    "columns": [
+      "Job_ID",
+      "Machine_ID",
+      "Assigned_Machine",
+      "Machine_Type",
+      "Start_Slot",
+      "End_Slot",
+      "Start_Time",
+      "End_Time",
+      "Duration_min",
+      "Priority",
+      "Delay_min",
+      "Energy_Cost_$",
+      "Is_Late"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Job_ID": "J036",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 36,
+        "End_Slot": 43,
+        "Start_Time": "09:00",
+        "End_Time": "10:45",
+        "Duration_min": 105,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 1894.89,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J106",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 43,
+        "End_Slot": 47,
+        "Start_Time": "10:45",
+        "End_Time": "11:45",
+        "Duration_min": 60,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 1102.89,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J160",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 47,
+        "End_Slot": 50,
+        "Start_Time": "11:45",
+        "End_Time": "12:30",
+        "Duration_min": 45,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 838.89,
+        "Is_Late": 0
+      }
+    ]
+  },
+  {
+    "file": "backend\\output\\predictions.csv",
+    "rows": 7008,
+    "cols": 9,
+    "columns": [
+      "timestamp",
+      "actual_kWh",
+      "predicted_kWh_p50",
+      "predicted_kWh_p10",
+      "predicted_kWh_p90",
+      "actual_CO2",
+      "predicted_CO2_p50",
+      "actual_PF",
+      "predicted_PF_p50"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "timestamp": "2018-10-20 00:00:00",
+        "actual_kWh": 2.81,
+        "predicted_kWh_p50": 4.600349,
+        "predicted_kWh_p10": 1.9999628,
+        "predicted_kWh_p90": 6.991563,
+        "actual_CO2": 0.0,
+        "predicted_CO2_p50": 0.073391035,
+        "actual_PF": 53.91,
+        "predicted_PF_p50": 7.9997687
+      },
+      {
+        "timestamp": "2018-10-20 00:15:00",
+        "actual_kWh": 64.33,
+        "predicted_kWh_p50": 7.290525,
+        "predicted_kWh_p10": 1.9999628,
+        "predicted_kWh_p90": 12.686591,
+        "actual_CO2": 0.03,
+        "predicted_CO2_p50": 0.019306839,
+        "actual_PF": 81.49,
+        "predicted_PF_p50": 7.9997687
+      },
+      {
+        "timestamp": "2018-10-20 00:30:00",
+        "actual_kWh": 45.22,
+        "predicted_kWh_p50": 7.415519,
+        "predicted_kWh_p10": 1.9999628,
+        "predicted_kWh_p90": 13.208667,
+        "actual_CO2": 0.02,
+        "predicted_CO2_p50": 0.15833901,
+        "actual_PF": 82.73,
+        "predicted_PF_p50": 7.9997687
+      }
+    ]
+  },
+  {
+    "file": "backend\\output\\robust_schedule.csv",
+    "rows": 180,
+    "cols": 13,
+    "columns": [
+      "Job_ID",
+      "Machine_ID",
+      "Assigned_Machine",
+      "Machine_Type",
+      "Start_Slot",
+      "End_Slot",
+      "Start_Time",
+      "End_Time",
+      "Duration_min",
+      "Priority",
+      "Delay_min",
+      "Energy_Cost_$",
+      "Is_Late"
+    ],
+    "unique_instances": 1,
+    "sample_head": [
+      {
+        "Job_ID": "J123",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 28,
+        "End_Slot": 29,
+        "Start_Time": "07:00",
+        "End_Time": "07:15",
+        "Duration_min": 15,
+        "Priority": "High",
+        "Delay_min": 0,
+        "Energy_Cost_$": 194.31,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J106",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 44,
+        "End_Slot": 48,
+        "Start_Time": "11:00",
+        "End_Time": "12:00",
+        "Duration_min": 60,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 1102.89,
+        "Is_Late": 0
+      },
+      {
+        "Job_ID": "J160",
+        "Machine_ID": "M01",
+        "Assigned_Machine": "M01",
+        "Machine_Type": "CNC_Machining",
+        "Start_Slot": 49,
+        "End_Slot": 52,
+        "Start_Time": "12:15",
+        "End_Time": "13:00",
+        "Duration_min": 45,
+        "Priority": "Medium",
+        "Delay_min": 0,
+        "Energy_Cost_$": 838.89,
+        "Is_Late": 0
+      }
+    ]
+  }
+]

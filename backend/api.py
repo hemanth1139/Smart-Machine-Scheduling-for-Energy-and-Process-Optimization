@@ -13,27 +13,38 @@ from fastapi.staticfiles import StaticFiles
 
 # ─────────────────────────────────────────────────────────────────────────────
 OUTPUT_DIR   = Path(__file__).parent / "output"
+RAW_DATA_DIR = Path(__file__).parent / "data" / "raw"
 FRONTEND_DIR = Path(__file__).parent.parent / "frontend"
 
-MODEL_ORDER  = [
-    "FCFS", "EDF", "Makespan_Greedy",
-    "Deterministic_Greedy", "Proposed_Robust_Greedy", "Hybrid_Solver",
+# 10 algorithms matching comprehensive_report.csv column headers
+MODEL_ORDER = [
+    "FCFS", "EDD", "SPT", "LPT",
+    "Energy_Unaware", "Makespan_Greedy",
+    "FD_PDTS_Det", "FD_PDTS_Robust",
+    "CP_SAT_Warm", "CP_SAT_Cold",
 ]
+
+# Map API model key → output CSV filename
 SCHEDULE_FILES = {
-    "FCFS":                  "fcfs_schedule.csv",
-    "EDF":                   "edf_schedule.csv",
-    "Makespan_Greedy":       "makespan_schedule.csv",
-    "Deterministic_Greedy":  "deterministic_schedule.csv",
-    "Proposed_Robust_Greedy":"robust_schedule.csv",
-    "Hybrid_Solver":         "hybrid_schedule.csv",
+    "FCFS":              "fcfs_schedule.csv",
+    "EDD":               "edf_schedule.csv",
+    "SPT":               "spt_schedule.csv",
+    "LPT":               "lpt_schedule.csv",
+    "Energy_Unaware":    "energy_unaware_schedule.csv",
+    "Makespan_Greedy":   "makespan_schedule.csv",
+    "FD_PDTS_Det":       "deterministic_schedule.csv",
+    "FD_PDTS_Robust":    "robust_schedule.csv",
+    "CP_SAT_Warm":       "hybrid_schedule.csv",
+    "CP_SAT_Cold":       "cpsat_cold_schedule.csv",
 }
+
 HIGHER_BETTER = {"On-Time Completion (%)", "Machine Utilization (%)"}
 
 # ─────────────────────────────────────────────────────────────────────────────
 app = FastAPI(
     title="Smart Machine Scheduling API",
     description="Serves pre-computed scheduling benchmark results as JSON.",
-    version="1.0.0",
+    version="2.0.0",
 )
 
 app.add_middleware(
@@ -78,9 +89,17 @@ def load_csv(path: Path) -> pd.DataFrame:
 def root():
     return {
         "status": "ok",
-        "message": "Smart Machine Scheduling API",
+        "message": "Smart Machine Scheduling API v2",
         "docs": "/docs",
-        "endpoints": ["/api/kpi", "/api/schedule/{model}", "/api/forecast", "/api/comparison"],
+        "endpoints": [
+            "/api/kpi",
+            "/api/schedule/{model}",
+            "/api/forecast",
+            "/api/comparison",
+            "/api/datasets/machines",
+            "/api/datasets/jobs",
+            "/api/aggregate-stats",
+        ],
     }
 
 
@@ -91,15 +110,15 @@ def get_kpi():
     {
       models: [...],
       metrics: [...],
-      values: { "Hybrid_Solver": { "Total Energy Cost (INR)": 125432.0, ... }, ... }
+      values: { "CP_SAT_Warm": { "Total Energy Cost (INR)": 125432.0, ... }, ... }
     }
     """
     df = load_csv(OUTPUT_DIR / "comprehensive_report.csv")
 
     values: dict = {}
-    for model in MODEL_ORDER:
-        if model not in df.columns:
-            continue
+    available_models = [m for m in MODEL_ORDER if m in df.columns]
+
+    for model in available_models:
         values[model] = {}
         for _, row in df.iterrows():
             values[model][row["Metric"]] = parse_val(row[model])
@@ -109,7 +128,9 @@ def get_kpi():
     # Pre-compute % improvement vs FCFS for every model / metric
     improvements: dict = {}
     fcfs_vals = values.get("FCFS", {})
-    for model in MODEL_ORDER[1:]:
+    for model in available_models:
+        if model == "FCFS":
+            continue
         improvements[model] = {}
         for metric in metrics:
             base = fcfs_vals.get(metric, 0)
@@ -123,10 +144,10 @@ def get_kpi():
             improvements[model][metric] = round(pct, 2)
 
     return {
-        "models":       MODEL_ORDER,
+        "models":       available_models,
         "metrics":      metrics,
         "values":       values,
-        "improvements": improvements,   # pre-computed % vs FCFS (positive = better)
+        "improvements": improvements,
     }
 
 
@@ -154,4 +175,48 @@ def get_forecast():
 def get_comparison():
     """Returns the raw comparison_report.csv (FCFS vs CP-SAT)."""
     df = load_csv(OUTPUT_DIR / "comparison_report.csv")
+    return df.fillna("").to_dict(orient="records")
+
+
+@app.get("/api/datasets/machines")
+def get_machines():
+    """Returns the machine fleet dataset."""
+    df = load_csv(RAW_DATA_DIR / "machine_table.csv")
+    return {
+        "count": len(df),
+        "columns": df.columns.tolist(),
+        "data": df.fillna("").to_dict(orient="records"),
+    }
+
+
+@app.get("/api/datasets/jobs")
+def get_jobs():
+    """Returns the job scheduling dataset."""
+    df = load_csv(RAW_DATA_DIR / "job_table.csv")
+
+    # Compute summary stats
+    stats = {
+        "total_jobs": len(df),
+        "avg_duration_min": round(float(df["Duration_min"].mean()), 2) if "Duration_min" in df.columns else 0,
+        "min_duration_min": int(df["Duration_min"].min()) if "Duration_min" in df.columns else 0,
+        "max_duration_min": int(df["Duration_min"].max()) if "Duration_min" in df.columns else 0,
+        "priority_distribution": df["Priority"].value_counts().to_dict() if "Priority" in df.columns else {},
+        "setup_type_distribution": df["Setup_Type"].value_counts().to_dict() if "Setup_Type" in df.columns else {},
+    }
+
+    return {
+        "count": len(df),
+        "columns": df.columns.tolist(),
+        "stats": stats,
+        "data": df.fillna("").to_dict(orient="records"),
+    }
+
+
+@app.get("/api/aggregate-stats")
+def get_aggregate_stats():
+    """Returns the 20-seed aggregate statistics for all algorithms."""
+    path = OUTPUT_DIR / "aggregate_stats.csv"
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="aggregate_stats.csv not found.")
+    df = load_csv(path)
     return df.fillna("").to_dict(orient="records")
