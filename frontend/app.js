@@ -55,13 +55,13 @@ const ALGO_INFO = [
   {key:'CP_SAT_Cold', tag:'Ablation', tagColor:'rgba(100,116,139,0.15)', tagText:'#94a3b8', name:'CP-SAT Cold-Start', desc:'CP-SAT without warm-start hints — proves the necessity of FD-PDTS initialization for feasible solutions.'},
 ];
 
-// ── Plotly Dark Theme ───────────────────────────────────────────────────────
+// ── Plotly Light Theme ───────────────────────────────────────────────────────
 const PLOTLY_DARK = {
   paper_bgcolor: 'rgba(0,0,0,0)',
   plot_bgcolor: 'rgba(0,0,0,0)',
-  font: { family: 'Inter, sans-serif', size: 11, color: '#94a3b8' },
-  xaxis: { gridcolor: 'rgba(148,163,184,0.1)', zerolinecolor: 'rgba(148,163,184,0.15)' },
-  yaxis: { gridcolor: 'rgba(148,163,184,0.1)', zerolinecolor: 'rgba(148,163,184,0.15)' },
+  font: { family: 'Inter, sans-serif', size: 11, color: '#334155' },
+  xaxis: { gridcolor: '#e2e8f0', zerolinecolor: '#cbd5e1' },
+  yaxis: { gridcolor: '#e2e8f0', zerolinecolor: '#cbd5e1' },
 };
 
 // ── Global State ────────────────────────────────────────────────────────────
@@ -786,22 +786,25 @@ function renderCompositeBar(kpi) {
   const scores = kpi.models.map(m => ({
     model: m, label: SHORT_LABELS[m] || m,
     score: computeCompositeScore(kpi, m),
-    color: MODEL_COLORS[m] || '#6366f1'
+    color: MODEL_COLORS[m] || '#4f46e5'
   }));
   scores.sort((a, b) => a.score - b.score);
 
   const data = [{
     type: 'bar', x: scores.map(s => s.score), y: scores.map(s => s.label),
     orientation: 'h', marker: { color: scores.map(s => s.color) },
-    text: scores.map(s => s.score.toFixed(1)), textposition: 'inside',
-    textfont: { color: '#fff', size: 11 }
+    text: scores.map(s => `${s.score.toFixed(1)} / 100`), textposition: 'inside',
+    textfont: { color: '#ffffff', size: 11, weight: 700 }
   }];
 
   const layout = {
     ...PLOTLY_DARK,
-    title: { text: 'Overall Composite Efficiency Index (0–100)', font: { size: 13, color: '#e2e8f0' } },
-    xaxis: { ...PLOTLY_DARK.xaxis, title: { text: 'Composite Score', font: { color: '#94a3b8' } }, range: [0, 100] },
-    margin: { l: 120, r: 30, t: 50, b: 40 },
+    height: 460,
+    bargap: 0.2,
+    title: { text: 'Overall Composite Efficiency Index (0–100)', font: { size: 13, color: '#0f172a', weight: 800 } },
+    xaxis: { ...PLOTLY_DARK.xaxis, title: { text: 'Composite Score (0-100)', font: { color: '#334155', weight: 700 } }, range: [0, 100] },
+    yaxis: { ...PLOTLY_DARK.yaxis, automargin: true },
+    margin: { l: 150, r: 40, t: 50, b: 40 },
   };
 
   Plotly.newPlot('composite-bar', data, layout, { responsive: true, displayModeBar: false });
@@ -811,25 +814,43 @@ function renderPeakBar(kpi) {
   const el = document.getElementById('peak-bar');
   if (!el || typeof Plotly === 'undefined') return;
 
+  const peakIdx = kpi.metrics.findIndex(m => m.toLowerCase().includes('peak'));
+
   const peaks = kpi.models.map((m, idx) => {
-    const peakIdx = kpi.metrics.findIndex(metric => metric.toLowerCase().includes('peak'));
-    const val = peakIdx !== -1 ? kpi.values[idx][peakIdx] : 0;
-    return { model: m, label: SHORT_LABELS[m] || m, val, color: MODEL_COLORS[m] || '#6366f1' };
+    let val = 0;
+    if (Array.isArray(kpi.values[idx])) {
+      val = peakIdx !== -1 ? (kpi.values[idx][peakIdx] ?? 0) : 0;
+    } else if (kpi.values[m] && typeof kpi.values[m] === 'object') {
+      val = kpi.values[m]['Peak Grid Load (kW)'] ?? kpi.values[m]['Peak Grid Load (kW)'] ?? 0;
+    }
+    return { model: m, label: SHORT_LABELS[m] || m, val: Number(val), color: MODEL_COLORS[m] || '#4f46e5' };
   });
-  peaks.sort((a, b) => b.val - a.val);
+
+  // Keep predictable order (reverse so FCFS is top, CP-SAT Cold bottom)
+  const plotPeaks = [...peaks].reverse();
 
   const data = [{
-    type: 'bar', x: peaks.map(p => p.val), y: peaks.map(p => p.label),
-    orientation: 'h', marker: { color: peaks.map(p => p.color) },
-    text: peaks.map(p => `${p.val.toFixed(1)} kW`), textposition: 'inside',
-    textfont: { color: '#fff', size: 11 }
+    type: 'bar',
+    x: plotPeaks.map(p => p.val),
+    y: plotPeaks.map(p => p.label),
+    orientation: 'h',
+    marker: {
+      color: plotPeaks.map(p => p.color),
+      line: { color: 'rgba(255,255,255,0.4)', width: 1 }
+    },
+    text: plotPeaks.map(p => `${p.val.toFixed(1)} kW`),
+    textposition: 'auto',
+    textfont: { color: '#0f172a', size: 11, weight: 700 }
   }];
 
   const layout = {
     ...PLOTLY_DARK,
-    title: { text: 'Peak Grid Power Demand (kW) — Lower is Better', font: { size: 13, color: '#e2e8f0' } },
-    xaxis: { ...PLOTLY_DARK.xaxis, title: { text: 'Peak Demand (kW)', font: { color: '#94a3b8' } } },
-    margin: { l: 120, r: 30, t: 50, b: 40 },
+    height: 460,
+    bargap: 0.2,
+    title: { text: 'Peak Grid Power Demand (kW) across 10 Algorithms — Lower is Better', font: { size: 13, color: '#0f172a', weight: 800 } },
+    xaxis: { ...PLOTLY_DARK.xaxis, title: { text: 'Peak Demand (kW)', font: { color: '#334155', weight: 700 } }, range: [0, 850] },
+    yaxis: { ...PLOTLY_DARK.yaxis, automargin: true },
+    margin: { l: 150, r: 40, t: 50, b: 40 },
   };
 
   Plotly.newPlot('peak-bar', data, layout, { responsive: true, displayModeBar: false });
@@ -915,18 +936,18 @@ function getMockKpi() {
       'Machine Utilization (%)', 'Average Waiting Time (min)', 'On-Time Completion (%)',
       'Carbon Emissions (tCO2)', 'Power Factor Penalty (INR)'
     ],
-    values: MODEL_ORDER.map(() => [
-      [181528, 784.5, 47.25, 45.77, 45, 100, 671.9, 30660],
-      [174318, 784.5, 47.25, 45.77, 65, 100, 705.2, 29452],
-      [164128, 784.5, 48.0, 45.05, 79, 97.5, 723.1, 27935],
-      [179592, 784.5, 47.25, 45.77, 58, 100, 666.6, 30458],
-      [181284, 784.5, 47.25, 45.77, 47, 100, 668.6, 30724],
-      [177671, 784.5, 47.25, 45.77, 54, 100, 659.7, 30031],
-      [162875, 784.5, 47.5, 45.53, 89, 100, 624.8, 27658],
-      [160398, 784.5, 50.5, 42.82, 100, 100, 619.5, 27324],
-      [120183, 454.5, 51.5, 41.99, 112, 100, 483.9, 20431],
-      [78302, 161.5, 55.5, 38.96, 420, 94.4, 573.3, 13528],
-    ]),
+    values: [
+      [181528.4, 784.5, 47.25, 45.77, 45.0, 100.0, 671.9, 30660.5],
+      [174318.0, 784.5, 47.25, 45.77, 65.2, 100.0, 705.2, 29451.6],
+      [164128.3, 784.5, 48.00, 45.05, 78.6,  97.5, 723.1, 27934.6],
+      [179591.7, 784.5, 47.25, 45.77, 58.2, 100.0, 666.6, 30458.3],
+      [181284.2, 784.5, 47.25, 45.77, 46.7, 100.0, 668.6, 30724.0],
+      [177671.4, 784.5, 47.25, 45.77, 54.1, 100.0, 659.7, 30031.1],
+      [162874.8, 784.5, 47.50, 45.53, 88.7, 100.0, 624.8, 27657.6],
+      [160398.3, 784.5, 50.50, 42.82, 100.2, 100.0, 619.5, 27324.0],
+      [120183.3, 454.5, 51.50, 41.99, 112.4, 100.0, 483.9, 20431.2],
+      [78301.9,  161.5, 55.50, 38.96, 419.5,  94.4, 573.3, 13527.9],
+    ],
     improvements: {}
   };
 }
