@@ -55,13 +55,13 @@ const ALGO_INFO = [
   {key:'CP_SAT_Cold', tag:'Ablation', tagColor:'rgba(100,116,139,0.15)', tagText:'#94a3b8', name:'CP-SAT Cold-Start', desc:'CP-SAT without warm-start hints — proves the necessity of FD-PDTS initialization for feasible solutions.'},
 ];
 
-// ── Plotly Light Theme ───────────────────────────────────────────────────────
+// ── Plotly Dark Theme ───────────────────────────────────────────────────────
 const PLOTLY_DARK = {
   paper_bgcolor: 'rgba(0,0,0,0)',
   plot_bgcolor: 'rgba(0,0,0,0)',
-  font: { family: 'Inter, sans-serif', size: 11, color: '#475569' },
-  xaxis: { gridcolor: '#e2e8f0', zerolinecolor: '#cbd5e1' },
-  yaxis: { gridcolor: '#e2e8f0', zerolinecolor: '#cbd5e1' },
+  font: { family: 'Inter, sans-serif', size: 11, color: '#94a3b8' },
+  xaxis: { gridcolor: 'rgba(148,163,184,0.1)', zerolinecolor: 'rgba(148,163,184,0.15)' },
+  yaxis: { gridcolor: 'rgba(148,163,184,0.1)', zerolinecolor: 'rgba(148,163,184,0.15)' },
 };
 
 // ── Global State ────────────────────────────────────────────────────────────
@@ -974,15 +974,6 @@ function getMockJobs() {
 
 // ── Initialization ──────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  // Drawer sidebar nav items
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      const page = item.dataset.page;
-      window.location.hash = page;
-    });
-  });
-
   // Top navbar items
   document.querySelectorAll('.top-nav-item').forEach(item => {
     item.addEventListener('click', (e) => {
@@ -991,26 +982,6 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.hash = page;
     });
   });
-
-  // Drawer toggling (3-lines hamburger menu)
-  const hamburgerBtn = document.getElementById('hamburger-btn');
-  const closeDrawerBtn = document.getElementById('close-drawer-btn');
-  const sidebarOverlay = document.getElementById('sidebar-overlay');
-  const sidebar = document.getElementById('sidebar');
-
-  function openDrawer() {
-    sidebar?.classList.add('open');
-    sidebarOverlay?.classList.add('open');
-  }
-
-  function closeDrawer() {
-    sidebar?.classList.remove('open');
-    sidebarOverlay?.classList.remove('open');
-  }
-
-  if (hamburgerBtn) hamburgerBtn.addEventListener('click', openDrawer);
-  if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
-  if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeDrawer);
 
   // Listen for hash changes
   window.addEventListener('hashchange', handleHashChange);
